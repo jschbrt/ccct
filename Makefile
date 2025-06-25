@@ -14,34 +14,10 @@ all: deps games
 index: common
 	python build/compress.py index
 
-puzzle: common
-	python build/compress.py puzzle
-
 maze: common
 	python build/compress.py maze
 
-bird: common
-	python build/compress.py bird
-
-turtle: common
-	python build/compress.py turtle
-
-movie: common
-	python build/compress.py movie
-
-music: common
-	python build/compress.py music
-
-pond-tutor: common
-	python build/compress.py pond/tutor
-
-pond-duck: common
-	python build/compress.py pond/duck
-
-gallery: common
-	python build/compress.py gallery
-
-games: index puzzle maze bird turtle movie music pond-tutor pond-duck gallery
+games: index maze
 
 common:
 	@echo "Converting messages.js to JSON for Translatewiki."

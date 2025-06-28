@@ -32,6 +32,13 @@ goog.require('Maze.html');
 
 BlocklyGames.storageName = 'maze';
 
+var timer;
+var submitPressed = false; // for Maze.animate
+var NUMBER_OF_ANSWERS = 0; // amout of choices made in divergent task
+var LETTERS_USED = []; // which letters have been used
+var choiceLevelInputList = []; //input of in choice level
+
+
 const MAX_BLOCKS = [
     Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity
 ][BlocklyGames.LEVEL - 1]
@@ -67,7 +74,7 @@ const SKINS = [
         markerBlock: 'maze/marker_honeyblock.png',
         background: 'maze/bg_bee.png',
         look: '#000',
-        crashType: Maze.CRASH_FALL
+        crashType: CRASH_FALL
     },
   {
     sprite: 'maze/pegman.png',
@@ -92,6 +99,8 @@ const SKINS = [
 const SKIN_ID =
     BlocklyGames.getIntegerParamFromUrl('skin', 0, SKINS.length - 1);
 const SKIN = SKINS[SKIN_ID];
+const IS_KIDS_VERSION = Boolean(SKIN_ID); // if true, its the 1-2graders version
+
 
 /**
  * The types of squares in the maze, which is represented
@@ -107,7 +116,7 @@ const SquareType = {
 
 // The maze square constants defined above are inlined here
 // for ease of reading and writing the static mazes.
-Maze.map = [
+const map = [
     // Item 1. Training 1 - Normal Perspective
     [
         [0, 0, 0, 0, 0, 0, 0, 0],
@@ -485,7 +494,7 @@ function drawMap() {
 // This is the Data object used for saving stuff to mysql
 // Save all submitted plays
 // TODO put into Blockly Interface and abstract this code for other functions
-Maze.saveWorkspace = function() {   
+function saveWorkspace() {   
     var xmlText = BlocklyInterface.getCode();
     var encoded = BlocklyInterface.encodeXml(xmlText);
     return encoded;
@@ -493,7 +502,7 @@ Maze.saveWorkspace = function() {
         
 // TODO: do that but with mysql
 // object with data for each level
-Maze.levelData = {
+var levelData = {
     level: BlocklyGames.LEVEL,          // level number 
     submissionType: "null",                  // how was the game submitted "submit", "skip", "hiddenSkip"
     playPressedCount: 0,                       // amount of play button clicked (Submit button is not counted -> would be this+1)
@@ -502,7 +511,7 @@ Maze.levelData = {
     allSubmitted: {mazeLog: [], code: [], resultType: [], timestamp: []}, // all code subitted thourgh play button with result type
 }
 
-Maze.choiceLevelData = {
+var choiceLevelData = {
     level: BlocklyGames.LEVEL,
     submissionType: "null",  // "submit", "timeout"
     time: "0",
@@ -515,8 +524,8 @@ function startTimer () {
     var tick = function() {
         var min = String(Math.trunc(time / 60)).padStart(2, 0);
         var sec = String(time % 60).padStart(2, 0);
-        Maze.levelData['time'] = min + ":" + sec;
-        Maze.choiceLevelData['time'] = min + ':' + sec;
+        levelData['time'] = min + ":" + sec;
+        choiceLevelData['time'] = min + ':' + sec;
         time++;
     };
     // Set time to 5 minutes
@@ -524,7 +533,7 @@ function startTimer () {
 
     // Call the timer every second
     tick();
-    Maze.timer = setInterval(tick, 1000);
+    timer = setInterval(tick, 1000);
 }
 
 function countdown( elementName, minutes, seconds ){
@@ -540,8 +549,8 @@ function countdown( elementName, minutes, seconds ){
         msLeft = endTime - (+new Date);
         if ( msLeft < 1000 ) {
             element.innerHTML = "0:00";
-            Maze.choiceLevelData.submissionType = 'timeout';
-            for (var i = 0; i < Maze.NUMBER_OF_ANSWERS; i++) {
+            choiceLevelData.submissionType = 'timeout';
+            for (var i = 0; i < NUMBER_OF_ANSWERS; i++) {
                 var choiceLevelInput = document.getElementById('choiceLevelInput' + (i+1)).value; // return value of input box
                 choiceLevelInput = choiceLevelInput.toUpperCase();
                 Maze.choiceLevelInputList[i] = choiceLevelInput;
@@ -627,7 +636,7 @@ function init() {
 
   var scale = 1.0;
   // Scale kids and youth version differently
-  if (SKIN_ID === 1) { // kids version
+  if (IS_KIDS_VERSION) { // kids version
     scale = 1.0;
   }
   else { // youth version
@@ -669,7 +678,7 @@ function init() {
 
   var defaultXml = '';
   if (BlocklyGames.LEVEL === 1) {
-    if (SKIN_ID == 1) {
+    if (IS_KIDS_VERSION) {
       // Make connecting blocks easier for beginners.
       Blockly.SNAP_RADIUS *= 2;
       Blockly.CONNECTING_SNAP_RADIUS = Blockly.SNAP_RADIUS;
@@ -711,30 +720,32 @@ function init() {
     BlocklyInterface.loadBlocks(defaultXml, false);
 
   }
-  if (BlocklyGames.LEVEL === 10) {
-    if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName,
-                                           BlocklyGames.LEVEL)) {
-      // Level 10 gets an introductory modal dialog.
-      // Skip the dialog if the user has already won.
-      const content = BlocklyGames.getElementById('dialogHelpWallFollow');
-      const style = {
-        'width': '30%',
-        'left': '35%',
-        'top': '12em',
-      };
-      BlocklyDialogs.showDialog(content, null, false, true, style,
-          BlocklyDialogs.stopDialogKeyDown);
-      BlocklyDialogs.startDialogKeyDown();
-      setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
-    }
-  } else {
-    // All other levels get interactive help.  But wait 5 seconds for the
-    // user to think a bit before they are told what to do.
-    setTimeout(function() {
-      BlocklyInterface.workspace.addChangeListener(levelHelp);
-      levelHelp();
-    }, 5000);
-  }
+
+  // Level help is currently not set up.
+  // if (BlocklyGames.LEVEL === 10) {
+  //   if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName,
+  //                                          BlocklyGames.LEVEL)) {
+  //     // Level 10 gets an introductory modal dialog.
+  //     // Skip the dialog if the user has already won.
+  //     const content = BlocklyGames.getElementById('dialogHelpWallFollow');
+  //     const style = {
+  //       'width': '30%',
+  //       'left': '35%',
+  //       'top': '12em',
+  //     };
+  //     BlocklyDialogs.showDialog(content, null, false, true, style,
+  //         BlocklyDialogs.stopDialogKeyDown);
+  //     BlocklyDialogs.startDialogKeyDown();
+  //     setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
+  //   }
+  // } else {
+  //   // All other levels get interactive help.  But wait 5 seconds for the
+  //   // user to think a bit before they are told what to do.
+  //   setTimeout(function() {
+  //     BlocklyInterface.workspace.addChangeListener(levelHelp);
+  //     levelHelp();
+  //   }, 5000);
+  // }
 
   // Add the spinning Pegman icon to the done dialog.
   // <img id="pegSpin" src="common/1x1.gif">
@@ -1066,6 +1077,20 @@ function runButtonClick(e) {
   resetButton.style.display = 'inline';
   reset(false);
   execute();
+
+  // save results 
+    var textLog = [];
+    for(var i=0; i < log.length; i++){
+        textLog.push(log[i][0]);
+    }
+    levelData.allSubmitted.mazeLog.push(textLog);
+    var encoded = [saveWorkspace()];
+    levelData.allSubmitted.code.push(encoded);
+    levelData.allSubmitted.resultType.push(result());
+    levelData.allSubmitted.timestamp.push(new Date().toISOString());
+    levelData.playPressedCount += 1;
+
+    console.log(levelData);
 }
 
 /**

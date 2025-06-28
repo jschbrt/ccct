@@ -1387,7 +1387,7 @@ function submitChoiceLevel(e) {
     }
   }
 
-  if (Maze.hasDuplicates(Maze.choiceLevelInputList)) {
+  if (hasDuplicates(choiceLevelInputList)) {
     isClean = false;
     if (!already_alerted) {
       alert('Verwende bitte keinen Zahlen doppelt.');
@@ -1396,24 +1396,24 @@ function submitChoiceLevel(e) {
 
   if (isClean) {
     submitButton.style.display = 'none';
-    Maze.saveChoiceData();
-    Maze.switchLevel();
+    saveChoiceData();
+    switchLevel();
   }
 }
 
-Maze.saveChoiceData = function () {
+saveChoiceData = function () {
   // save prios
-  for (var i = 0; i < Maze.choiceLevelInputList.length; i++) {
-    Maze.choiceLevelData['prio' + (i + 1)] = Maze.choiceLevelInputList[i];
+  for (var i = 0; i < choiceLevelInputList.length; i++) {
+    choiceLevelData['prio' + (i + 1)] = choiceLevelInputList[i];
   }
 
-  console.log(Maze.choiceLevelData);
+  console.log(choiceLevelData);
 
-  BlocklyInterface.saveChoiceLevelToLocalStorage(Maze.choiceLevelData);
-  var json = JSON.stringify(Maze.choiceLevelData);
+  BlocklyInterface.saveChoiceLevelToLocalStorage(choiceLevelData);
+  var json = JSON.stringify(choiceLevelData);
   BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
   // input boolean to validate that its a submission with actual input
-  //Maze.choiceLevelData[0].prio1 = window.localStorage.getItem()    TODO: add sabing mechanism for prios
+  //choiceLevelData[0].prio1 = window.localStorage.getItem()    TODO: add sabing mechanism for prios
 };
 
 /**

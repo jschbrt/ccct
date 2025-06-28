@@ -482,6 +482,86 @@ function drawMap() {
 }
 
 
+// This is the Data object used for saving stuff to mysql
+// Save all submitted plays
+// TODO put into Blockly Interface and abstract this code for other functions
+Maze.saveWorkspace = function() {   
+    var xmlText = BlocklyInterface.getCode();
+    var encoded = BlocklyInterface.encodeXml(xmlText);
+    return encoded;
+}
+        
+// TODO: do that but with mysql
+// object with data for each level
+Maze.levelData = {
+    level: BlocklyGames.LEVEL,          // level number 
+    submissionType: "null",                  // how was the game submitted "submit", "skip", "hiddenSkip"
+    playPressedCount: 0,                       // amount of play button clicked (Submit button is not counted -> would be this+1)
+    time: "0",                          // time needed to solve level
+    finalCode : {mazeLog: [], code: "", resultType: 0, timestamp: ""},  // final code encoded + result type
+    allSubmitted: {mazeLog: [], code: [], resultType: [], timestamp: []}, // all code subitted thourgh play button with result type
+}
+
+Maze.choiceLevelData = {
+    level: BlocklyGames.LEVEL,
+    submissionType: "null",  // "submit", "timeout"
+    time: "0",
+    prio1: "",
+    prio2: ""
+}
+
+
+function startTimer () {
+    var tick = function() {
+        var min = String(Math.trunc(time / 60)).padStart(2, 0);
+        var sec = String(time % 60).padStart(2, 0);
+        Maze.levelData['time'] = min + ":" + sec;
+        Maze.choiceLevelData['time'] = min + ':' + sec;
+        time++;
+    };
+    // Set time to 5 minutes
+    var time = 0;
+
+    // Call the timer every second
+    tick();
+    Maze.timer = setInterval(tick, 1000);
+}
+
+function countdown( elementName, minutes, seconds ){
+    var element, endTime, hours, mins, msLeft, time;
+    element
+    function twoDigits( n )
+    {
+        return (n <= 9 ? "0" + n : n);
+    }
+
+    function updateTimer()
+    {
+        msLeft = endTime - (+new Date);
+        if ( msLeft < 1000 ) {
+            element.innerHTML = "0:00";
+            Maze.choiceLevelData.submissionType = 'timeout';
+            for (var i = 0; i < Maze.NUMBER_OF_ANSWERS; i++) {
+                var choiceLevelInput = document.getElementById('choiceLevelInput' + (i+1)).value; // return value of input box
+                choiceLevelInput = choiceLevelInput.toUpperCase();
+                Maze.choiceLevelInputList[i] = choiceLevelInput;
+            }
+            Maze.saveChoiceData();
+            Maze.switchLevel();
+        } else {
+            time = new Date( msLeft );
+            hours = time.getUTCHours();
+            mins = time.getUTCMinutes();
+            element.innerHTML = (hours ? hours + ':' + twoDigits( mins ) : mins) + ':' + twoDigits( time.getUTCSeconds() );
+            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+        }
+    }
+
+    element = document.getElementById( elementName );
+    endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+    updateTimer();
+}
+
 /**
  * Initialize Blockly and the maze.  Called on page load.
  */

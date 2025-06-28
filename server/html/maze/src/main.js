@@ -778,32 +778,6 @@ function init() {
       BlocklyInterface.loadBlocks(defaultXml, false);
     }
 
-    // Level help is currently not set up.
-    // if (BlocklyGames.LEVEL === 10) {
-    //   if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName,
-    //                                          BlocklyGames.LEVEL)) {
-    //     // Level 10 gets an introductory modal dialog.
-    //     // Skip the dialog if the user has already won.
-    //     const content = BlocklyGames.getElementById('dialogHelpWallFollow');
-    //     const style = {
-    //       'width': '30%',
-    //       'left': '35%',
-    //       'top': '12em',
-    //     };
-    //     BlocklyDialogs.showDialog(content, null, false, true, style,
-    //         BlocklyDialogs.stopDialogKeyDown);
-    //     BlocklyDialogs.startDialogKeyDown();
-    //     setTimeout(BlocklyDialogs.abortOffer, 5 * 60 * 1000);
-    //   }
-    // } else {
-    //   // All other levels get interactive help.  But wait 5 seconds for the
-    //   // user to think a bit before they are told what to do.
-    //   setTimeout(function() {
-    //     BlocklyInterface.workspace.addChangeListener(levelHelp);
-    //     levelHelp();
-    //   }, 5000);
-    // }
-
     // Add the spinning Pegman icon to the done dialog.
     // <img id="pegSpin" src="common/1x1.gif">
     const buttonDiv = BlocklyGames.getElementById('dialogDoneButtons');

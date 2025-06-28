@@ -14,101 +14,100 @@ goog.provide('BlocklyGames');
 
 goog.require('Blockly.Msg');
 
-
 /**
  * Lookup for names of languages.  Keys should be in ISO 639 format.
  * @private
  */
 BlocklyGames.LANGUAGE_NAME_ = {
-//  'ace': 'بهسا اچيه',  // RTL
-//  'af': 'Afrikaans',
-  'am': 'አማርኛ',
-  'ar': 'العربية',  // RTL
-//  'az': 'Azərbaycanca',
-  'be': 'беларускі',
+  //  'ace': 'بهسا اچيه',  // RTL
+  //  'af': 'Afrikaans',
+  am: 'አማርኛ',
+  ar: 'العربية', // RTL
+  //  'az': 'Azərbaycanca',
+  be: 'беларускі',
   'be-tarask': 'Taraškievica',
-  'bg': 'български език',
-  'bn': 'বাংলা',
-  'br': 'Brezhoneg',
-  'ca': 'Català',
-//  'cdo': '閩東語',
-  'cs': 'Česky',
-  'da': 'Dansk',
-  'de': 'Deutsch',
-  'el': 'Ελληνικά',
-  'en': 'English',
-  'eo': 'Esperanto',
-  'es': 'Español',
-  'eu': 'Euskara',
-  'fa': 'فارسی',  // RTL
-  'fi': 'Suomi',
-  'fo': 'Føroyskt',
-  'fr': 'Français',
-//  'frr': 'Frasch',
-  'gl': 'Galego',
-  'ha': 'Hausa',
-//  'hak': '客家話',
-  'he': 'עברית',  // RTL
-  'hi': 'हिन्दी',
-  'hr': 'Hrvatski',
-//  'hrx': 'Hunsrik',
-  'hu': 'Magyar',
-  'hy': 'հայերէն',
-  'ia': 'Interlingua',
-  'id': 'Bahasa Indonesia',
-  'ig': 'Asụsụ Igbo',
-  'is': 'Íslenska',
-  'it': 'Italiano',
-  'ja': '日本語',
-//  'ka': 'ქართული',
-  'kab': 'Taqbaylit',
-//  'km': 'ភាសាខ្មែរ',
-  'kn': 'ಕನ್ನಡ',
-  'ko': '한국어',
-//  'ksh': 'Ripoarėsch',
-//  'ky': 'Кыргызча',
-//  'la': 'Latine',
-//  'lb': 'Lëtzebuergesch',
-  'lt': 'Lietuvių',
-  'lv': 'Latviešu',
-//  'mg': 'Malagasy',
-//  'ml': 'മലയാളം',
-//  'mk': 'Македонски',
-//  'mr': 'मराठी',
-  'ms': 'Bahasa Melayu',
-  'my': 'မြန်မာစာ',
-//  'mzn': 'مازِرونی',  // RTL
-  'nb': 'Norsk (bokmål)',
-  'nl': 'Nederlands, Vlaams',
-//  'oc': 'Lenga d\'òc',
-//  'pa': 'पंजाबी',
-  'pl': 'Polski',
-  'pms': 'Piemontèis',
-//  'ps': 'پښتو',  // RTL
-  'pt': 'Português',
+  bg: 'български език',
+  bn: 'বাংলা',
+  br: 'Brezhoneg',
+  ca: 'Català',
+  //  'cdo': '閩東語',
+  cs: 'Česky',
+  da: 'Dansk',
+  de: 'Deutsch',
+  el: 'Ελληνικά',
+  en: 'English',
+  eo: 'Esperanto',
+  es: 'Español',
+  eu: 'Euskara',
+  fa: 'فارسی', // RTL
+  fi: 'Suomi',
+  fo: 'Føroyskt',
+  fr: 'Français',
+  //  'frr': 'Frasch',
+  gl: 'Galego',
+  ha: 'Hausa',
+  //  'hak': '客家話',
+  he: 'עברית', // RTL
+  hi: 'हिन्दी',
+  hr: 'Hrvatski',
+  //  'hrx': 'Hunsrik',
+  hu: 'Magyar',
+  hy: 'հայերէն',
+  ia: 'Interlingua',
+  id: 'Bahasa Indonesia',
+  ig: 'Asụsụ Igbo',
+  is: 'Íslenska',
+  it: 'Italiano',
+  ja: '日本語',
+  //  'ka': 'ქართული',
+  kab: 'Taqbaylit',
+  //  'km': 'ភាសាខ្មែរ',
+  kn: 'ಕನ್ನಡ',
+  ko: '한국어',
+  //  'ksh': 'Ripoarėsch',
+  //  'ky': 'Кыргызча',
+  //  'la': 'Latine',
+  //  'lb': 'Lëtzebuergesch',
+  lt: 'Lietuvių',
+  lv: 'Latviešu',
+  //  'mg': 'Malagasy',
+  //  'ml': 'മലയാളം',
+  //  'mk': 'Македонски',
+  //  'mr': 'मराठी',
+  ms: 'Bahasa Melayu',
+  my: 'မြန်မာစာ',
+  //  'mzn': 'مازِرونی',  // RTL
+  nb: 'Norsk (bokmål)',
+  nl: 'Nederlands, Vlaams',
+  //  'oc': 'Lenga d\'òc',
+  //  'pa': 'पंजाबी',
+  pl: 'Polski',
+  pms: 'Piemontèis',
+  //  'ps': 'پښتو',  // RTL
+  pt: 'Português',
   'pt-br': 'Português Brasileiro',
-  'ro': 'Română',
-  'ru': 'Русский',
-  'sc': 'Sardu',
-//  'sco': 'Scots',
-//  'si': 'සිංහල',
-  'sk': 'Slovenčina',
-  'sl': 'Slovenščina',
-//  'smn': 'Anarâškielâ',
-  'sq': 'Shqip',
-  'sr': 'Српски',
+  ro: 'Română',
+  ru: 'Русский',
+  sc: 'Sardu',
+  //  'sco': 'Scots',
+  //  'si': 'සිංහල',
+  sk: 'Slovenčina',
+  sl: 'Slovenščina',
+  //  'smn': 'Anarâškielâ',
+  sq: 'Shqip',
+  sr: 'Српски',
   'sr-latn': 'Srpski',
-  'sv': 'Svenska',
-//  'sw': 'Kishwahili',
-//  'ta': 'தமிழ்',
-  'th': 'ภาษาไทย',
-  'ti': 'ትግርኛ',
-//  'tl': 'Tagalog',
-  'tr': 'Türkçe',
-  'uk': 'Українська',
-  'ur': 'اُردُو‬',  // RTL
-  'vi': 'Tiếng Việt',
-  'yo': 'Èdè Yorùbá',
+  sv: 'Svenska',
+  //  'sw': 'Kishwahili',
+  //  'ta': 'தமிழ்',
+  th: 'ภาษาไทย',
+  ti: 'ትግርኛ',
+  //  'tl': 'Tagalog',
+  tr: 'Türkçe',
+  uk: 'Українська',
+  ur: 'اُردُو‬', // RTL
+  vi: 'Tiếng Việt',
+  yo: 'Èdè Yorùbá',
   'zh-hans': '简体中文',
   'zh-hant': '正體中文',
 };
@@ -155,7 +154,7 @@ BlocklyGames.getElementById = document.getElementById.bind(document);
  * @param {!ErrorEvent} event Error event.
  * @private
  */
-BlocklyGames.errorReporter_ = function(event) {
+BlocklyGames.errorReporter_ = function (event) {
   try {
     //if (Math.random() > 0.5) return;
     // 3rd party script errors (likely plugins) have no useful info.
@@ -167,15 +166,16 @@ BlocklyGames.errorReporter_ = function(event) {
     const req = new XMLHttpRequest();
     // Try to use the experimental 'event.error.stack',
     // otherwise, use standard properties.
-    const report = (event.error && event.error.stack) ||
-        `${event.message} ${event.filename} ${event.lineno}:${event.colno}`;
-    const params = "error=" + encodeURIComponent(report.trim()) +
-        '&url=' + encodeURIComponent(window.location);
+    const report =
+      (event.error && event.error.stack) ||
+      `${event.message} ${event.filename} ${event.lineno}:${event.colno}`;
+    const params =
+      'error=' + encodeURIComponent(report.trim()) + '&url=' + encodeURIComponent(window.location);
     req.open('POST', '/scripts/errorReporter.py');
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.send(params);
     console.log('Error reported.');
-  } catch(e) {
+  } catch (e) {
     // Error in error reporter.  Do NOT recursively call the error reporter.
     console.log(event.error);
   }
@@ -192,9 +192,8 @@ if (!BlocklyGames.IS_HTML) {
  * @param {string} defaultValue Value to return if parameter not found.
  * @returns {string} The parameter value or the default value if not found.
  */
-BlocklyGames.getStringParamFromUrl = function(name, defaultValue) {
-  const val =
-      window.location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
+BlocklyGames.getStringParamFromUrl = function (name, defaultValue) {
+  const val = window.location.search.match(new RegExp('[?&]' + name + '=([^&]+)'));
   return val ? decodeURIComponent(val[1].replace(/\+/g, '%20')) : defaultValue;
 };
 
@@ -207,7 +206,7 @@ BlocklyGames.getStringParamFromUrl = function(name, defaultValue) {
  * @param {number} maxValue The maximum legal value.
  * @returns {number} A number in the range [min_value, max_value].
  */
-BlocklyGames.getIntegerParamFromUrl = function(name, minValue, maxValue) {
+BlocklyGames.getIntegerParamFromUrl = function (name, minValue, maxValue) {
   const val = Math.floor(Number(BlocklyGames.getStringParamFromUrl(name, 'NaN')));
   return isNaN(val) ? minValue : Math.max(minValue, Math.min(val, maxValue));
 };
@@ -229,20 +228,23 @@ BlocklyGames.MAX_LEVEL = 13;
 BlocklyGames.CHOICE_LEVEL = 12;
 Blockly.DIVERGENT_1 = 7;
 
+BlocklyGames.loadStartTime = function () {
+  var startTime = window.localStorage['BlocklyGamesStartTime'];
+  return startTime;
+};
+
 /**
  * User's level (e.g. 5).
  * @type number
  */
-BlocklyGames.LEVEL =
-    BlocklyGames.getIntegerParamFromUrl('level', 1, BlocklyGames.MAX_LEVEL);
+BlocklyGames.LEVEL = BlocklyGames.getIntegerParamFromUrl('level', 1, BlocklyGames.MAX_LEVEL);
 
 /**
  * Common startup tasks for all apps.
  * @param {string} title Text for the page title.
  */
-BlocklyGames.init = function(title) {
-  document.title = BlocklyGames.getMsg('Games.name', true) +
-      (title && ' : ') + title;
+BlocklyGames.init = function (title) {
+  document.title = BlocklyGames.getMsg('Games.name', true) + (title && ' : ') + title;
 
   // Set the HTML's language and direction.
   document.dir = BlocklyGames.IS_RTL ? 'rtl' : 'ltr';
@@ -256,7 +258,7 @@ BlocklyGames.init = function(title) {
     for (const lang of BlocklyGames.LANGUAGES_) {
       languages.push([BlocklyGames.LANGUAGE_NAME_[lang], lang]);
     }
-    const comp = function(a, b) {
+    const comp = function (a, b) {
       // Sort based on first argument ('English', 'Русский', '简体字', etc).
       if (a[0] > b[0]) return 1;
       if (a[0] < b[0]) return -1;
@@ -289,8 +291,7 @@ BlocklyGames.init = function(title) {
   // Fixes viewport for small screens.
   const viewport = document.querySelector('meta[name="viewport"]');
   if (viewport && screen.availWidth < 725) {
-    viewport.setAttribute('content',
-        'width=725, initial-scale=.35, user-scalable=no');
+    viewport.setAttribute('content', 'width=725, initial-scale=.35, user-scalable=no');
   }
 };
 
@@ -299,7 +300,7 @@ BlocklyGames.init = function(title) {
  * then call the game's init function.
  * @param {!Function} init Initialization function to call.
  */
-BlocklyGames.callWhenLoaded = function(init) {
+BlocklyGames.callWhenLoaded = function (init) {
   function go() {
     if (!window['BlocklyGamesMsg']) {
       // Messages haven't arrived yet.  Try again later.
@@ -318,10 +319,9 @@ BlocklyGames.callWhenLoaded = function(init) {
 /**
  * Reload with a different language.
  */
-BlocklyGames.changeLanguage = function() {
+BlocklyGames.changeLanguage = function () {
   const languageMenu = BlocklyGames.getElementById('languageMenu');
-  const newLang = encodeURIComponent(
-      languageMenu.options[languageMenu.selectedIndex].value);
+  const newLang = encodeURIComponent(languageMenu.options[languageMenu.selectedIndex].value);
   let search = window.location.search;
   if (search.length <= 1) {
     search = '?lang=' + newLang;
@@ -331,8 +331,8 @@ BlocklyGames.changeLanguage = function() {
     search = search.replace(/\?/, '?lang=' + newLang + '&');
   }
 
-  window.location = window.location.protocol + '//' +
-      window.location.host + window.location.pathname + search;
+  window.location =
+    window.location.protocol + '//' + window.location.host + window.location.pathname + search;
 };
 
 /**
@@ -342,7 +342,7 @@ BlocklyGames.changeLanguage = function() {
  * @param {number} level Level (1-10).
  * @returns {string|undefined} Serialized XML, or undefined.
  */
-BlocklyGames.loadFromLocalStorage = function(name, level) {
+BlocklyGames.loadFromLocalStorage = function (name, level) {
   let xml;
   try {
     xml = window.localStorage[name + level];
@@ -359,7 +359,7 @@ BlocklyGames.loadFromLocalStorage = function(name, level) {
  * @param {Element|string} el Button element or ID thereof.
  * @param {!Function} func Event handler to bind.
  */
-BlocklyGames.bindClick = function(el, func) {
+BlocklyGames.bindClick = function (el, func) {
   if (!el) {
     throw TypeError('Element not found: ' + el);
   }
@@ -381,7 +381,7 @@ BlocklyGames.bindClick = function(el, func) {
  * @param {number} angle Angle in degrees.
  * @returns {number} Standardized angle.
  */
-BlocklyGames.normalizeAngle = function(angle) {
+BlocklyGames.normalizeAngle = function (angle) {
   angle %= 360;
   if (angle < 0) {
     angle += 360;
@@ -395,7 +395,7 @@ BlocklyGames.normalizeAngle = function(angle) {
  * @param {boolean} escape Perform HTML escaping, if true.
  * @returns {string} Message string (e.g. 'Want to start over?').
  */
-BlocklyGames.getMsg = function(name, escape) {
+BlocklyGames.getMsg = function (name, escape) {
   let msg = window['BlocklyGamesMsg'][name];
   if (msg === undefined) {
     msg = `[Unknown message: ${name}]`;
@@ -408,10 +408,11 @@ BlocklyGames.getMsg = function(name, escape) {
  * @param {string} text Unsafe text, possibly with HTML tags.
  * @returns {string} Safe text, with <>&'" escaped.
  */
-BlocklyGames.esc = function(text) {
-  return text.replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+BlocklyGames.esc = function (text) {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 };

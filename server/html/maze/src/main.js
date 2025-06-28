@@ -32,9 +32,9 @@ goog.require('Maze.html');
 
 BlocklyGames.storageName = 'maze';
 
-const MAX_BLOCKS =
-    [Infinity, Infinity, 2, 5, 5, 5, 5, 10, 7, 10][BlocklyGames.LEVEL - 1];
-
+const MAX_BLOCKS = [
+    Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity
+][BlocklyGames.LEVEL - 1]
 // Crash type constants.
 const CRASH_STOP = 1;
 const CRASH_SPIN = 2;
@@ -48,6 +48,27 @@ const SKINS = [
   // winSound: List of sounds (in various formats) to play when the player wins.
   // crashSound: List of sounds (in various formats) for player crashes.
   // crashType: Behaviour when player crashes (stop, spin, or fall).
+    {
+    sprite: 'maze/astro.png',
+    tiles: 'maze/tiles_astro.png',
+    background: 'maze/bg_astro.jpg',
+    // Coma star cluster, photo by George Hatfield, used with permission.
+    look: '#fff',
+    winSound: ['maze/win.mp3', 'maze/win.ogg'],
+    crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
+    crashType: CRASH_SPIN,
+  },
+    {
+        sprite: 'maze/bee4.png',
+        spriteDialog: 'maze/bee3.png',
+        avatar: 'maze/static_bee2.png',
+        tiles: 'maze/tiles_bee_4.png',
+        marker: 'maze/marker_honey2.png',
+        markerBlock: 'maze/marker_honeyblock.png',
+        background: 'maze/bg_bee.png',
+        look: '#000',
+        crashType: Maze.CRASH_FALL
+    },
   {
     sprite: 'maze/pegman.png',
     tiles: 'maze/tiles_pegman.png',
@@ -58,16 +79,6 @@ const SKINS = [
     crashType: CRASH_STOP,
   },
   {
-    sprite: 'maze/astro.png',
-    tiles: 'maze/tiles_astro.png',
-    background: 'maze/bg_astro.jpg',
-    // Coma star cluster, photo by George Hatfield, used with permission.
-    look: '#fff',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
-    crashType: CRASH_SPIN,
-  },
-  {
     sprite: 'maze/panda.png',
     tiles: 'maze/tiles_panda.png',
     background: 'maze/bg_panda.jpg',
@@ -76,7 +87,7 @@ const SKINS = [
     winSound: ['maze/win.mp3', 'maze/win.ogg'],
     crashSound: ['maze/fail_panda.mp3', 'maze/fail_panda.ogg'],
     crashType: CRASH_FALL,
-  },
+  }
 ];
 const SKIN_ID =
     BlocklyGames.getIntegerParamFromUrl('skin', 0, SKINS.length - 1);
@@ -96,102 +107,151 @@ const SquareType = {
 
 // The maze square constants defined above are inlined here
 // for ease of reading and writing the static mazes.
-const map = [
-// Level 1.
- [[0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 2, 1, 3, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0]],
-// Level 2.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 3, 0, 0, 0],
-  [0, 0, 2, 1, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 3.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 2, 1, 1, 1, 1, 3, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 4.
-/**
- * Note, the path continues past the start and the goal in both directions.
- * This is intentionally done so users see the maze is about getting from
- * the start to the goal and not necessarily about moving over every part of
- * the maze, 'mowing the lawn' as Neil calls it.
- */
- [[0, 0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 1, 1],
-  [0, 0, 0, 0, 0, 3, 1, 0],
-  [0, 0, 0, 0, 1, 1, 0, 0],
-  [0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 0, 1, 1, 0, 0, 0, 0],
-  [0, 2, 1, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0]],
-// Level 5.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 3, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 0, 0, 2, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 6.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0, 0],
-  [0, 1, 0, 0, 0, 1, 0, 0],
-  [0, 1, 1, 3, 0, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 0, 0],
-  [0, 2, 1, 1, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 7.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 0],
-  [0, 2, 1, 1, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 0],
-  [0, 1, 1, 3, 0, 1, 0, 0],
-  [0, 1, 0, 1, 0, 1, 0, 0],
-  [0, 1, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 8.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 0, 0, 0],
-  [0, 1, 0, 0, 1, 1, 0, 0],
-  [0, 1, 1, 1, 0, 1, 0, 0],
-  [0, 0, 0, 1, 0, 1, 0, 0],
-  [0, 2, 1, 1, 0, 3, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 9.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 1, 1, 1, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0, 0],
-  [3, 1, 1, 1, 1, 1, 1, 0],
-  [0, 1, 0, 1, 0, 1, 1, 0],
-  [1, 1, 1, 1, 1, 0, 1, 0],
-  [0, 1, 0, 1, 0, 2, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
-// Level 10.
- [[0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 3, 0, 1, 0],
-  [0, 1, 1, 0, 1, 1, 1, 0],
-  [0, 1, 0, 1, 0, 1, 0, 0],
-  [0, 1, 1, 1, 1, 1, 1, 0],
-  [0, 0, 0, 1, 0, 0, 1, 0],
-  [0, 2, 1, 1, 1, 0, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0]],
+Maze.map = [
+    // Item 1. Training 1 - Normal Perspective
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 3, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 2. Training 2 - No-For-Loop
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 3. Training 3 - For-Loop
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 4. Training 4 - Switched Perspective
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 2, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 5. Intro 1 - Astronaut looking EAST
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 2, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 6. Intro 2 - For-Loop and Switched Perspective
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 2, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 3, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 7. Divergent Task 1
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 3, 0],
+        [0, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 2, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],    
+    // Item 8. Divergent Task 2
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 3, 0],
+        [0, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 2, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 9. Divergent Task 3
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 3, 0],
+        [0, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 2, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 10. Divergent Task 4
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 3, 0],
+        [0, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 2, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 11. Divergent Task 5
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 3, 0],
+        [0, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 2, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Item 12. Multiple Choice wrt Divergent Task 1 -> special level!
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 3, 0],
+        [0, 1, 1, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [0, 2, 1, 1, 1, 1, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ],
+    // Divergent Task 2 MISSING TODO?
+    // Item 13. No only L not R allowed
+    [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 3, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0]
+    ]
 ][BlocklyGames.LEVEL - 1];
 
 /**
@@ -241,8 +301,21 @@ let result = ResultType.UNSET;
 /**
  * Starting direction.
  */
-let startDirection = DirectionType.EAST;
-
+let startDirection = [    
+    DirectionType.NORTH,  // Item 1
+    DirectionType.NORTH,  // Item 2
+    DirectionType.NORTH,  // Item 3
+    DirectionType.WEST,   // Item 4
+    DirectionType.EAST,   // Item 5
+    DirectionType.SOUTH,  // Item 6
+    DirectionType.NORTH,  // Item 7
+    DirectionType.NORTH,  // Item 8
+    DirectionType.NORTH,  // Item 9
+    DirectionType.NORTH,  // Item 10
+    DirectionType.NORTH,  // Item 11
+    DirectionType.NORTH,  // Item 12
+    DirectionType.NORTH   // Item 13
+][BlocklyGames.LEVEL - 1]
 /**
  * PIDs of animation tasks currently executing.
  * @type !Array<number>
@@ -408,6 +481,7 @@ function drawMap() {
       SKIN.sprite);
 }
 
+
 /**
  * Initialize Blockly and the maze.  Called on page load.
  */
@@ -471,8 +545,16 @@ function init() {
   window.addEventListener('resize', onresize);
   onresize(null);
 
+  var scale = 1.0;
+  // Scale kids and youth version differently
+  if (SKIN_ID === 1) { // kids version
+    scale = 1.0;
+  }
+  else { // youth version
+    scale = 0.8;
+  }
+
   // Scale the workspace so level 1 = 1.3, and level 10 = 1.0.
-  const scale = 1 + (1 - (BlocklyGames.LEVEL / BlocklyGames.MAX_LEVEL)) / 3;
   BlocklyInterface.injectBlockly(
       {'maxBlocks': MAX_BLOCKS,
        'rtl': rtl,
@@ -485,13 +567,6 @@ function init() {
       'turnRight,turnLeft,isPathForward,isPathRight,isPathBackward,isPathLeft');
 
   drawMap();
-
-  const defaultXml =
-      '<xml>' +
-        '<block movable="' + (BlocklyGames.LEVEL !== 1) + '" ' +
-        'type="maze_moveForward" x="70" y="70"></block>' +
-      '</xml>';
-  BlocklyInterface.loadBlocks(defaultXml, false);
 
   // Locate the start and finish squares.
   for (let y = 0; y < ROWS; y++) {
@@ -512,10 +587,49 @@ function init() {
   BlocklyGames.bindClick('runButton', runButtonClick);
   BlocklyGames.bindClick('resetButton', resetButtonClick);
 
+  var defaultXml = '';
   if (BlocklyGames.LEVEL === 1) {
-    // Make connecting blocks easier for beginners.
-    Blockly.SNAP_RADIUS *= 2;
-    Blockly.CONNECTING_SNAP_RADIUS = Blockly.SNAP_RADIUS;
+    if (SKIN_ID == 1) {
+      // Make connecting blocks easier for beginners.
+      Blockly.SNAP_RADIUS *= 2;
+      Blockly.CONNECTING_SNAP_RADIUS = Blockly.SNAP_RADIUS;
+      defaultXml =
+            '<xml>' +
+            '<block ' + 'type="maze_moveForwardKids" x="70" y="70">' +
+            '<next>' +
+            '<block ' + 'type="maze_moveForwardKids" >' +
+            '<next>' +
+            '<block ' + 'type="maze_turn_rightKids" >' +
+            '<next>' +
+            '<block ' + 'type="maze_moveForwardKids" >' + '</block>' +
+            '</next>' +
+            '</block>' +
+            '</next>' +
+            '</block>' +
+            '</next>' +
+            '</block>' +
+            '</xml>';
+    }
+    else {
+      defaultXml =
+            '<xml>' +
+            '<block ' + 'type="maze_moveForward" x="70" y="70">' +
+            '<next>' +
+            '<block ' + 'type="maze_moveForward" >' +
+            '<next>' +
+            '<block ' + 'type="maze_turn" ><field name="DIR">turnRight</field>'+
+            '<next>' +
+            '<block ' + 'type="maze_moveForward" >' + '</block>' +
+            '</next>' + 
+            '</block>' +
+            '</next>' + 
+            '</block>' +
+            '</next>' +
+            '</block>' +
+            '</xml>';
+    }
+    BlocklyInterface.loadBlocks(defaultXml, false);
+
   }
   if (BlocklyGames.LEVEL === 10) {
     if (!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName,

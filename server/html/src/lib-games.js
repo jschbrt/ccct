@@ -219,9 +219,15 @@ BlocklyGames.getIntegerParamFromUrl = function(name, minValue, maxValue) {
 BlocklyGames.storageName;
 
 /**
- * Maximum number of levels.  Common to all apps.
+ * Maximum number of levels.
  */
-BlocklyGames.MAX_LEVEL = 10;
+BlocklyGames.MAX_LEVEL = 13;
+
+/**
+ * special Levels
+ */
+BlocklyGames.CHOICE_LEVEL = 12;
+Blockly.DIVERGENT_1 = 7;
 
 /**
  * User's level (e.g. 5).

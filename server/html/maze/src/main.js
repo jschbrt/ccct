@@ -630,34 +630,6 @@ function init() {
 
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));
 
-  // Setup the Pegman menu.
-  const pegmanImg = document.querySelector('#pegmanButton>img');
-  pegmanImg.style.backgroundImage = 'url(' + SKIN.sprite + ')';
-  const pegmanMenu = BlocklyGames.getElementById('pegmanMenu');
-  const handlerFactory = function (n) {
-    return function () {
-      changePegman(n);
-    };
-  };
-  for (let i = 0; i < SKINS.length; i++) {
-    if (i === SKIN_ID) {
-      continue;
-    }
-    const div = document.createElement('div');
-    const img = document.createElement('img');
-    img.src = 'common/1x1.gif';
-    img.style.backgroundImage = 'url(' + SKINS[i].sprite + ')';
-    div.appendChild(img);
-    pegmanMenu.appendChild(div);
-    Blockly.browserEvents.bind(div, 'mousedown', null, handlerFactory(i));
-  }
-  Blockly.browserEvents.bind(window, 'resize', null, hidePegmanMenu);
-  const pegmanButton = BlocklyGames.getElementById('pegmanButton');
-  Blockly.browserEvents.bind(pegmanButton, 'mousedown', null, showPegmanMenu);
-  const pegmanButtonArrow = BlocklyGames.getElementById('pegmanButtonArrow');
-  const arrow = document.createTextNode(Blockly.FieldDropdown.ARROW_CHAR);
-  pegmanButtonArrow.appendChild(arrow);
-
   const rtl = BlocklyGames.IS_RTL;
   const blocklyDiv = BlocklyGames.getElementById('blockly');
   const visualization = BlocklyGames.getElementById('visualization');
@@ -845,73 +817,6 @@ function init() {
     BlocklyCode.importInterpreter();
     // Lazy-load the syntax-highlighting.
     BlocklyCode.importPrettify();
-  }
-}
-
-/**
- * Reload with a different Pegman skin.
- * @param {number} newSkin ID of new skin.
- */
-function changePegman(newSkin) {
-  BlocklyInterface.saveToSessionStorage();
-  location =
-    location.protocol +
-    '//' +
-    location.host +
-    location.pathname +
-    '?lang=' +
-    BlocklyGames.LANG +
-    '&level=' +
-    BlocklyGames.LEVEL +
-    '&skin=' +
-    newSkin;
-}
-
-let pegmanMenuMouse_;
-
-/**
- * Display the Pegman skin-change menu.
- * @param {!Event} e Mouse, touch, or resize event.
- */
-function showPegmanMenu(e) {
-  const menu = BlocklyGames.getElementById('pegmanMenu');
-  if (menu.style.display === 'block') {
-    // Menu is already open.  Close it.
-    hidePegmanMenu(e);
-    return;
-  }
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-  const button = BlocklyGames.getElementById('pegmanButton');
-  button.classList.add('buttonHover');
-  menu.style.top = button.offsetTop + button.offsetHeight + 'px';
-  menu.style.left = button.offsetLeft + 'px';
-  menu.style.display = 'block';
-  pegmanMenuMouse_ = Blockly.browserEvents.bind(document.body, 'mousedown', null, hidePegmanMenu);
-  // Close the skin-changing hint if open.
-  const hint = BlocklyGames.getElementById('dialogHelpSkins');
-  if (hint && hint.className !== 'dialogHiddenContent') {
-    BlocklyDialogs.hideDialog(false);
-  }
-  showPegmanMenu.activatedOnce = true;
-}
-
-/**
- * Hide the Pegman skin-change menu.
- * @param {!Event} e Mouse, touch, or resize event.
- */
-function hidePegmanMenu(e) {
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-  BlocklyGames.getElementById('pegmanMenu').style.display = 'none';
-  BlocklyGames.getElementById('pegmanButton').classList.remove('buttonHover');
-  if (pegmanMenuMouse_) {
-    Blockly.browserEvents.unbind(pegmanMenuMouse_);
-    pegmanMenuMouse_ = undefined;
   }
 }
 

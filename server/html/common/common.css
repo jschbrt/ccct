@@ -60,6 +60,7 @@ html[dir="RTL"] .mirrorImg {
 }
 
 #languageMenu {
+  visibility: hidden;
   margin: 16px 0;
 }
 

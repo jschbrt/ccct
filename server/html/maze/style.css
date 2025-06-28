@@ -92,6 +92,7 @@ html[dir="RTL"] button.primary {
 }
 
 #pegmanButton {
+  visibility: hidden;
   padding: 0;
   position: relative;
 }

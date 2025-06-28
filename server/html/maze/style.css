@@ -12,7 +12,7 @@
   top: 375px;
   width: 380px;
 }
-html[dir="RTL"] #capacityBubble {
+html[dir='RTL'] #capacityBubble {
   left: auto;
   right: 10px;
 }
@@ -21,7 +21,7 @@ html[dir="RTL"] #capacityBubble {
   color: #fff;
   padding: 5px 1em;
   border-radius: 15px;
-  background-color: rgba(64,64,64,.7);
+  background-color: rgba(64, 64, 64, 0.7);
   font-size: large;
 }
 .capacityNumber {
@@ -38,7 +38,7 @@ html[dir="RTL"] #capacityBubble {
   margin-top: 10px;
   position: absolute;
 }
-html[dir="RTL"] #pegSpin {
+html[dir='RTL'] #pegSpin {
   background-position: -441px 0;
 }
 
@@ -49,12 +49,12 @@ html[dir="RTL"] #pegSpin {
   padding: 0 1ex;
   cursor: default;
 }
-img[src$="help_up.png"] {
+img[src$='help_up.png'] {
   margin: -20px 10px 0;
   height: 64px;
   width: 23px;
 }
-img[src$="help_down.png"] {
+img[src$='help_down.png'] {
   margin: 0 10px -20px;
   height: 64px;
   width: 23px;
@@ -65,11 +65,11 @@ img[src$="help_down.png"] {
 }
 
 /* 'Look' icon */
-#look>path {
+#look > path {
   display: none;
   fill: none;
   stroke-linecap: round;
-  stroke-opacity: .7;
+  stroke-opacity: 0.7;
   stroke-width: 10;
 }
 
@@ -78,7 +78,7 @@ button.primary {
   /* Can't use "text-align: start" due to IE. */
   text-align: left;
 }
-html[dir="RTL"] button.primary {
+html[dir='RTL'] button.primary {
   text-align: right;
 }
 
@@ -99,24 +99,24 @@ html[dir="RTL"] button.primary {
 #pegmanButton:active {
   border: 1px solid #ddd !important;
 }
-#pegmanButton>img {
+#pegmanButton > img {
   background-position: -980px 0;
   margin-left: -0.5ex;
-  margin-right: .5ex;
-  opacity: .8;
+  margin-right: 0.5ex;
+  opacity: 0.8;
   height: 38px;
   width: 49px;
 }
-html[dir="RTL"] #pegmanButton>img {
-  margin-left: .5ex;
+html[dir='RTL'] #pegmanButton > img {
+  margin-left: 0.5ex;
   margin-right: -0.5ex;
 }
-#pegmanButton>span {
+#pegmanButton > span {
   position: absolute;
-  top: .8ex;
+  top: 0.8ex;
   margin-left: -15px;
 }
-html[dir="RTL"] #pegmanButton>span {
+html[dir='RTL'] #pegmanButton > span {
   margin-right: -15px;
 }
 #pegmanMenu {
@@ -126,14 +126,140 @@ html[dir="RTL"] #pegmanButton>span {
   display: none;
   position: absolute;
 }
-#pegmanMenu>div {
+#pegmanMenu > div {
   background-color: #fff;
 }
-#pegmanMenu>div:hover {
+#pegmanMenu > div:hover {
   background-color: #57e;
 }
-#pegmanMenu>div>img {
+#pegmanMenu > div > img {
   height: 38px;
   width: 49px;
   background-position: -980px 0;
+}
+
+#table {
+  margin-left: -25px;
+}
+
+#buttonTable {
+  text-align: center;
+  /* margin-left: 90px; */
+}
+
+#buttonTableSpecial {
+  text-align: center;
+}
+
+#runButton {
+  border: 1px solid #1cdf36;
+  background-color: #1cdf36;
+  color: #fff;
+}
+
+#resetButton {
+  border: 1px solid #dd4b39;
+  background-color: #dd4b39;
+  color: #fff;
+}
+
+#submitButton {
+  border: 1px solid #501cdf;
+  background-color: #501cdf;
+  color: #fff;
+  text-align: center;
+  display: table-cell;
+}
+
+#skipButton {
+  border: 1px solid #1c98df;
+  background-color: #1c98df;
+  color: #fff;
+}
+
+#help-ins {
+  color: #501cdf;
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-top: 7px;
+}
+
+#stopImage {
+  /* left: 30%; */
+  width: 100%;
+  /* text-align: center; */
+  /* margin-left: 1em; */
+  /* display: table-cell; */
+  /* margin: 0 auto; */
+  /* height: 30%; */
+  margin-top: 35px;
+}
+
+#abortImage {
+  /* left: 30%; */
+  /* width: 40%; */
+  /* text-align: center; */
+  /* margin-left: 1em; */
+  /* display: table-cell; */
+  /* margin: 0 auto; */
+  /* height: 100%; */
+  margin-top: 35px;
+}
+
+#hiddenskipButton {
+  display: none;
+  border: #fff9f9e8;
+  background-color: #fff9f9e8;
+  color: #fff9f9e8;
+}
+
+#hiddenskipButton:hover {
+  border: 1px solid #1c98df;
+  background-color: #1c98df;
+}
+
+button.stop:hover {
+  border: 1px solid #1cdf36;
+  background-color: #1cdf36;
+  color: #fff9f9e8;
+}
+
+#dialogStopText2 {
+  left: 112px;
+  bottom: 61px;
+  position: relative;
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
+#dialogAbortText2 {
+  left: 128px;
+  bottom: 68px;
+  position: relative;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#abortImageDiv {
+  display: table;
+  height: 100%;
+  margin: 0 auto;
+  margin-bottom: -60px;
+}
+
+#stopImageDiv {
+  display: table;
+  height: 100%;
+  margin: 0 auto;
+  margin-bottom: -60px;
+}
+
+#finalImageDiv {
+  text-align: center;
+}
+
+button.stop {
+  border: 1px solid #fff;
+  background-color: #fff;
+  color: #fff;
 }

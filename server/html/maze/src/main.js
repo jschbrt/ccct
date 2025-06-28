@@ -74,13 +74,13 @@ const SKINS = [
   },
   {
     sprite: 'maze/bee4.png',
-    spriteDialog: 'maze/bee3.png',
-    avatar: 'maze/static_bee2.png',
     tiles: 'maze/tiles_bee_4.png',
     marker: 'maze/marker_honey2.png',
     markerBlock: 'maze/marker_honeyblock.png',
     background: 'maze/bg_bee.png',
     look: '#000',
+    winSound: ['maze/win.mp3', 'maze/win.ogg'],
+    crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
     crashType: CRASH_FALL,
   },
   {
@@ -529,6 +529,8 @@ function drawMap() {
 }
 
 var numberOfAnswers = 0;
+var letters_used;
+var submitButtonClick = false;
 
 // This is the Data object used for saving stuff to mysql
 // Save all submitted plays
@@ -757,8 +759,6 @@ function init() {
     if (BlocklyGames.LEVEL === 1) {
       if (IS_KIDS_VERSION) {
         // Make connecting blocks easier for beginners.
-        Blockly.SNAP_RADIUS *= 2;
-        Blockly.CONNECTING_SNAP_RADIUS = Blockly.SNAP_RADIUS;
         defaultXml =
           '<xml>' +
           '<block ' +
@@ -1158,15 +1158,6 @@ function runButtonClick(e) {
   }
   BlocklyDialogs.hideDialog(false);
   // Only allow a single top block on level 1.
-  if (
-    BlocklyGames.LEVEL === 1 &&
-    BlocklyInterface.workspace.getTopBlocks(false).length > 1 &&
-    result !== ResultType.SUCCESS &&
-    !BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.LEVEL)
-  ) {
-    levelHelp();
-    return;
-  }
   const runButton = BlocklyGames.getElementById('runButton');
   const resetButton = BlocklyGames.getElementById('resetButton');
   // Ensure that Reset button is at least as wide as Run button.
@@ -1186,7 +1177,7 @@ function runButtonClick(e) {
   levelData.allSubmitted.mazeLog.push(textLog);
   var encoded = [saveWorkspace()];
   levelData.allSubmitted.code.push(encoded);
-  levelData.allSubmitted.resultType.push(result());
+  levelData.allSubmitted.resultType.push(result);
   levelData.allSubmitted.timestamp.push(new Date().toISOString());
   levelData.playPressedCount += 1;
 
@@ -1331,6 +1322,22 @@ submitButtonClick = function (e) {
   }
 };
 
+function saveChoiceData() {
+  // save prios
+  for (var i = 0; i < choiceLevelInputList.length; i++) {
+    choiceLevelData['prio' + (i + 1)] = choiceLevelInputList[i];
+  }
+
+  console.log(choiceLevelData);
+
+  BlocklyInterface.saveChoiceLevelToLocalStorage(choiceLevelData);
+  var json = JSON.stringify(choiceLevelData);
+  // TODO: write upload code
+  // BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
+  // input boolean to validate that its a submission with actual input
+  //Maze.choiceLevelData[0].prio1 = window.localStorage.getItem()    TODO: add sabing mechanism for prios
+}
+
 function saveData() {
   // save result
   // convert the saved code to xmldom to text to encode
@@ -1345,12 +1352,12 @@ function saveData() {
   }
   var encoded = saveWorkspace();
   levelData.finalCode.code = encoded;
-  levelData.finalCode.resultType = setResult();
+  levelData.finalCode.resultType = result;
   levelData.finalCode.timestamp = new Date().toISOString();
 
   console.log(levelData);
   var json = JSON.stringify(levelData);
-  BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
+  //TODO write upload function BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
 
   if (BlocklyGames.LEVEL == 13) {
     let startTime = new Date(BlocklyGames.loadStartTime());
@@ -1387,6 +1394,18 @@ function submitChoiceLevel(e) {
     }
   }
 
+  function hasDuplicates(array) {
+    var valuesSoFar = Object.create(null);
+    for (var i = 0; i < array.length; ++i) {
+      var value = array[i];
+      if (value in valuesSoFar) {
+        return true;
+      }
+      valuesSoFar[value] = true;
+    }
+    return false;
+  }
+
   if (hasDuplicates(choiceLevelInputList)) {
     isClean = false;
     if (!already_alerted) {
@@ -1400,21 +1419,6 @@ function submitChoiceLevel(e) {
     switchLevel();
   }
 }
-
-saveChoiceData = function () {
-  // save prios
-  for (var i = 0; i < choiceLevelInputList.length; i++) {
-    choiceLevelData['prio' + (i + 1)] = choiceLevelInputList[i];
-  }
-
-  console.log(choiceLevelData);
-
-  BlocklyInterface.saveChoiceLevelToLocalStorage(choiceLevelData);
-  var json = JSON.stringify(choiceLevelData);
-  BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
-  // input boolean to validate that its a submission with actual input
-  //choiceLevelData[0].prio1 = window.localStorage.getItem()    TODO: add sabing mechanism for prios
-};
 
 /**
  * Click the reset button.  Reset the maze.
@@ -1430,7 +1434,7 @@ function resetButtonClick(e) {
   BlocklyGames.getElementById('resetButton').style.display = 'none';
   BlocklyInterface.workspace.highlightBlock(null);
   reset(false);
-  levelHelp();
+  //levelHelp();
 }
 
 /**
@@ -1560,7 +1564,7 @@ function animate() {
   const action = log.shift();
   if (!action) {
     BlocklyCode.highlight(null);
-    levelHelp();
+    //levelHelp();
     return;
   }
   BlocklyCode.highlight(action[1]);

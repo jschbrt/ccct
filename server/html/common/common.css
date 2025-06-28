@@ -17,10 +17,10 @@ a:hover {
 .farSide {
   text-align: right;
 }
-#header_cta>* {
+#header_cta > * {
   vertical-align: middle;
 }
-html[dir="RTL"] .farSide {
+html[dir='RTL'] .farSide {
   text-align: left;
 }
 .level_number {
@@ -31,12 +31,14 @@ html[dir="RTL"] .farSide {
 }
 .level_dot {
   border: solid 1px #ddd;
-	border-radius: 50%;
-	width: 15px;
-	height: 15px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
   display: inline-block;
 }
-.level_done, .level_dot:hover, .level_number:hover {
+.level_done,
+.level_dot:hover,
+.level_number:hover {
   background-color: #ddd;
   color: #000;
 }
@@ -50,12 +52,12 @@ html[dir="RTL"] .farSide {
   max-height: 200px;
 }
 
-img[src$="help.png"] {
+img[src$='help.png'] {
   height: 64px;
   width: 64px;
 }
 
-html[dir="RTL"] .mirrorImg {
+html[dir='RTL'] .mirrorImg {
   transform: scaleX(-1);
 }
 
@@ -88,15 +90,15 @@ button.secondary {
   background-color: #4d90fe;
   color: #fff;
 }
-button.primary>img,
-button.secondary>img {
+button.primary > img,
+button.secondary > img {
   opacity: 1;
 }
-button>img {
-  opacity: .6;
+button > img {
+  opacity: 0.6;
   vertical-align: text-bottom;
 }
-button:hover:not(:disabled)>img {
+button:hover:not(:disabled) > img {
   opacity: 1;
 }
 button:active:not(:disabled) {
@@ -134,11 +136,11 @@ button:hover:not(:disabled) {
   height: 100%;
   width: 100%;
   background-color: #000;
-  opacity: .3
+  opacity: 0.3;
 }
 .dialogAnimate {
   transition-property: width height left top opacity;
-  transition-duration: .2s;
+  transition-duration: 0.2s;
   transition-timing-function: linear;
 }
 .dialogHiddenContent {
@@ -162,15 +164,15 @@ button:hover:not(:disabled) {
 .readonly .blocklyMainBackground {
   stroke: none;
 }
-#galleryForm>header {
+#galleryForm > header {
   font-size: larger;
 }
-#galleryForm>* {
+#galleryForm > * {
   margin-top: 1em;
   margin-left: 1em;
   margin-right: 1em;
 }
-#dialogDone>.large {
+#dialogDone > .large {
   font-size: large;
   margin: 1em;
 }
@@ -179,6 +181,19 @@ button:hover:not(:disabled) {
 }
 
 /* Sprited icons. */
+
+/* Sprited icons. */
+
+.skip {
+  height: 21px;
+  width: 21px;
+}
+
+.submit {
+  height: 21px;
+  width: 21px;
+}
+
 .icon21 {
   height: 21px;
   width: 21px;

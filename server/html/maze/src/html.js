@@ -16,17 +16,21 @@ goog.require('BlocklyGames');
 goog.require('BlocklyGames.html');
 goog.require('BlocklyInterface');
 
-
 /**
  * Web page structure.
  * @param {!Object} ij Injected options.
  * @returns {string} HTML.
  */
-Maze.html.start = function(ij) {
+Maze.html.start = function (ij) {
   return `
-${BlocklyGames.html.headerBar(ij, BlocklyGames.getMsg('Games.maze', true),
-    BlocklyInterface.nextLevelParam, true, false,
-    '<button id="pegmanButton"><img src="common/1x1.gif"><span id="pegmanButtonArrow"></span></button>')}
+${BlocklyGames.html.headerBar(
+  ij,
+  BlocklyGames.getMsg('Games.maze', true),
+  BlocklyInterface.nextLevelParam,
+  true,
+  false,
+  '<button id="pegmanButton"><img src="common/1x1.gif"><span id="pegmanButtonArrow"></span></button>'
+)}
 
 <div id="visualization">
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="svgMaze" width="400px" height="400px">
@@ -42,12 +46,30 @@ ${BlocklyGames.html.headerBar(ij, BlocklyGames.getMsg('Games.maze', true),
 </div>
 
 <div id="commandDiv">
+  <table id='table' width="450">
+  <tr>
+  <td id="buttonTable">
   <button id="runButton" class="primary" title="${BlocklyGames.getMsg('Maze.runTooltip', true)}">
     <img src="common/1x1.gif" class="run icon21"> ${BlocklyGames.getMsg('Games.runProgram', true)}
   </button>
-  <button id="resetButton" class="primary" title="${BlocklyGames.getMsg('Maze.resetTooltip', true)}">
-    <img src="common/1x1.gif" class="stop icon21"> ${BlocklyGames.getMsg('Games.resetProgram', true)}
+  <button id="resetButton" class="primary" title="${BlocklyGames.getMsg(
+    'Maze.resetTooltip',
+    true
+  )}">
+    <img src="common/1x1.gif" class="stop icon21"> ${BlocklyGames.getMsg(
+      'Games.resetProgram',
+      true
+    )}
   </button>
+  <button id="skipButton" class="primary" title="Überspringt die Level ohne eine Lösung abzugeben.">
+          <img src="common/skipw.png" class="skip"> Überspringen
+        </button>
+        <button id="submitButton" class="primary"  title="Gebe deine Lösung ab.">
+          <img src="common/submit2.png" class="submit"> Abgeben
+        </button>
+      </td>
+  </tr>
+  </table>
 </div>
 
 ${Maze.html.toolbox_(ij.level)}
@@ -70,7 +92,7 @@ ${Maze.html.helpDialogs_()}
  * @returns {string} HTML.
  * @private
  */
-Maze.html.toolbox_ = function(level) {
+Maze.html.toolbox_ = function (level) {
   let xml = `
 <block type="maze_moveForward"></block>
 <block type="maze_turn"><field name="DIR">turnLeft</field></block>
@@ -95,8 +117,8 @@ Maze.html.toolbox_ = function(level) {
  * @returns {string} HTML.
  * @private
  */
- Maze.html.helpDialogs_ = function() {
-   return `
+Maze.html.helpDialogs_ = function () {
+  return `
 <div id="dialogHelpStack" class="dialogHiddenContent">
   <table><tr><td>
     <img src="common/help.png">

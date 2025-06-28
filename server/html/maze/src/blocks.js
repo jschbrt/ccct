@@ -19,11 +19,10 @@ goog.require('Blockly.FieldDropdown');
 goog.require('Blockly.FieldImage');
 goog.require('BlocklyGames');
 
-
 /**
  * Construct custom maze block types.  Called on page load.
  */
-Maze.Blocks.init = function() {
+Maze.Blocks.init = function () {
   /**
    * Common HSV hue for all movement blocks.
    */
@@ -61,141 +60,227 @@ Maze.Blocks.init = function() {
   ];
 
   // Add arrows to turn options after prefix/suffix have been separated.
-  Blockly.Extensions.register('maze_turn_arrows',
-      function() {
-        const options = this.getField('DIR').getOptions();
-        options[options.length - 2][0] += LEFT_TURN;
-        options[options.length - 1][0] += RIGHT_TURN;
-      });
+  Blockly.Extensions.register('maze_turn_arrows', function () {
+    const options = this.getField('DIR').getOptions();
+    options[options.length - 2][0] += LEFT_TURN;
+    options[options.length - 1][0] += RIGHT_TURN;
+  });
 
   Blockly.defineBlocksWithJsonArray([
     // Block for moving forward.
     {
-      "type": "maze_moveForward",
-      "message0": BlocklyGames.getMsg('Maze.moveForward', false),
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": MOVEMENT_HUE,
-      "tooltip": BlocklyGames.getMsg('Maze.moveForwardTooltip', false),
+      type: 'maze_moveForward',
+      message0: BlocklyGames.getMsg('Maze.moveForward', false),
+      previousStatement: null,
+      nextStatement: null,
+      colour: MOVEMENT_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.moveForwardTooltip', false),
     },
 
     // Block for turning left or right.
     {
-      "type": "maze_turn",
-      "message0": "%1",
-      "args0": [
+      type: 'maze_turn',
+      message0: '%1',
+      args0: [
         {
-          "type": "field_dropdown",
-          "name": "DIR",
-          "options": TURN_DIRECTIONS,
+          type: 'field_dropdown',
+          name: 'DIR',
+          options: TURN_DIRECTIONS,
         },
       ],
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": MOVEMENT_HUE,
-      "tooltip": BlocklyGames.getMsg('Maze.turnTooltip', false),
-      "extensions": ["maze_turn_arrows"],
+      previousStatement: null,
+      nextStatement: null,
+      colour: MOVEMENT_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.turnTooltip', false),
+      extensions: ['maze_turn_arrows'],
     },
 
     // Block for conditional "if there is a path".
     {
-      "type": "maze_if",
-      "message0": `%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3`,
-      "args0": [
+      type: 'maze_if',
+      message0: `%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3`,
+      args0: [
         {
-          "type": "field_dropdown",
-          "name": "DIR",
-          "options": PATH_DIRECTIONS,
+          type: 'field_dropdown',
+          name: 'DIR',
+          options: PATH_DIRECTIONS,
         },
         {
-          "type": "input_dummy",
+          type: 'input_dummy',
         },
         {
-          "type": "input_statement",
-          "name": "DO",
+          type: 'input_statement',
+          name: 'DO',
         },
       ],
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": LOGIC_HUE,
-      "tooltip": BlocklyGames.getMsg('Maze.ifTooltip', false),
-      "extensions": ["maze_turn_arrows"],
+      previousStatement: null,
+      nextStatement: null,
+      colour: LOGIC_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.ifTooltip', false),
+      extensions: ['maze_turn_arrows'],
     },
 
     // Block for conditional "if there is a path, else".
     {
-      "type": "maze_ifElse",
-      "message0": `%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3${window['BlocklyMsg']['CONTROLS_IF_MSG_ELSE']}%4`,
-      "args0": [
+      type: 'maze_ifElse',
+      message0: `%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3${
+        window['BlocklyMsg']['CONTROLS_IF_MSG_ELSE']
+      }%4`,
+      args0: [
         {
-          "type": "field_dropdown",
-          "name": "DIR",
-          "options": PATH_DIRECTIONS,
+          type: 'field_dropdown',
+          name: 'DIR',
+          options: PATH_DIRECTIONS,
         },
         {
-          "type": "input_dummy",
+          type: 'input_dummy',
         },
         {
-          "type": "input_statement",
-          "name": "DO",
+          type: 'input_statement',
+          name: 'DO',
         },
         {
-          "type": "input_statement",
-          "name": "ELSE",
+          type: 'input_statement',
+          name: 'ELSE',
         },
       ],
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": LOGIC_HUE,
-      "tooltip": BlocklyGames.getMsg('Maze.ifelseTooltip', false),
-      "extensions": ["maze_turn_arrows"],
+      previousStatement: null,
+      nextStatement: null,
+      colour: LOGIC_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.ifelseTooltip', false),
+      extensions: ['maze_turn_arrows'],
     },
 
     // Block for repeat loop.
     {
-      "type": "maze_forever",
-      "message0": `${BlocklyGames.getMsg('Maze.repeatUntil', false)}%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3`,
-      "args0": [
+      type: 'maze_forever',
+      message0: `${BlocklyGames.getMsg('Maze.repeatUntil', false)}%1%2${BlocklyGames.getMsg(
+        'Maze.doCode',
+        false
+      )}%3`,
+      args0: [
         {
-          "type": "field_image",
-          "src": "maze/marker.png",
-          "width": 12,
-          "height": 16,
+          type: 'field_image',
+          src: 'maze/marker.png',
+          width: 12,
+          height: 16,
         },
         {
-          "type": "input_dummy",
+          type: 'input_dummy',
         },
         {
-          "type": "input_statement",
-          "name": "DO",
-        }
+          type: 'input_statement',
+          name: 'DO',
+        },
       ],
-      "previousStatement": null,
-      "colour": LOOPS_HUE,
-      "tooltip": BlocklyGames.getMsg('Maze.whileTooltip', false),
+      previousStatement: null,
+      colour: LOOPS_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.whileTooltip', false),
+    },
+
+    // Block for conditional "if there is a path".
+    {
+      type: 'maze_if',
+      message0: `%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3`,
+      args0: [
+        {
+          type: 'field_dropdown',
+          name: 'DIR',
+          options: PATH_DIRECTIONS,
+        },
+        {
+          type: 'input_dummy',
+        },
+        {
+          type: 'input_statement',
+          name: 'DO',
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: LOGIC_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.ifTooltip', false),
+      extensions: ['maze_turn_arrows'],
+    },
+
+    // Block for conditional "if there is a path, else".
+    {
+      type: 'maze_ifElse',
+      message0: `%1%2${BlocklyGames.getMsg('Maze.doCode', false)}%3${
+        window['BlocklyMsg']['CONTROLS_IF_MSG_ELSE']
+      }%4`,
+      args0: [
+        {
+          type: 'field_dropdown',
+          name: 'DIR',
+          options: PATH_DIRECTIONS,
+        },
+        {
+          type: 'input_dummy',
+        },
+        {
+          type: 'input_statement',
+          name: 'DO',
+        },
+        {
+          type: 'input_statement',
+          name: 'ELSE',
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: LOGIC_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.ifelseTooltip', false),
+      extensions: ['maze_turn_arrows'],
+    },
+
+    // Block for repeat loop.
+    {
+      type: 'maze_forever',
+      message0: `${BlocklyGames.getMsg('Maze.repeatUntil', false)}%1%2${BlocklyGames.getMsg(
+        'Maze.doCode',
+        false
+      )}%3`,
+      args0: [
+        {
+          type: 'field_image',
+          src: 'maze/marker.png',
+          width: 12,
+          height: 16,
+        },
+        {
+          type: 'input_dummy',
+        },
+        {
+          type: 'input_statement',
+          name: 'DO',
+        },
+      ],
+      previousStatement: null,
+      colour: LOOPS_HUE,
+      tooltip: BlocklyGames.getMsg('Maze.whileTooltip', false),
     },
   ]);
 };
 
-
-Blockly.JavaScript['maze_moveForward'] = function(block) {
+Blockly.JavaScript['maze_moveForward'] = function (block) {
   // Generate JavaScript for moving forward.
   return `moveForward('block_id_${block.id}');\n`;
 };
 
-Blockly.JavaScript['maze_turn'] = function(block) {
+Blockly.JavaScript['maze_turn'] = function (block) {
   // Generate JavaScript for turning left or right.
   return `${block.getFieldValue('DIR')}('block_id_${block.id}');\n`;
 };
 
-Blockly.JavaScript['maze_if'] = function(block) {
+Blockly.JavaScript['maze_if'] = function (block) {
   // Generate JavaScript for conditional "if there is a path".
   const argument = `${block.getFieldValue('DIR')}('block_id_${block.id}')`;
   const branch = Blockly.JavaScript.statementToCode(block, 'DO');
   return `if (${argument}) {\n${branch}}\n`;
 };
 
-Blockly.JavaScript['maze_ifElse'] = function(block) {
+Blockly.JavaScript['maze_ifElse'] = function (block) {
   // Generate JavaScript for conditional "if there is a path, else".
   const argument = `${block.getFieldValue('DIR')}('block_id_${block.id}')`;
   const branch0 = Blockly.JavaScript.statementToCode(block, 'DO');
@@ -203,12 +288,212 @@ Blockly.JavaScript['maze_ifElse'] = function(block) {
   return `if (${argument}) {\n${branch0}} else {\n${branch1}}\n`;
 };
 
-Blockly.JavaScript['maze_forever'] = function(block) {
+Blockly.JavaScript['maze_forever'] = function (block) {
   // Generate JavaScript for repeat loop.
   let branch = Blockly.JavaScript.statementToCode(block, 'DO');
   if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
-    branch = Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g,
-        `'block_id_${block.id}'`) + branch;
+    branch =
+      Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g, `'block_id_${block.id}'`) + branch;
   }
   return `while (notDone()) {\n${branch}}\n`;
+};
+
+// Kids Blocks
+Blockly.JavaScript['maze_moveForward'] = function (block) {
+  // Generate JavaScript for moving forward.
+  return "moveForward('block_id_" + block.id + "');\n";
+};
+
+Blockly.Blocks['maze_moveForwardKids'] = {
+  /**
+   * Block for moving forward.
+   * @this {Blockly.Block}
+   */
+  init: function () {
+    this.jsonInit({
+      message0: '%1 vorwärts laufen',
+      args0: [
+        {
+          type: 'field_image',
+          src: 'blocks/forward1.png',
+          width: 20,
+          height: 20,
+        },
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: Maze.Blocks.MOVEMENT_HUE,
+      tooltip: BlocklyGames.getMsg('Maze_moveForwardTooltip'),
+    });
+  },
+};
+
+Blockly.Blocks['maze_foreverKids'] = {
+  /**
+   * Block for repeat loop.
+   * @this {Blockly.Block}
+   */
+  init: function () {
+    this.setColour(Maze.Blocks.LOOPS_HUE);
+    this.appendDummyInput()
+      .appendField(new Blockly.FieldImage('blocks/repeat1.png', 20, 20))
+      .appendField(BlocklyGames.getMsg('Maze_repeatUntil'))
+      .appendField(new Blockly.FieldImage(Maze.SKIN.markerBlock, 20, 20));
+    this.appendStatementInput('DO').appendField(BlocklyGames.getMsg('Maze_doCode'));
+    this.setPreviousStatement(true);
+    this.setTooltip(BlocklyGames.getMsg('Maze_whileTooltip'));
+  },
+};
+
+Blockly.JavaScript['maze_foreverKids'] = function (block) {
+  // Generate JavaScript for repeat loop.
+  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  if (Blockly.JavaScript.INFINITE_LOOP_TRAP) {
+    branch =
+      Blockly.JavaScript.INFINITE_LOOP_TRAP.replace(/%1/g, "'block_id_" + block.id + "'") + branch;
+  }
+  return 'while (notDone()) {\n' + branch + '}\n';
+};
+
+// controls repeat ext kids
+Blockly.Blocks['controls_repeat_extKids'] = {
+  /**
+   * Block for repeat n times (internal number).
+   * @this {Blockly.Block}
+   */
+  init: function () {
+    this.jsonInit({
+      message0: '%1 wiederhole %2 mal:',
+      args0: [
+        {
+          type: 'field_image',
+          src: 'blocks/repeat1.png',
+          width: 20,
+          height: 20,
+        },
+        {
+          type: 'field_dropdown',
+          name: 'TIMES',
+          options: [
+            ['2', '2'],
+            ['3', '3'],
+            ['4', '4'],
+            ['5', '5'],
+          ],
+        },
+      ],
+      previousStatement: true,
+      nextStatement: null,
+      colour: 60,
+      tooltip: Blockly.Msg['CONTROLS_REPEAT_TOOLTIP'],
+      helpUrl: Blockly.Msg['CONTROLS_REPEAT_HELPURL'],
+    });
+    this.appendStatementInput('DO').appendField(Blockly.Msg['CONTROLS_REPEAT_INPUT_DO']);
+  },
+};
+
+Blockly.JavaScript['controls_repeat_extKids'] = function (block) {
+  // Repeat n times.
+  if (block.getField('TIMES')) {
+    // Internal number.
+    var repeats = String(Number(block.getFieldValue('TIMES')));
+  } else {
+    // External number.
+    var repeats =
+      Blockly.JavaScript.valueToCode(block, 'TIMES', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
+  }
+  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  branch = Blockly.JavaScript.addLoopTrap(branch, block);
+  var code = '';
+  var loopVar = Blockly.JavaScript.variableDB_.getDistinctName(
+    'count',
+    Blockly.VARIABLE_CATEGORY_NAME
+  );
+  var endVar = repeats;
+  if (!repeats.match(/^\w+$/) && !Blockly.isNumber(repeats)) {
+    endVar = Blockly.JavaScript.variableDB_.getDistinctName(
+      'repeat_end',
+      Blockly.VARIABLE_CATEGORY_NAME
+    );
+    code += 'var ' + endVar + ' = ' + repeats + ';\n';
+  }
+  code +=
+    'for (var ' +
+    loopVar +
+    ' = 0; ' +
+    loopVar +
+    ' < ' +
+    endVar +
+    '; ' +
+    loopVar +
+    '++) {\n' +
+    branch +
+    '}\n';
+  return code;
+};
+
+// turn left only
+Blockly.Blocks['maze_turn_left'] = {
+  /**
+   * Block for turning left.
+   * @this {Blockly.Block}
+   */
+  init: function () {
+    this.setColour(Maze.Blocks.MOVEMENT_HUE);
+    this.appendDummyInput()
+      .appendField(Maze.Blocks.LEFT_TURN) // Append arrows to direction messages.
+      .appendField(BlocklyGames.getMsg('Maze_turnLeft'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
+  },
+};
+
+Blockly.JavaScript['maze_turn_left'] = function (block) {
+  // Generate JavaScript for turning left.
+  return "turnLeft('block_id_" + block.id + "');\n";
+};
+
+// turn left only
+Blockly.Blocks['maze_turn_leftKids'] = {
+  /**
+   * Block for turning left.
+   * @this {Blockly.Block}
+   */
+  init: function () {
+    this.setColour(Maze.Blocks.MOVEMENT_HUE);
+    this.appendDummyInput()
+      .appendField(new Blockly.FieldImage('blocks/left.png', 20, 20))
+      .appendField(BlocklyGames.getMsg('Maze_turnLeft'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
+  },
+};
+
+Blockly.JavaScript['maze_turn_leftKids'] = function (block) {
+  // Generate JavaScript for turning left.
+  return "turnLeft('block_id_" + block.id + "');\n";
+};
+
+// turn right only
+Blockly.Blocks['maze_turn_rightKids'] = {
+  /**
+   * Block for turning right.
+   * @this {Blockly.Block}
+   */
+  init: function () {
+    this.setColour(Maze.Blocks.MOVEMENT_HUE);
+    this.appendDummyInput()
+      .appendField(new Blockly.FieldImage('blocks/right.png', 20, 20))
+      .appendField(BlocklyGames.getMsg('Maze_turnRight'));
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
+  },
+};
+
+Blockly.JavaScript['maze_turn_rightKids'] = function (block) {
+  // Generate JavaScript for turning right.
+  return "turnRight('block_id_" + block.id + "');\n";
 };

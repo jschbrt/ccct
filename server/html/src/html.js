@@ -15,7 +15,6 @@ goog.provide('BlocklyGames.html');
 goog.require('Blockly.Msg');
 goog.require('BlocklyGames');
 
-
 /**
  * Top toolbar for page
  * @param {!Object} ij Injected options.
@@ -26,8 +25,14 @@ goog.require('BlocklyGames');
  * @param {string} farLeftHtml Additional content to add to farLeft toolbar.
  * @returns {string} HTML.
  */
-BlocklyGames.html.headerBar = function(ij, appName, levelLinkSuffix,
-    hasLinkButton, hasHelpButton, farLeftHtml) {
+BlocklyGames.html.headerBar = function (
+  ij,
+  appName,
+  levelLinkSuffix,
+  hasLinkButton,
+  hasHelpButton,
+  farLeftHtml
+) {
   let linkButton = '';
   if (hasLinkButton) {
     linkButton = `
@@ -50,6 +55,11 @@ BlocklyGames.html.headerBar = function(ij, appName, levelLinkSuffix,
   return `
 <table width="100%">
   <tr>
+   <td>
+      <button id="hiddenskipButton">
+        <img src="common/skipw.png" class="skip">Skip
+      </button>
+    </td>
     <td>
       <h1>
         ${BlocklyGames.html.titleSpan_(ij, appName)}
@@ -74,10 +84,13 @@ BlocklyGames.html.headerBar = function(ij, appName, levelLinkSuffix,
  * @returns {string} HTML.
  * @private
  */
-BlocklyGames.html.titleSpan_ = function(ij, appName) {
+BlocklyGames.html.titleSpan_ = function (ij, appName) {
   return `
 <span id="title">
-  <a href="${ij.html ? 'index.html' : './'}?lang=${ij.lang}">${BlocklyGames.getMsg('Games.name', true)}</a> : ${appName}
+  <a href="${ij.html ? 'index.html' : './'}?lang=${ij.lang}">${BlocklyGames.getMsg(
+    'Games.name',
+    true
+  )}</a> : ${appName}
 </span>
 `;
 };
@@ -89,7 +102,7 @@ BlocklyGames.html.titleSpan_ = function(ij, appName) {
  * @returns {string} HTML.
  * @private
  */
-BlocklyGames.html.levelLinks_ = function(ij, suffix) {
+BlocklyGames.html.levelLinks_ = function (ij, suffix) {
   let html = ' &nbsp ';
   for (let i = 1; i <= ij.maxLevel; i++) {
     let url = `?lang=${ij.lang}&level=${i}`;
@@ -112,7 +125,7 @@ BlocklyGames.html.levelLinks_ = function(ij, suffix) {
  * Dialogs.
  * @returns {string} HTML.
  */
-BlocklyGames.html.dialog = function() {
+BlocklyGames.html.dialog = function () {
   return `
 <div id="dialogShadow" class="dialogAnimate"></div>
 <div id="dialogBorder"></div>
@@ -124,7 +137,7 @@ BlocklyGames.html.dialog = function() {
  * Done dialog.
  * @returns {string} HTML.
  */
-BlocklyGames.html.doneDialog = function() {
+BlocklyGames.html.doneDialog = function () {
   return `
 <div id="dialogDone" class="dialogHiddenContent">
   <div class="large">${BlocklyGames.getMsg('Games.congratulations', true)}</div>
@@ -143,7 +156,7 @@ BlocklyGames.html.doneDialog = function() {
  * Abort dialog.
  * @returns {string} HTML.
  */
-BlocklyGames.html.abortDialog = function() {
+BlocklyGames.html.abortDialog = function () {
   return `
 <div id="dialogAbort" class="dialogHiddenContent">
   ${BlocklyGames.getMsg('Games.helpAbort', true)}
@@ -159,7 +172,7 @@ BlocklyGames.html.abortDialog = function() {
  * Storage dialog.
  * @returns {string} HTML.
  */
-BlocklyGames.html.storageDialog = function() {
+BlocklyGames.html.storageDialog = function () {
   return `
 <div id="dialogStorage" class="dialogHiddenContent">
   <div id="containerStorage"></div>
@@ -172,7 +185,7 @@ BlocklyGames.html.storageDialog = function() {
  * OK button for dialogs.
  * @returns {string} HTML.
  */
-BlocklyGames.html.ok = function() {
+BlocklyGames.html.ok = function () {
   return `
 <div class="farSide farSideButtons">
   <button class="secondary addHideHandler">${BlocklyGames.esc(Blockly.Msg['DIALOG_OK'])}</button>

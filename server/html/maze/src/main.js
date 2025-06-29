@@ -692,6 +692,18 @@ function init() {
   BlocklyGames.bindClick('runButton', runButtonClick);
   BlocklyGames.bindClick('resetButton', resetButtonClick);
 
+  BlocklyGames.bindClick('submitButton', Maze.submitButtonClick);
+
+  if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
+    BlocklyGames.bindClick('skipButton', Maze.skipButtonClick);
+  }
+
+  if ([7, 8].includes(BlocklyGames.LEVEL)) {
+    var hiddenskipbutton = document.getElementById('hiddenskipButton');
+    hiddenskipbutton.style.display = 'inline';
+    BlocklyGames.bindClick('hiddenskipButton', Maze.hiddenSkipButtonClick);
+  }
+
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
     var letters = ['1', '2', '3', '4', '5'];
     var lettersUsed = [];
@@ -731,7 +743,6 @@ function init() {
     var defaultXml = '';
     if (BlocklyGames.LEVEL === 1) {
       if (IS_KIDS_VERSION) {
-        // Make connecting blocks easier for beginners.
         defaultXml =
           '<xml>' +
           '<block ' +

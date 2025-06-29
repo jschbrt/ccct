@@ -178,6 +178,173 @@ Maze.Blocks.init = function () {
       tooltip: BlocklyGames.getMsg('Maze.whileTooltip', false),
     },
   ]);
+  // Kids Blocks
+
+  Blockly.Blocks['maze_moveForwardKids'] = {
+    /**
+     * Block for moving forward.
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.jsonInit({
+        message0: '%1 vorwärts laufen',
+        args0: [
+          {
+            type: 'field_image',
+            src: 'maze/forward1.png',
+            width: 20,
+            height: 20,
+          },
+        ],
+        previousStatement: null,
+        nextStatement: null,
+        colour: MOVEMENT_HUE,
+        tooltip: BlocklyGames.getMsg('Maze.moveForwardTooltip'),
+      });
+    },
+  };
+
+  Blockly.Blocks['maze_foreverKids'] = {
+    /**
+     * Block for repeat loop.
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.setColour(LOOPS_HUE);
+      this.appendDummyInput()
+        .appendField(new Blockly.FieldImage('maze/repeat1.png', 20, 20))
+        .appendField(BlocklyGames.getMsg('Maze.repeatUntil'))
+        .appendField(new Blockly.FieldImage(SKIN.markerBlock, 20, 20));
+      this.appendStatementInput('DO').appendField(BlocklyGames.getMsg('Maze.doCode'));
+      this.setPreviousStatement(true);
+      this.setTooltip(BlocklyGames.getMsg('Maze.whileTooltip'));
+    },
+  };
+
+  // controls reapeat youth
+  // controls repeat ext kids
+  Blockly.Blocks['controls_repeat_ext'] = {
+    /**
+     * Block for repeat n times (internal number).
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.jsonInit({
+        message0: '%1 wiederhole %2 mal:',
+        args0: [
+          {
+            type: 'field_image',
+            src: 'maze/repeat1.png',
+            width: 20,
+            height: 20,
+          },
+          {
+            type: 'field_dropdown',
+            name: 'TIMES',
+            options: [
+              ['2', '2'],
+              ['3', '3'],
+              ['4', '4'],
+              ['5', '5'],
+            ],
+          },
+        ],
+        previousStatement: true,
+        nextStatement: null,
+        colour: MOVEMENT_HUE,
+        tooltip: Blockly.Msg['CONTROLS_REPEAT_TOOLTIP'],
+        helpUrl: Blockly.Msg['CONTROLS_REPEAT_HELPURL'],
+      });
+      this.appendStatementInput('DO').appendField(Blockly.Msg['CONTROLS_REPEAT_INPUT_DO']);
+    },
+  };
+
+  // controls repeat ext kids
+  Blockly.Blocks['controls_repeat_extKids'] = {
+    /**
+     * Block for repeat n times (internal number).
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.jsonInit({
+        message0: '%1 wiederhole %2 mal:',
+        args0: [
+          {
+            type: 'field_image',
+            src: 'maze/repeat1.png',
+            width: 20,
+            height: 20,
+          },
+          {
+            type: 'field_dropdown',
+            name: 'TIMES',
+            options: [
+              ['2', '2'],
+              ['3', '3'],
+              ['4', '4'],
+              ['5', '5'],
+            ],
+          },
+        ],
+        previousStatement: true,
+        nextStatement: null,
+        colour: MOVEMENT_HUE,
+        tooltip: Blockly.Msg['CONTROLS_REPEAT_TOOLTIP'],
+        helpUrl: Blockly.Msg['CONTROLS_REPEAT_HELPURL'],
+      });
+      this.appendStatementInput('DO').appendField(Blockly.Msg['CONTROLS_REPEAT_INPUT_DO']);
+    },
+  };
+
+  // turn left only
+  Blockly.Blocks['maze_turn_left'] = {
+    /**
+     * Block for turning left.
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.setColour(MOVEMENT_HUE);
+      this.appendDummyInput()
+        .appendField(LEFT_TURN) // Append arrows to direction messages.
+        .appendField(BlocklyGames.getMsg('Maze.turnLeft'));
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip(BlocklyGames.getMsg('Maze.turnTooltip'));
+    },
+  };
+
+  // turn left only
+  Blockly.Blocks['maze_turn_leftKids'] = {
+    /**
+     * Block for turning left.
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.setColour(MOVEMENT_HUE);
+      this.appendDummyInput()
+        .appendField(new Blockly.FieldImage('maze/left.png', 20, 20))
+        .appendField(BlocklyGames.getMsg('Maze.turnLeft'));
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip(BlocklyGames.getMsg('Maze.turnTooltip'));
+    },
+  };
+  // turn right only
+  Blockly.Blocks['maze_turn_rightKids'] = {
+    /**
+     * Block for turning right.
+     * @this {Blockly.Block}
+     */
+    init: function () {
+      this.setColour(MOVEMENT_HUE);
+      this.appendDummyInput()
+        .appendField(new Blockly.FieldImage('maze/right.png', 20, 20))
+        .appendField(BlocklyGames.getMsg('Maze.turnRight'));
+      this.setPreviousStatement(true);
+      this.setNextStatement(true);
+      this.setTooltip(BlocklyGames.getMsg('Maze.turnTooltip'));
+    },
+  };
 };
 
 Blockly.JavaScript['maze_moveForward'] = function (block) {
@@ -215,51 +382,11 @@ Blockly.JavaScript['maze_forever'] = function (block) {
   return `while (notDone()) {\n${branch}}\n`;
 };
 
-// Kids Blocks
-Blockly.JavaScript['maze_moveForward'] = function (block) {
+//Kids blocks
+
+Blockly.JavaScript['maze_moveForwardKids'] = function (block) {
   // Generate JavaScript for moving forward.
-  return "moveForward('block_id_" + block.id + "');\n";
-};
-
-Blockly.Blocks['maze_moveForwardKids'] = {
-  /**
-   * Block for moving forward.
-   * @this {Blockly.Block}
-   */
-  init: function () {
-    this.jsonInit({
-      message0: '%1 vorwärts laufen',
-      args0: [
-        {
-          type: 'field_image',
-          src: 'blocks/forward1.png',
-          width: 20,
-          height: 20,
-        },
-      ],
-      previousStatement: null,
-      nextStatement: null,
-      colour: Maze.Blocks.MOVEMENT_HUE,
-      tooltip: BlocklyGames.getMsg('Maze_moveForwardTooltip'),
-    });
-  },
-};
-
-Blockly.Blocks['maze_foreverKids'] = {
-  /**
-   * Block for repeat loop.
-   * @this {Blockly.Block}
-   */
-  init: function () {
-    this.setColour(Maze.Blocks.LOOPS_HUE);
-    this.appendDummyInput()
-      .appendField(new Blockly.FieldImage('blocks/repeat1.png', 20, 20))
-      .appendField(BlocklyGames.getMsg('Maze_repeatUntil'))
-      .appendField(new Blockly.FieldImage(Maze.SKIN.markerBlock, 20, 20));
-    this.appendStatementInput('DO').appendField(BlocklyGames.getMsg('Maze_doCode'));
-    this.setPreviousStatement(true);
-    this.setTooltip(BlocklyGames.getMsg('Maze_whileTooltip'));
-  },
+  return `moveForward('block_id_${block.id}');\n`;
 };
 
 Blockly.JavaScript['maze_foreverKids'] = function (block) {
@@ -272,63 +399,15 @@ Blockly.JavaScript['maze_foreverKids'] = function (block) {
   return 'while (notDone()) {\n' + branch + '}\n';
 };
 
-// controls repeat ext kids
-Blockly.Blocks['controls_repeat_extKids'] = {
-  /**
-   * Block for repeat n times (internal number).
-   * @this {Blockly.Block}
-   */
-  init: function () {
-    this.jsonInit({
-      message0: '%1 wiederhole %2 mal:',
-      args0: [
-        {
-          type: 'field_image',
-          src: 'blocks/repeat1.png',
-          width: 20,
-          height: 20,
-        },
-        {
-          type: 'field_dropdown',
-          name: 'TIMES',
-          options: [
-            ['2', '2'],
-            ['3', '3'],
-            ['4', '4'],
-            ['5', '5'],
-          ],
-        },
-      ],
-      previousStatement: true,
-      nextStatement: null,
-      colour: 60,
-      tooltip: Blockly.Msg['CONTROLS_REPEAT_TOOLTIP'],
-      helpUrl: Blockly.Msg['CONTROLS_REPEAT_HELPURL'],
-    });
-    this.appendStatementInput('DO').appendField(Blockly.Msg['CONTROLS_REPEAT_INPUT_DO']);
-  },
-};
-
-Blockly.JavaScript['controls_repeat_extKids'] = function (block) {
-  // Repeat n times.
-  if (block.getField('TIMES')) {
-    // Internal number.
-    var repeats = String(Number(block.getFieldValue('TIMES')));
-  } else {
-    // External number.
-    var repeats =
-      Blockly.JavaScript.valueToCode(block, 'TIMES', Blockly.JavaScript.ORDER_ASSIGNMENT) || '0';
-  }
+Blockly.JavaScript['controls_repeat_ext'] = function (block) {
+  var repeats = String(Number(block.getFieldValue('TIMES')));
   var branch = Blockly.JavaScript.statementToCode(block, 'DO');
   branch = Blockly.JavaScript.addLoopTrap(branch, block);
   var code = '';
-  var loopVar = Blockly.JavaScript.variableDB_.getDistinctName(
-    'count',
-    Blockly.VARIABLE_CATEGORY_NAME
-  );
+  var loopVar = Blockly.JavaScript.nameDB_.getDistinctName('count', Blockly.VARIABLE_CATEGORY_NAME);
   var endVar = repeats;
   if (!repeats.match(/^\w+$/) && !Blockly.isNumber(repeats)) {
-    endVar = Blockly.JavaScript.variableDB_.getDistinctName(
+    endVar = Blockly.JavaScript.nameDB_.getDistinctName(
       'repeat_end',
       Blockly.VARIABLE_CATEGORY_NAME
     );
@@ -349,21 +428,34 @@ Blockly.JavaScript['controls_repeat_extKids'] = function (block) {
   return code;
 };
 
-// turn left only
-Blockly.Blocks['maze_turn_left'] = {
-  /**
-   * Block for turning left.
-   * @this {Blockly.Block}
-   */
-  init: function () {
-    this.setColour(Maze.Blocks.MOVEMENT_HUE);
-    this.appendDummyInput()
-      .appendField(Maze.Blocks.LEFT_TURN) // Append arrows to direction messages.
-      .appendField(BlocklyGames.getMsg('Maze_turnLeft'));
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
-  },
+Blockly.JavaScript['controls_repeat_extKids'] = function (block) {
+  // Repeat n times.
+  var repeats = String(Number(block.getFieldValue('TIMES')));
+  var branch = Blockly.JavaScript.statementToCode(block, 'DO');
+  branch = Blockly.JavaScript.addLoopTrap(branch, block);
+  var code = '';
+  var loopVar = Blockly.JavaScript.nameDB_.getDistinctName('count', Blockly.VARIABLE_CATEGORY_NAME);
+  var endVar = repeats;
+  if (!repeats.match(/^\w+$/) && !Blockly.isNumber(repeats)) {
+    endVar = Blockly.JavaScript.nameDB_.getDistinctName(
+      'repeat_end',
+      Blockly.VARIABLE_CATEGORY_NAME
+    );
+    code += 'var ' + endVar + ' = ' + repeats + ';\n';
+  }
+  code +=
+    'for (var ' +
+    loopVar +
+    ' = 0; ' +
+    loopVar +
+    ' < ' +
+    endVar +
+    '; ' +
+    loopVar +
+    '++) {\n' +
+    branch +
+    '}\n';
+  return code;
 };
 
 Blockly.JavaScript['maze_turn_left'] = function (block) {
@@ -371,43 +463,9 @@ Blockly.JavaScript['maze_turn_left'] = function (block) {
   return "turnLeft('block_id_" + block.id + "');\n";
 };
 
-// turn left only
-Blockly.Blocks['maze_turn_leftKids'] = {
-  /**
-   * Block for turning left.
-   * @this {Blockly.Block}
-   */
-  init: function () {
-    this.setColour(Maze.Blocks.MOVEMENT_HUE);
-    this.appendDummyInput()
-      .appendField(new Blockly.FieldImage('blocks/left.png', 20, 20))
-      .appendField(BlocklyGames.getMsg('Maze_turnLeft'));
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
-  },
-};
-
 Blockly.JavaScript['maze_turn_leftKids'] = function (block) {
   // Generate JavaScript for turning left.
   return "turnLeft('block_id_" + block.id + "');\n";
-};
-
-// turn right only
-Blockly.Blocks['maze_turn_rightKids'] = {
-  /**
-   * Block for turning right.
-   * @this {Blockly.Block}
-   */
-  init: function () {
-    this.setColour(Maze.Blocks.MOVEMENT_HUE);
-    this.appendDummyInput()
-      .appendField(new Blockly.FieldImage('blocks/right.png', 20, 20))
-      .appendField(BlocklyGames.getMsg('Maze_turnRight'));
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setTooltip(BlocklyGames.getMsg('Maze_turnTooltip'));
-  },
 };
 
 Blockly.JavaScript['maze_turn_rightKids'] = function (block) {

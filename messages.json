@@ -23,17 +23,17 @@
     "desc": "alert - This is displayed when the user solves the most difficult level and is going to go to the next game.",
     "msg": "Are you ready for the next challenge?"
   },
- "Games.submitTitle": {
+  "Games.submitTitle": {
     "desc": "Label in front of a field where the user is requested to type a title for their work.\n{{Identical|Title}}",
-     "msg": "Title:"
+    "msg": "Title:"
   },
   "Games.linkTooltip": {
     "desc": "tooltip - Pressing this button will cause the current program to be saved and for a URL to be shown to later retrieve it.",
     "msg": "Save and link to blocks."
   },
- "Games.runTooltip": {
+  "Games.runTooltip": {
     "desc": "tooltip - Pressing this button runs the computer program the user has written.",
-     "msg": "Run the program you wrote."
+    "msg": "Run the program you wrote."
   },
   "Games.runProgram": {
     "desc": "button label - Pressing this button runs the computer program the user has written.",
@@ -46,6 +46,14 @@
   "Games.resetProgram": {
     "desc": "button label - Pressing this button causes the output of the program to be erased but does not delete the user's program).\n{{Identical|Reset}}",
     "msg": "Reset"
+  },
+  "Games.submitProgram": {
+    "desc": "button label - Pressing this button causes the output of the program to be erased but does not delete the user's program).\n{{Identical|Reset}}",
+    "msg": "Submit"
+  },
+  "Games.submitTooltip": {
+    "desc": "button label - Pressing this button causes the output of the program to be erased but does not delete the user's program).\n{{Identical|Reset}}",
+    "msg": "Submit solution"
   },
   "Games.help": {
     "desc": "button label - Pressing this button shows help information.\n{{Identical|Help}}",
@@ -147,7 +155,7 @@
     "desc": "Text on button for deleting all the user's data.",
     "msg": "Clear data"
   },
-    "Maze.moveForward": {
+  "Maze.moveForward": {
     "desc": "block text - Imperative or infinitive of a verb for a person moving (walking) in the direction he/she is facing.",
     "msg": "move forward"
   },

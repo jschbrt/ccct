@@ -1,6 +1,6 @@
 {
 	"@metadata": {
-		"lastupdated": "2025-06-24 17:30:57.438734",
+		"lastupdated": "2025-06-29 12:06:06.343651",
 		"locale": "en",
 		"messagedocumentation": "qqq"
 	},
@@ -16,6 +16,8 @@
 	"Games.runProgram": "Run Program",
 	"Games.resetTooltip": "Stop the program and reset the level.",
 	"Games.resetProgram": "Reset",
+	"Games.submitProgram": "Submit",
+	"Games.submitTooltip": "Submit solution",
 	"Games.help": "Help",
 	"Games.catLogic": "Logic",
 	"Games.catLoops": "Loops",

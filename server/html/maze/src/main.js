@@ -626,6 +626,7 @@ function init() {
     maxLevel: BlocklyGames.MAX_LEVEL,
     skin: SKIN_ID,
     html: BlocklyGames.IS_HTML,
+    isKids: IS_KIDS_VERSION,
   });
 
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));

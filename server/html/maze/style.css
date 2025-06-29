@@ -91,6 +91,41 @@ html[dir='RTL'] button.primary {
   text-align: right;
 }
 
+#both-groups {
+  width: 400px;
+  margin-left: 20px;
+}
+
+#gold {
+  color: gold;
+  text-align: center;
+}
+
+#silver {
+  color: silver;
+  text-align: center;
+}
+
+#choiceLevelInput2 {
+  display: block;
+  margin: auto;
+  text-transform: uppercase;
+}
+
+#choiceLevelInput1 {
+  display: block;
+  margin: auto;
+  text-transform: uppercase;
+}
+
+#input-group1 {
+  margin-left: -65px;
+}
+
+#input-group2 {
+  margin-left: 65px;
+}
+
 #pegmanButton {
   visibility: hidden;
   padding: 0;

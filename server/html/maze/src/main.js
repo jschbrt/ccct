@@ -68,8 +68,8 @@ const SKINS = [
     background: 'maze/bg_astro.jpg',
     // Coma star cluster, photo by George Hatfield, used with permission.
     look: '#fff',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
+    //winSound: ['maze/win.mp3', 'maze/win.ogg'],
+    //crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
     crashType: CRASH_SPIN,
   },
   {
@@ -79,8 +79,8 @@ const SKINS = [
     markerBlock: 'maze/marker_honeyblock.png',
     background: 'maze/bg_bee.png',
     look: '#000',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
+    //winSound: ['maze/win.mp3', 'maze/win.ogg'],
+    //crashSound: ['maze/fail_astro.mp3', 'maze/fail_astro.ogg'],
     crashType: CRASH_FALL,
   },
   {
@@ -88,8 +88,8 @@ const SKINS = [
     tiles: 'maze/tiles_pegman.png',
     background: false,
     look: '#000',
-    winSound: ['maze/win.mp3', 'maze/win.ogg'],
-    crashSound: ['maze/fail_pegman.mp3', 'maze/fail_pegman.ogg'],
+    //winSound: ['maze/win.mp3', 'maze/win.ogg'],
+    //crashSound: ['maze/fail_pegman.mp3', 'maze/fail_pegman.ogg'],
     crashType: CRASH_STOP,
   },
   {
@@ -530,7 +530,6 @@ function drawMap() {
 
 var numberOfAnswers = 0;
 var letters_used;
-var submitButtonClick = false;
 
 // This is the Data object used for saving stuff to mysql
 // Save all submitted plays
@@ -657,14 +656,19 @@ function init() {
     scale = 0.8;
   }
 
-  BlocklyInterface.injectBlockly({
+  const options = {
     maxBlocks: MAX_BLOCKS,
     rtl: rtl,
     trashcan: true,
     zoom: { startScale: scale },
-  });
-  BlocklyInterface.workspace.getAudioManager().load(SKIN.winSound, 'win');
-  BlocklyInterface.workspace.getAudioManager().load(SKIN.crashSound, 'fail');
+  };
+  if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
+    options.readOnly = true;
+  }
+  BlocklyInterface.injectBlockly(options);
+
+  //BlocklyInterface.workspace.getAudioManager().load(SKIN.winSound, 'win');
+  //BlocklyInterface.workspace.getAudioManager().load(SKIN.crashSound, 'fail');
   // Not really needed, there are no user-defined functions or variables.
   Blockly.JavaScript.addReservedWords(
     'moveForward,moveBackward,' +
@@ -689,26 +693,28 @@ function init() {
 
   document.body.addEventListener('mousemove', updatePegSpin_, true);
 
-  BlocklyGames.bindClick('runButton', runButtonClick);
-  BlocklyGames.bindClick('resetButton', resetButtonClick);
+  if (BlocklyGames.LEVEL != 12) {
+    BlocklyGames.bindClick('runButton', runButtonClick);
+    BlocklyGames.bindClick('resetButton', resetButtonClick);
+  }
 
-  BlocklyGames.bindClick('submitButton', Maze.submitButtonClick);
+  BlocklyGames.bindClick('submitButton', submitButtonClick);
 
   if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
-    BlocklyGames.bindClick('skipButton', Maze.skipButtonClick);
+    BlocklyGames.bindClick('skipButton', skipButtonClick);
   }
 
   if ([7, 8].includes(BlocklyGames.LEVEL)) {
     var hiddenskipbutton = document.getElementById('hiddenskipButton');
     hiddenskipbutton.style.display = 'inline';
-    BlocklyGames.bindClick('hiddenskipButton', Maze.hiddenSkipButtonClick);
+    BlocklyGames.bindClick('hiddenskipButton', hiddenSkipButtonClick);
   }
 
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
     var letters = ['1', '2', '3', '4', '5'];
     var lettersUsed = [];
     for (var level = BlocklyGames.DIVERGENT_1; level < BlocklyGames.DIVERGENT_1 + 5; level++) {
-      var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME, level);
+      var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, level);
       if (code) {
         var xml = Blockly.Xml.textToDom(code);
         if (xml.childElementCount != 0) {
@@ -737,8 +743,10 @@ function init() {
       el.style.display = 'none';
       var input = document.getElementById('choiceLevelInput1');
       input.value = letters_used[0];
+      setTimeout(BlocklyDialogs.stop, 100);
+    } else {
+      setTimeout(BlocklyDialogs.stop, 100);
     }
-    setTimeout(BlocklyDialogs.stop, 100);
   } else {
     var defaultXml = '';
     if (BlocklyGames.LEVEL === 1) {
@@ -788,6 +796,8 @@ function init() {
           '</xml>';
       }
       BlocklyInterface.loadBlocks(defaultXml, false);
+    } else {
+      BlocklyInterface.loadBlocks(defaultXml, false);
     }
 
     // Add the spinning Pegman icon to the done dialog.
@@ -803,6 +813,15 @@ function init() {
     BlocklyCode.importInterpreter();
     // Lazy-load the syntax-highlighting.
     BlocklyCode.importPrettify();
+
+    // show dialogs or start timer
+    if ([2, 3, 4, 5, 7, 13].includes(BlocklyGames.LEVEL)) {
+      setTimeout(BlocklyDialogs.stop, 100);
+    } else {
+      //put timer
+      if (timer) clearInterval(timer);
+      startTimer();
+    }
   }
 }
 
@@ -973,7 +992,7 @@ function switchLevel() {
  * @param {event} e
  * @returns
  */
-submitButtonClick = function (e) {
+function submitButtonClick(e) {
   // save time
   clearInterval(timer);
 
@@ -1010,13 +1029,7 @@ submitButtonClick = function (e) {
     resetButton.style.display = 'none';
     submitButton.style.display = 'none';
 
-    if (
-      BlocklyGames.LEVEL == 5 ||
-      BlocklyGames.LEVEL == 6 ||
-      BlocklyGames.LEVEL == 9 ||
-      BlocklyGames.LEVEL == 10 ||
-      BlocklyGames.LEVEL == 11
-    ) {
+    if ([(5, 6, 9, 10, 11)].includes(BlocklyGames.LEVEL)) {
       // change level 1 to 9
       var skipButton = document.getElementById('skipButton');
       skipButton.style.display = 'none';
@@ -1026,7 +1039,7 @@ submitButtonClick = function (e) {
     execute('submit');
     saveData();
   }
-};
+}
 
 function saveChoiceData() {
   // save prios
@@ -1047,7 +1060,7 @@ function saveChoiceData() {
 function saveData() {
   // save result
   // convert the saved code to xmldom to text to encode
-  //var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.NAME, BlocklyGames.LEVEL);
+  //var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.LEVEL);
 
   var textLog = [];
   if (log) {

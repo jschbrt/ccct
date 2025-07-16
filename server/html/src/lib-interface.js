@@ -19,6 +19,7 @@ goog.require('Blockly.ShortcutItems');
 goog.require('Blockly.Xml');
 goog.require('BlocklyGames');
 goog.require('BlocklyStorage');
+goog.require('Blockly.Warning');
 
 /**
  * Blockly's main workspace.
@@ -241,7 +242,7 @@ BlocklyInterface.setMazeChoice = function (code, codeNumber) {
     var xml = Blockly.Xml.textToDom(code);
     // Clear the workspace to avoid merge.
     //BlocklyInterface.workspace.clear();
-    BlocklyInterface.appendToWorkspace(xml, BlocklyInterface.workspace, codeNumber);
+    const blockId = BlocklyInterface.appendToWorkspace(xml, BlocklyInterface.workspace, codeNumber);
     BlocklyInterface.workspace.clearUndo();
   }
 };
@@ -310,7 +311,7 @@ BlocklyInterface.saveSkipToLocalStorage = function (level) {
     return;
   }
   // TODO: should skipped be marked as skipped in user interface?
-  //var name = BlocklyGames.NAME + level;
+  //var name = BlocklyGames.storageName + level;
   //window.localStorage[name] = BlocklyInterface.executedCode;
 };
 
@@ -330,7 +331,7 @@ BlocklyInterface.saveToLocalStorage = function () {
  * Save choice level data to local storage
  */
 BlocklyInterface.saveChoiceLevelToLocalStorage = function (choiceLevelData) {
-  var name = BlocklyGames.NAME + BlocklyGames.LEVEL;
+  var name = BlocklyGames.storageName + BlocklyGames.LEVEL;
   window.localStorage[name] = choiceLevelData; // save choiceLevelData to local storage
 };
 
@@ -394,11 +395,11 @@ BlocklyInterface.changeLanguage = function () {
  */
 BlocklyInterface.nextLevel = function () {
   if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
-    location =
-      location.protocol +
+    window.location =
+      window.location.protocol +
       '//' +
-      location.host +
-      location.pathname +
+      window.location.host +
+      window.location.pathname +
       '?lang=' +
       BlocklyGames.LANG +
       '&level=' +

@@ -13,6 +13,7 @@
 goog.provide('BlocklyGames');
 
 goog.require('Blockly.Msg');
+goog.require('Blockly.Warning');
 
 /**
  * Lookup for names of languages.  Keys should be in ISO 639 format.
@@ -226,7 +227,7 @@ BlocklyGames.MAX_LEVEL = 13;
  * special Levels
  */
 BlocklyGames.CHOICE_LEVEL = 12;
-Blockly.DIVERGENT_1 = 7;
+BlocklyGames.DIVERGENT_1 = 7;
 
 BlocklyGames.loadStartTime = function () {
   var startTime = window.localStorage['BlocklyGamesStartTime'];

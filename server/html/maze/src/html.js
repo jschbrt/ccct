@@ -142,9 +142,12 @@ ${ij.level === 12 ? '' : Maze.html.toolbox_(ij.level, ij.isKids)}
 <div id="blockly"></div>
 
 ${BlocklyGames.html.dialog()}
+${BlocklyGames.html.storageDialog()}
+
 ${BlocklyGames.html.doneDialog()}
 ${BlocklyGames.html.abortDialog()}
-${BlocklyGames.html.storageDialog()}
+${BlocklyGames.html.stopDialog()}
+${BlocklyGames.html.stopDialogVisible()}
 
 ${Maze.html.helpDialogs_()}
 `;

@@ -74,6 +74,8 @@ html[dir='RTL'] .farSide {
   width: 15px;
   height: 15px;
   display: inline-block;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .level_done,
@@ -143,6 +145,8 @@ button.stop {
   border: 1px solid #fff;
   background-color: #fff;
   color: #fff;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 button.secondary {

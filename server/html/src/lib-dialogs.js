@@ -435,14 +435,16 @@ BlocklyDialogs.abortKeyDown_ = function (e) {
 // Dialogs for the CCCT extension
 
 BlocklyDialogs.startTime = function () {
+  const maze = goog.module.get('Maze'); // Lazy require
+
   //put timer
-  if (Maze.timer) clearInterval(Maze.timer);
-  Maze.startTimer();
+  if (maze.timer) clearInterval(maze.timer);
+  maze.startTimer();
 
   if (BlocklyGames.LEVEL == 12) {
     var timeBubble = document.getElementById('timeBubble');
     timeBubble.style.display = 'inline';
-    Maze.countdown('time', 1, 0);
+    maze.countdown('time', 1, 0);
   }
 };
 
@@ -473,28 +475,24 @@ BlocklyDialogs.finish = function () {
  */
 BlocklyDialogs.stop = function () {
   var ok = document.getElementById('stopOK');
-  ok.addEventListener('click', () => {
+  function handleOk() {
     BlocklyDialogs.hideDialog(true);
     BlocklyDialogs.startTime();
-  });
-  ok.addEventListener('touchend', () => {
-    BlocklyDialogs.hideDialog(true);
-    BlocklyDialogs.startTime();
-  });
+  }
+  ok.addEventListener('click', handleOk);
+  ok.addEventListener('touchend', handleOk);
 
   var stopSign = document.getElementById('stopImage');
-  stopSign.addEventListener('click', () => {
+  function handleStop() {
     var stopOK = document.getElementById('stopOK');
     stopOK.style.border = '1px';
     stopOK.style.backgroundColor = '#1cdf36';
     stopOK.style.color = '#fff';
-  });
-  stopSign.addEventListener('touchend', () => {
-    var stopOK = document.getElementById('stopOK');
-    stopOK.style.border = '1px';
-    stopOK.style.backgroundColor = '#1cdf36';
-    stopOK.style.color = '#fff';
-  });
+    stopOK.style.pointerEvents = 'auto';
+    stopOK.style.cursor = 'pointer';
+  }
+  stopSign.addEventListener('click', handleStop);
+  stopSign.addEventListener('touchend', handleStop);
 
   var style = {
     width: '40%',

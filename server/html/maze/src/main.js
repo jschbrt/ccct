@@ -559,7 +559,7 @@ var choiceLevelData = {
   prio2: '',
 };
 
-function startTimer() {
+Maze.startTimer = function () {
   var tick = function () {
     var min = String(Math.trunc(time / 60)).padStart(2, 0);
     var sec = String(time % 60).padStart(2, 0);
@@ -573,9 +573,9 @@ function startTimer() {
   // Call the timer every second
   tick();
   timer = setInterval(tick, 1000);
-}
+};
 
-function countdown(elementName, minutes, seconds) {
+Maze.countdown = function (elementName, minutes, seconds) {
   var element, endTime, hours, mins, msLeft, time;
   element;
   function twoDigits(n) {
@@ -607,7 +607,7 @@ function countdown(elementName, minutes, seconds) {
   element = document.getElementById(elementName);
   endTime = +new Date() + 1000 * (60 * minutes + seconds) + 500;
   updateTimer();
-}
+};
 
 /**
  * Initialize Blockly and the maze.  Called on page load.
@@ -820,7 +820,7 @@ function init() {
     } else {
       //put timer
       if (timer) clearInterval(timer);
-      startTimer();
+      Maze.startTimer();
     }
   }
 }

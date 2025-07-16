@@ -172,7 +172,7 @@ BlocklyGames.html.stopDialog = function () {
   return `
   <div id="dialogStop" class="dialogHiddenContent">
     <div id="stopImageDiv">
-    <img id="stopImage" src="server/html/common/stop.png">
+    <img id="stopImage" src="common/stop.png">
       <div id="dialogStopText2">Es geht erst dann weiter, </br> wenn Du dazu aufgefordert wirst.</div>
     </div>
     <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
@@ -189,7 +189,7 @@ BlocklyGames.html.stopDialogVisible = function () {
   return `
   <div id="dialogStopVisible" class="dialogHiddenContent">
     <div id="stopImageDiv">
-    <img id="stopImage" src="server/html/common/stop.png">
+    <img id="stopImage" src="common/stop.png">
       <div id="dialogStopText2">Es geht erst dann weiter, </br> wenn Du dazu aufgefordert wirst.</div>
     </div>
     <div id="dialogStopButtonsVisible" class="center" style="padding: 1ex 3ex 0">

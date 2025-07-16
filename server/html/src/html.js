@@ -139,11 +139,24 @@ BlocklyGames.html.dialog = function () {
  */
 BlocklyGames.html.doneDialog = function () {
   return `
+    <div id="dialogDone" class="dialogHiddenContent">
+    <div style="font-size: large; margin: 1em; color: purple;">{{msg meaning="Games.congratulations" desc="alert - This is displayed when the user solves the level.\n{lb}{lb}Identical|Congratulation{rb}{rb}"}}Congratulations!{{/msg}}</div>
+    <div id="finalImageDiv">
+      <img id="finalImage">
+      <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
+    </div>
+    <div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0">
+      <button id="doneOk" class="secondary">
+        {{msg meaning="Games.dialogOk" desc="IBID"}}OK{{/msg}}
+      </button>
+    </div>
+  </div>
 <div id="dialogDone" class="dialogHiddenContent">
   <div class="large">${BlocklyGames.getMsg('Games.congratulations', true)}</div>
-  <div id="dialogLinesText" class="large"></div>
-  <pre id="containerCode"></pre>
-  <div id="dialogDoneText" class="large"></div>
+  <div id="finalImageDiv">
+  <img id="finalImage">
+  <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
+    </div>
   <div id="dialogDoneButtons" class="farSide farSideButtons">
     <button class="addHideHandler">${BlocklyGames.esc(Blockly.Msg['DIALOG_CANCEL'])}</button>
     <button id="doneOk" class="secondary">${BlocklyGames.esc(Blockly.Msg['DIALOG_OK'])}</button>
@@ -153,17 +166,53 @@ BlocklyGames.html.doneDialog = function () {
 };
 
 /**
+ * Stop dialog
+ */
+BlocklyGames.html.stopDialog = function () {
+  return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopImageDiv">
+    <img id="stopImage" src="server/html/common/stop.png">
+      <div id="dialogStopText2">Es geht erst dann weiter, </br> wenn Du dazu aufgefordert wirst.</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+};
+
+/**
+ * Stop dialog visible
+ */
+BlocklyGames.html.stopDialogVisible = function () {
+  return `
+  <div id="dialogStopVisible" class="dialogHiddenContent">
+    <div id="stopImageDiv">
+    <img id="stopImage" src="server/html/common/stop.png">
+      <div id="dialogStopText2">Es geht erst dann weiter, </br> wenn Du dazu aufgefordert wirst.</div>
+    </div>
+    <div id="dialogStopButtonsVisible" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOKVisible" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+};
+
+/**
  * Abort dialog.
  * @returns {string} HTML.
  */
 BlocklyGames.html.abortDialog = function () {
   return `
 <div id="dialogAbort" class="dialogHiddenContent">
-  ${BlocklyGames.getMsg('Games.helpAbort', true)}
-  <div class="farSide farSideButtons">
-    <button class="addHideHandler">${BlocklyGames.esc(Blockly.Msg['DIALOG_CANCEL'])}</button>
-    <button id="abortOk" class="secondary">${BlocklyGames.esc(Blockly.Msg['DIALOG_OK'])}</button>
+  <div id="abortImageDiv">
+    <img id="abortImage" src="common/stop.png">
+      <div id="dialogAbortText2">Da keine Ergebnisse vorliegen, </br> musst Du dieses Level Ü.</div>
   </div>
+    <div id="dialogAbortButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="abortOK" class="stop">Weiter</button>
+    </div>
 </div>
 `;
 };

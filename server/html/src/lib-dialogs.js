@@ -432,5 +432,195 @@ BlocklyDialogs.abortKeyDown_ = function (e) {
   }
 };
 
+// Dialogs for the CCCT extension
+
+BlocklyDialogs.startTime = function () {
+  //put timer
+  if (Maze.timer) clearInterval(Maze.timer);
+  Maze.startTimer();
+
+  if (BlocklyGames.LEVEL == 12) {
+    var timeBubble = document.getElementById('timeBubble');
+    timeBubble.style.display = 'inline';
+    Maze.countdown('time', 1, 0);
+  }
+};
+
+/**
+ * Congratulates the user for completing the level and offers to
+ * direct them to the next level, if available.
+ */
+BlocklyDialogs.finish = function () {
+  var content = document.getElementById('dialogDone');
+  var style = {
+    width: '40%',
+    left: '30%',
+    top: '3em',
+  };
+
+  var ok = document.getElementById('doneOk');
+  ok.addEventListener('click', BlocklyInterface.nextLevel, true);
+  ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
+
+  BlocklyDialogs.showDialog(content, null, false, true, style, function () {
+    document.body.removeEventListener('keydown', BlocklyDialogs.finishKeyDown, true);
+  });
+  document.body.addEventListener('keydown', BlocklyDialogs.finishKeyDown, true);
+};
+
+/**
+ * Blockly stop frame as a break before level 5, 7, 13
+ */
+BlocklyDialogs.stop = function () {
+  var ok = document.getElementById('stopOK');
+  ok.addEventListener('click', () => {
+    BlocklyDialogs.hideDialog(true);
+    BlocklyDialogs.startTime();
+  });
+  ok.addEventListener('touchend', () => {
+    BlocklyDialogs.hideDialog(true);
+    BlocklyDialogs.startTime();
+  });
+
+  var stopSign = document.getElementById('stopImage');
+  stopSign.addEventListener('click', () => {
+    var stopOK = document.getElementById('stopOK');
+    stopOK.style.border = '1px';
+    stopOK.style.backgroundColor = '#1cdf36';
+    stopOK.style.color = '#fff';
+  });
+  stopSign.addEventListener('touchend', () => {
+    var stopOK = document.getElementById('stopOK');
+    stopOK.style.border = '1px';
+    stopOK.style.backgroundColor = '#1cdf36';
+    stopOK.style.color = '#fff';
+  });
+
+  var style = {
+    width: '40%',
+    left: '30%',
+    top: '3em',
+  };
+  var content = document.getElementById('dialogStop');
+  BlocklyDialogs.showDialog(content, null, false, true, style, function () {
+    document.body.removeEventListener('keydown', BlocklyDialogs.abortKeyDown, true);
+  });
+};
+
+// Blockly level 2, 3, 4
+BlocklyDialogs.stopVisible = function () {
+  var ok = document.getElementById('stopOKVisible');
+  ok.addEventListener('click', () => {
+    BlocklyDialogs.hideDialog(true);
+    BlocklyDialogs.startTime();
+  });
+  ok.addEventListener('touchend', () => {
+    BlocklyDialogs.hideDialog(true);
+    BlocklyDialogs.startTime();
+  });
+
+  var style = {
+    width: '40%',
+    left: '30%',
+    top: '3em',
+  };
+  var content = document.getElementById('dialogStopVisible');
+  BlocklyDialogs.showDialog(content, null, false, true, style, function () {
+    document.body.removeEventListener('keydown', BlocklyDialogs.abortKeyDown, true);
+  });
+};
+
+BlocklyDialogs.choiceLevel = function () {
+  var ok = document.getElementById('stopOK');
+  ok.addEventListener('click', () => {
+    BlocklyDialogs.hideDialog(true);
+    BlocklyDialogs.startTime();
+  });
+  ok.addEventListener('touchend', () => {
+    BlocklyDialogs.hideDialog(true);
+    BlocklyDialogs.startTime();
+  });
+
+  var stopSign = document.getElementById('stopImage');
+  stopSign.addEventListener('click', () => {
+    var stopOK = document.getElementById('stopOK');
+    stopOK.style.border = '1px';
+    stopOK.style.backgroundColor = '#1cdf36';
+    stopOK.style.color = '#fff';
+  });
+
+  var style = {
+    width: '40%',
+    left: '30%',
+    top: '3em',
+  };
+  var content = document.getElementById('dialogStop');
+  BlocklyDialogs.showDialog(content, null, false, true, style, function () {
+    document.body.removeEventListener('keydown', BlocklyDialogs.abortKeyDown, true);
+  });
+};
+
+/**
+ * Message for submitting a wrong result and the code for the level
+ *
+ */
+BlocklyDialogs.endOfLevel = function () {
+  var content = document.getElementById('dialogDone2');
+  var style = {
+    width: '40%',
+    left: '30%',
+    top: '3em',
+  };
+
+  // Add the user's code.
+  if (BlocklyInterface.workspace) {
+    var linesText = document.getElementById('dialogLinesText2');
+    linesText.textContent = '';
+    var code = BlocklyInterface.executedJsCode;
+    code = BlocklyInterface.stripCode(code);
+    var noComments = code.replace(/\/\/[^\n]*/g, ''); // Inline comments.
+    noComments = noComments.replace(/\/\*.*\*\//g, ''); /* Block comments. */
+    noComments = noComments.replace(/[ \t]+\n/g, '\n'); // Trailing spaces.
+    noComments = noComments.replace(/\n+/g, '\n'); // Blank lines.
+    noComments = noComments.trim();
+    var lineCount = noComments.split('\n').length;
+    var pre = document.getElementById('containerCode2');
+    pre.textContent = code;
+    //αποθήκευση του κώδικα
+    var codeKey = 'maze-code' + BlocklyGames.LEVEL;
+    var codeValue = pre.textContent;
+    window.localStorage.setItem(codeKey, codeValue);
+
+    if (typeof prettyPrintOne == 'function') {
+      code = pre.innerHTML;
+      code = prettyPrintOne(code, 'js');
+      pre.innerHTML = code;
+    }
+    if (lineCount == 1) {
+      var text = BlocklyGames.getMsg('Games_linesOfCode1');
+    } else {
+      var text = BlocklyGames.getMsg('Games_linesOfCode2').replace('%1', String(lineCount));
+    }
+    linesText.appendChild(document.createTextNode(text));
+  }
+
+  if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
+    var text = BlocklyGames.getMsg('Games_nextLevel').replace('%1', String(BlocklyGames.LEVEL + 1));
+  } else {
+    var text = BlocklyGames.getMsg('Games_finalLevel');
+  }
+
+  var ok = document.getElementById('doneOk2');
+  ok.addEventListener('click', BlocklyInterface.nextLevel, true);
+  ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
+
+  BlocklyDialogs.showDialog(content, null, false, true, style, function () {
+    document.body.removeEventListener('keydown', BlocklyDialogs.finishKeyDown, true);
+  });
+  document.body.addEventListener('keydown', BlocklyDialogs.finishKeyDown, true);
+
+  document.getElementById('dialogDoneText2').textContent = text;
+};
+
 // Export symbols that would otherwise be renamed by Closure compiler.
 window['BlocklyDialogs'] = BlocklyDialogs;

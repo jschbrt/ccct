@@ -11,13 +11,10 @@ REQUIRED_BINS = unzip wget java python
 
 all: deps games
 
-index: common
-	python build/compress.py index
-
 maze: common
 	python build/compress.py maze
 
-games: index maze
+games: maze
 
 common:
 	@echo "Converting messages.js to JSON for Translatewiki."

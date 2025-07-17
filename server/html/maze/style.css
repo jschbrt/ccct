@@ -241,14 +241,12 @@ html[dir='RTL'] #pegmanButton > span {
   margin-top: 35px;
 }
 
-#hiddenskipButton {
-  display: none;
-  border: #fff9f9e8;
-  background-color: #fff9f9e8;
-  color: #fff9f9e8;
+#hiddenskipbutton {
+  opacity:0;
 }
 
-#hiddenskipButton:hover {
+#hiddenskipbutton:hover {
+  opacity: 0;
   border: 1px solid #1c98df;
   background-color: #1c98df;
 }
@@ -297,4 +295,27 @@ button.stop {
   border: 1px solid #fff;
   background-color: #fff;
   color: #fff;
+}
+
+#clearData {
+  opacity: 0;
+  width: 10px;
+  height: 10px;
+}
+
+#timeBubble {
+    position: absolute;
+    margin-bottom: -0.4em;
+    left: 5px;
+    bottom: 375px;
+    width: 380px;
+}
+
+#time {
+    display: inline;
+    color: #fff;
+    padding: 5px 1em;
+    border-radius: 15px;
+    background-color: rgba(64, 64, 64, 0.7);
+    font-size: large;
 }

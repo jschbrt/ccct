@@ -133,7 +133,13 @@ BlocklyGames.storageName;
  * User Code for the specific session.
  * @type string
  */
-BlocklyGames.userCode = "default";
+BlocklyGames.userCode;
+
+/**
+ * Game version.
+ * @type number (0: youth, 1: children)
+ */
+BlocklyGames.skinID;
 
 /**
  * Maximum number of levels.
@@ -200,7 +206,7 @@ BlocklyGames.init = function (title) {
   // Highlight levels that have been completed.
   for (let i = 1; i <= BlocklyGames.MAX_LEVEL; i++) {
     const link = BlocklyGames.getElementById('level' + i);
-    const done = !!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, i);
+    const done = !!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, i);
     if (link && done) {
       link.className += ' level_done';
     }
@@ -257,13 +263,14 @@ BlocklyGames.changeLanguage = function () {
  * Attempt to fetch the saved blocks for a level.
  * May be used to simply determine if a level is complete.
  * @param {string} name Name of app (maze, bird, ...).
- * @param {number} level Level (1-10).
+ * @param {string} userCode Identifier of the specific user (default)
+ * @param {number} level Level (1-13).
  * @returns {string|undefined} Serialized XML, or undefined.
  */
-BlocklyGames.loadFromLocalStorage = function (name, level) {
+BlocklyGames.loadFromLocalStorage = function (name, userCode, level) {
   let xml;
   try {
-    xml = window.localStorage[name + level];
+    xml = window.localStorage[name + userCode + level];
   } catch (e) {
     // Firefox sometimes throws a SecurityError when accessing localStorage.
     // Restarting Firefox fixes this, so it looks like a bug.
@@ -333,4 +340,98 @@ BlocklyGames.esc = function (text) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+};
+
+
+/**
+ * Clear the data from the local cache
+ */
+BlocklyGames.initClearData = function() {
+  let storedData = false;
+    for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
+      if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, j)) {
+        storedData = true;
+      }
+    }
+
+  if (storedData) {
+    const clearButton = BlocklyGames.getElementById('clearData');
+    clearButton.style.visibility = 'visible';
+    BlocklyGames.bindClick('clearData', BlocklyGames.clearData);
+  }
+}
+
+/**
+ * Remove all user data from local storage
+ */
+BlocklyGames.clearData = function() {
+ if (!confirm(BlocklyGames.getMsg('Index.clear', false))) {
+    return;
+  }
+  for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
+    delete window.localStorage[BlocklyGames.storageName + BlocklyGames.userCode + j];
+  }
+  window.location =
+      window.location.protocol +
+      '//' +
+      window.location.host +
+      window.location.pathname +
+      '?lang=' +
+      BlocklyGames.LANG +
+      '&level=1' + 
+      '&skin=' + 
+      BlocklyGames.skinID +
+      '&user=' + 
+      BlocklyGames.userCode;  
+}
+
+BlocklyGames.timer;
+
+BlocklyGames.startTimer = function () {
+  var tick = function () {
+    var min = String(Math.trunc(time / 60)).padStart(2, 0);
+    var sec = String(time % 60).padStart(2, 0);
+    levelData['time'] = min + ':' + sec;
+    choiceLevelData['time'] = min + ':' + sec;
+    time++;
+  };
+  var time = 0;
+
+  // Call the timer every second
+  tick();
+  BlocklyGames.timer = setInterval(tick, 1000);
+};
+
+BlocklyGames.countdown = function (elementName, minutes, seconds) {
+  var element, endTime, hours, mins, msLeft, time;
+  element;
+  function twoDigits(n) {
+    return n <= 9 ? '0' + n : n;
+  }
+
+  function updateTimer() {
+    msLeft = endTime - +new Date();
+    if (msLeft < 1000) {
+      element.innerHTML = '0:00';
+      choiceLevelData.submissionType = 'timeout';
+      for (var i = 0; i < NUMBER_OF_ANSWERS; i++) {
+        var choiceLevelInput = document.getElementById('choiceLevelInput' + (i + 1)).value; // return value of input box
+        choiceLevelInput = choiceLevelInput.toUpperCase();
+        choiceLevelInputList[i] = choiceLevelInput;
+      }
+      saveChoiceData();
+      switchLevel();
+    } else {
+      time = new Date(msLeft);
+      hours = time.getUTCHours();
+      mins = time.getUTCMinutes();
+      element.innerHTML =
+        (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
+      setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+    }
+  }
+
+  element = document.getElementById(elementName);
+  endTime = +new Date() + 1000 * (60 * minutes + seconds) + 500;
+  updateTimer();
 };

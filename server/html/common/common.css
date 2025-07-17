@@ -309,18 +309,6 @@ button:hover:not(:disabled) {
   margin-top: 35px;
 }
 
-#hiddenskipButton {
-  display: none;
-  border: #fff9f9e8;
-  background-color: #fff9f9e8;
-  color: #fff9f9e8;
-}
-
-#hiddenskipButton:hover {
-  border: 1px solid #1c98df;
-  background-color: #1c98df;
-}
-
 button.stop:hover {
   border: 1px solid #1cdf36;
   background-color: #1cdf36;

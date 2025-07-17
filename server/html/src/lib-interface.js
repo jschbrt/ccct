@@ -104,10 +104,11 @@ BlocklyInterface.loadBlocks = function (defaultXml, inherit) {
 
   const savedLevel = BlocklyGames.loadFromLocalStorage(
     BlocklyGames.storageName,
+    BlocklyGames.userCode,
     BlocklyGames.LEVEL
   );
   let inherited =
-    inherit && BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.LEVEL - 1);
+    inherit && BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, BlocklyGames.LEVEL - 1);
   if (inherited && typeof inherit === 'function') {
     inherited = inherit(inherited);
   }
@@ -323,7 +324,7 @@ BlocklyInterface.saveToLocalStorage = function () {
   if (!window.localStorage) {
     return;
   }
-  const name = BlocklyGames.storageName + BlocklyGames.LEVEL;
+  const name = BlocklyGames.storageName + BlocklyGames.userCode + BlocklyGames.LEVEL;
   window.localStorage[name] = BlocklyInterface.executedCode;
 };
 
@@ -331,7 +332,7 @@ BlocklyInterface.saveToLocalStorage = function () {
  * Save choice level data to local storage
  */
 BlocklyInterface.saveChoiceLevelToLocalStorage = function (choiceLevelData) {
-  var name = BlocklyGames.storageName + BlocklyGames.LEVEL;
+  var name = BlocklyGames.storageName + BlocklyGames.userCode + BlocklyGames.LEVEL;
   window.localStorage[name] = choiceLevelData; // save choiceLevelData to local storage
 };
 
@@ -404,9 +405,11 @@ BlocklyInterface.nextLevel = function () {
       BlocklyGames.LANG +
       '&level=' +
       (BlocklyGames.LEVEL + 1) +
-      BlocklyInterface.nextLevelParam;
+      BlocklyInterface.nextLevelParam + 
+      '&user=' +
+      BlocklyGames.userCode;
   } else {
-    BlocklyInterface.indexPage();
+    BlocklyDialogs.finish();
   }
 };
 

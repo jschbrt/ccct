@@ -29,7 +29,13 @@ Maze.html.start = function (ij) {
     BlocklyInterface.nextLevelParam,
     /* hasLinkButton */ true,
     /* hasHelpButton */ false,
-    '<button id="pegmanButton"><img src="common/1x1.gif"><span id="pegmanButtonArrow"></span></button>'
+    `<p id="adminButtons">
+      <button id="hiddenskipbutton">
+        <img src="common/skipw.png" class="skip"> Skip
+      </button>
+      <button class="secondary" id="clearData"></button>
+    </p>
+    ` 
   );
 
   // Level‐specific button row: run, reset, skip, submit
@@ -130,6 +136,9 @@ ${header}
       <path d="M 0,-55 a 55 55 0 0 1 55 55" />
     </g>
   </svg>
+  <div id="timeBubble" style='display: none'>
+      <div id="time"></div>
+  </div>
   <div id="capacityBubble">
     <div id="capacity"></div>
   </div>

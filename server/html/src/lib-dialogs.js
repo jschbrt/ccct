@@ -365,7 +365,7 @@ BlocklyDialogs.storageAlert = function (origin, message) {
  */
 BlocklyDialogs.abortOffer = function () {
   // If the user has solved the level, all is well.
-  if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.LEVEL)) {
+  if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, BlocklyGames.LEVEL)) {
     return;
   }
   // Don't override an existing dialog, or interrupt a drag.
@@ -382,8 +382,8 @@ BlocklyDialogs.abortOffer = function () {
   };
 
   const ok = BlocklyGames.getElementById('abortOk');
-  ok.addEventListener('click', BlocklyInterface.indexPage, true);
-  ok.addEventListener('touchend', BlocklyInterface.indexPage, true);
+  ok.addEventListener('click', BlocklyInterface.nextLevel, true);
+  ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
 
   BlocklyDialogs.showDialog(content, null, false, true, style, function () {
     document.body.removeEventListener('keydown', BlocklyDialogs.abortKeyDown_, true);
@@ -435,16 +435,14 @@ BlocklyDialogs.abortKeyDown_ = function (e) {
 // Dialogs for the CCCT extension
 
 BlocklyDialogs.startTime = function () {
-  const maze = goog.module.get('Maze'); // Lazy require
-
   //put timer
-  if (maze.timer) clearInterval(maze.timer);
-  maze.startTimer();
+  if (BlocklyGames.timer) clearInterval(BlocklyGames.timer);
+  BlocklyGames.startTimer();
 
   if (BlocklyGames.LEVEL == 12) {
     var timeBubble = document.getElementById('timeBubble');
     timeBubble.style.display = 'inline';
-    maze.countdown('time', 1, 0);
+    BlocklyGames.countdown('time', 1, 0);
   }
 };
 

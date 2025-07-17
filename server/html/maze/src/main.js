@@ -31,7 +31,6 @@ goog.require('Maze.html');
 
 BlocklyGames.storageName = 'maze';
 
-var timer;
 var submitPressed = false; // for Maze.animate
 var NUMBER_OF_ANSWERS = 0; // amout of choices made in divergent task
 var LETTERS_USED = []; // which letters have been used
@@ -106,6 +105,10 @@ const SKINS = [
 const SKIN_ID = BlocklyGames.getIntegerParamFromUrl('skin', 0, SKINS.length - 1);
 const SKIN = SKINS[SKIN_ID];
 const IS_KIDS_VERSION = Boolean(SKIN_ID); // if true, its the 1-2graders version
+
+// retrieve the usercode from the URL
+BlocklyGames.skinID = SKIN_ID;
+BlocklyGames.userCode = BlocklyGames.getStringParamFromUrl('user', 'default');
 
 /**
  * The types of squares in the maze, which is represented
@@ -559,56 +562,6 @@ var choiceLevelData = {
   prio2: '',
 };
 
-Maze.startTimer = function () {
-  var tick = function () {
-    var min = String(Math.trunc(time / 60)).padStart(2, 0);
-    var sec = String(time % 60).padStart(2, 0);
-    levelData['time'] = min + ':' + sec;
-    choiceLevelData['time'] = min + ':' + sec;
-    time++;
-  };
-  // Set time to 5 minutes
-  var time = 0;
-
-  // Call the timer every second
-  tick();
-  timer = setInterval(tick, 1000);
-};
-
-Maze.countdown = function (elementName, minutes, seconds) {
-  var element, endTime, hours, mins, msLeft, time;
-  element;
-  function twoDigits(n) {
-    return n <= 9 ? '0' + n : n;
-  }
-
-  function updateTimer() {
-    msLeft = endTime - +new Date();
-    if (msLeft < 1000) {
-      element.innerHTML = '0:00';
-      choiceLevelData.submissionType = 'timeout';
-      for (var i = 0; i < NUMBER_OF_ANSWERS; i++) {
-        var choiceLevelInput = document.getElementById('choiceLevelInput' + (i + 1)).value; // return value of input box
-        choiceLevelInput = choiceLevelInput.toUpperCase();
-        choiceLevelInputList[i] = choiceLevelInput;
-      }
-      saveChoiceData();
-      switchLevel();
-    } else {
-      time = new Date(msLeft);
-      hours = time.getUTCHours();
-      mins = time.getUTCMinutes();
-      element.innerHTML =
-        (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
-      setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
-    }
-  }
-
-  element = document.getElementById(elementName);
-  endTime = +new Date() + 1000 * (60 * minutes + seconds) + 500;
-  updateTimer();
-};
-
 /**
  * Initialize Blockly and the maze.  Called on page load.
  */
@@ -627,6 +580,7 @@ function init() {
     html: BlocklyGames.IS_HTML,
     isKids: IS_KIDS_VERSION,
   });
+  BlocklyGames.initClearData();
 
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));
 
@@ -705,16 +659,15 @@ function init() {
   }
 
   if ([7, 8].includes(BlocklyGames.LEVEL)) {
-    var hiddenskipbutton = document.getElementById('hiddenskipButton');
-    hiddenskipbutton.style.display = 'inline';
-    BlocklyGames.bindClick('hiddenskipButton', hiddenSkipButtonClick);
+    var hiddenskipbutton = document.getElementById('hiddenskipbutton');
+    BlocklyGames.bindClick('hiddenskipbutton', hiddenSkipButtonClick);
   }
 
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
     var letters = ['1', '2', '3', '4', '5'];
     var lettersUsed = [];
     for (var level = BlocklyGames.DIVERGENT_1; level < BlocklyGames.DIVERGENT_1 + 5; level++) {
-      var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, level);
+      var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, level);
       if (code) {
         var xml = Blockly.Xml.textToDom(code);
         if (xml.childElementCount != 0) {
@@ -727,8 +680,8 @@ function init() {
     }
 
     if (numberOfAnswers == 0) {
-      var el = document.getElementById('both-groups');
-      el.style.display = 'none';
+      var group = document.getElementById('both-groups');
+      group.style.display = 'none';
       var el = document.getElementById('submitButton');
       el.style.display = 'none';
 
@@ -817,10 +770,10 @@ function init() {
     // show dialogs or start timer
     if ([2, 3, 4, 5, 7, 13].includes(BlocklyGames.LEVEL)) {
       setTimeout(BlocklyDialogs.stop, 100);
+      BlocklyGames.startTimer();
     } else {
-      //put timer
-      if (timer) clearInterval(timer);
-      Maze.startTimer();
+      if (BlocklyGames.timer) clearInterval(BlocklyGames.timer);
+      BlocklyGames.startTimer();
     }
   }
 }
@@ -944,7 +897,7 @@ function updateCapacity() {
   }
 }
 
-// Effort for Skip Button
+// Skip Button
 function skipButtonClick(e) {
   // Prevent double-clicks or double-taps.
   if (BlocklyInterface.eventSpam(e)) {
@@ -960,12 +913,17 @@ function skipButtonClick(e) {
   BlocklyInterface.skipLevel(BlocklyGames.LEVEL);
 }
 
-// Effort for Skip Button
+// Hidden skip Button
 function hiddenSkipButtonClick(e) {
   // Prevent double-clicks or double-taps.
   if (BlocklyInterface.eventSpam(e)) {
     return;
   }
+
+  if (!confirm("Überspringen?")) {
+    return;
+  }
+
   BlocklyDialogs.hideDialog(false);
 
   reset(false);
@@ -994,7 +952,7 @@ function switchLevel() {
  */
 function submitButtonClick(e) {
   // save time
-  clearInterval(timer);
+  clearInterval(BlocklyGames.timer);
 
   if (BlocklyGames.LEVEL == BlocklyGames.CHOICE_LEVEL) {
     submitChoiceLevel(e);
@@ -1029,7 +987,7 @@ function submitButtonClick(e) {
     resetButton.style.display = 'none';
     submitButton.style.display = 'none';
 
-    if ([(5, 6, 9, 10, 11)].includes(BlocklyGames.LEVEL)) {
+    if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
       // change level 1 to 9
       var skipButton = document.getElementById('skipButton');
       skipButton.style.display = 'none';
@@ -1049,7 +1007,7 @@ function saveChoiceData() {
 
   console.log(choiceLevelData);
 
-  BlocklyInterface.saveChoiceLevelToLocalStorage(choiceLevelData);
+  BlocklyInterface.saveChoiceLevelToLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, choiceLevelData);
   var json = JSON.stringify(choiceLevelData);
   // TODO: write upload code
   // BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
@@ -1083,7 +1041,7 @@ function saveData() {
     let endTime = new Date();
     let minutes = (endTime - startTime) / (1000 * 60);
     minutes = minutes.toFixed(2);
-    BlocklyInterface.addTimeDiff(BlocklyGames.loadUserCode(), minutes);
+
   }
 }
 

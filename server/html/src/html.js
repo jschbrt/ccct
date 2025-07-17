@@ -55,11 +55,6 @@ BlocklyGames.html.headerBar = function (
   return `
 <table width="100%">
   <tr>
-   <td>
-      <button id="hiddenskipButton">
-        <img src="common/skipw.png" class="skip">Skip
-      </button>
-    </td>
     <td>
       <h1>
         ${BlocklyGames.html.titleSpan_(ij, appName)}
@@ -87,11 +82,10 @@ BlocklyGames.html.headerBar = function (
 BlocklyGames.html.titleSpan_ = function (ij, appName) {
   return `
 <span id="title">
-  <a href="${ij.html ? 'index.html' : './'}?lang=${ij.lang}">${BlocklyGames.getMsg(
+  ${BlocklyGames.getMsg(
     'Games.name',
     true
-  )}</a> : ${appName}
-</span>
+  )}
 `;
 };
 

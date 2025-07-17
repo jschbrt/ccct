@@ -82,10 +82,7 @@ BlocklyGames.html.headerBar = function (
 BlocklyGames.html.titleSpan_ = function (ij, appName) {
   return `
 <span id="title">
-  ${BlocklyGames.getMsg(
-    'Games.name',
-    true
-  )}
+  ${BlocklyGames.getMsg('Games.name', true)}
 `;
 };
 

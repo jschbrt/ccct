@@ -667,7 +667,11 @@ function init() {
     var letters = ['1', '2', '3', '4', '5'];
     var lettersUsed = [];
     for (var level = BlocklyGames.DIVERGENT_1; level < BlocklyGames.DIVERGENT_1 + 5; level++) {
-      var code = BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, level);
+      var code = BlocklyGames.loadFromLocalStorage(
+        BlocklyGames.storageName,
+        BlocklyGames.userCode,
+        level
+      );
       if (code) {
         var xml = Blockly.Xml.textToDom(code);
         if (xml.childElementCount != 0) {
@@ -920,7 +924,7 @@ function hiddenSkipButtonClick(e) {
     return;
   }
 
-  if (!confirm("Überspringen?")) {
+  if (!confirm('Überspringen?')) {
     return;
   }
 
@@ -1007,7 +1011,11 @@ function saveChoiceData() {
 
   console.log(choiceLevelData);
 
-  BlocklyInterface.saveChoiceLevelToLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, choiceLevelData);
+  BlocklyInterface.saveChoiceLevelToLocalStorage(
+    BlocklyGames.storageName,
+    BlocklyGames.userCode,
+    choiceLevelData
+  );
   var json = JSON.stringify(choiceLevelData);
   // TODO: write upload code
   // BlocklyInterface.uploadToServer(BlocklyGames.loadUserCode(), BlocklyGames.LEVEL, json);
@@ -1041,7 +1049,6 @@ function saveData() {
     let endTime = new Date();
     let minutes = (endTime - startTime) / (1000 * 60);
     minutes = minutes.toFixed(2);
-
   }
 }
 

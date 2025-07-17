@@ -14,7 +14,6 @@ goog.provide('BlocklyStorage');
 
 goog.require('BlocklyGames');
 
-
 /**
  * Function to get the code from Blockly or from the JS editor.
  * @type Function()
@@ -36,12 +35,13 @@ BlocklyStorage.startCode = null;
 /**
  * Save blocks or JavaScript to database and return a link containing the key.
  */
-BlocklyStorage.link = function() {
+BlocklyStorage.link = function () {
   const code = BlocklyStorage.getCode();
-  BlocklyStorage.makeRequest('/scripts/storage.py',
-      'app=' + encodeURIComponent(BlocklyGames.storageName) +
-      '&data=' + encodeURIComponent(code),
-      BlocklyStorage.handleLinkResponse_);
+  BlocklyStorage.makeRequest(
+    '/scripts/storage.py',
+    'app=' + encodeURIComponent(BlocklyGames.storageName) + '&data=' + encodeURIComponent(code),
+    BlocklyStorage.handleLinkResponse_
+  );
 };
 
 /**
@@ -49,9 +49,14 @@ BlocklyStorage.link = function() {
  * @param {string} app Name of application ('maze', 'turtle', ...).
  * @param {string} key Key to XML, obtained from href.
  */
-BlocklyStorage.retrieveXml = function(app, key) {
-  BlocklyStorage.makeRequest(`/data/${app}/storage/${key}.blockly`, '',
-      BlocklyStorage.handleRetrieveXmlResponse_, null, 'GET');
+BlocklyStorage.retrieveXml = function (app, key) {
+  BlocklyStorage.makeRequest(
+    `/data/${app}/storage/${key}.blockly`,
+    '',
+    BlocklyStorage.handleRetrieveXmlResponse_,
+    null,
+    'GET'
+  );
 };
 
 /**
@@ -70,22 +75,22 @@ BlocklyStorage.xhrs_ = new Map();
  *    unsuccessfully.  Defaults to BlocklyStorage alert of request status.
  * @param {string=} method The HTTP request method to use.  Default to POST.
  */
-BlocklyStorage.makeRequest =
-    function(url, data, opt_onSuccess, opt_onFailure, method = 'POST') {
+BlocklyStorage.makeRequest = function (url, data, opt_onSuccess, opt_onFailure, method = 'POST') {
   if (BlocklyStorage.xhrs_.has(url)) {
     // AJAX call is in-flight.
     BlocklyStorage.xhrs_.get(url).abort();
   }
   const xhr = new XMLHttpRequest();
   BlocklyStorage.xhrs_.set(url, xhr);
-  xhr.onload = function() {
+  xhr.onload = function () {
     if (this.status === 200) {
       opt_onSuccess && opt_onSuccess.call(xhr);
     } else if (opt_onFailure) {
       opt_onFailure.call(xhr);
     } else {
-      BlocklyStorage.alert_(BlocklyGames.getMsg('Games.httpRequestError', false) +
-          '\nXHR status: ' + xhr.status);
+      BlocklyStorage.alert_(
+        BlocklyGames.getMsg('Games.httpRequestError', false) + '\nXHR status: ' + xhr.status
+      );
     }
     BlocklyStorage.xhrs_.delete(url);
   };
@@ -106,11 +111,12 @@ BlocklyStorage.makeRequest =
  * Callback function for link AJAX call.
  * @private
  */
-BlocklyStorage.handleLinkResponse_ = function() {
+BlocklyStorage.handleLinkResponse_ = function () {
   const data = this.responseText.trim();
   window.location.hash = data;
-  BlocklyStorage.alert_(BlocklyGames.getMsg('Games.linkAlert', false).replace('%1',
-      window.location.href));
+  BlocklyStorage.alert_(
+    BlocklyGames.getMsg('Games.linkAlert', false).replace('%1', window.location.href)
+  );
   BlocklyStorage.startCode = BlocklyStorage.getCode();
 };
 
@@ -119,11 +125,12 @@ BlocklyStorage.handleLinkResponse_ = function() {
  * @private
  * @this {!XMLHttpRequest}
  */
-BlocklyStorage.handleRetrieveXmlResponse_ = function() {
+BlocklyStorage.handleRetrieveXmlResponse_ = function () {
   let data = this.responseText.trim();
   if (!data.length) {
-    BlocklyStorage.alert_(BlocklyGames.getMsg('Games.hashError', false)
-        .replace('%1', window.location.hash));
+    BlocklyStorage.alert_(
+      BlocklyGames.getMsg('Games.hashError', false).replace('%1', window.location.hash)
+    );
   } else {
     // Remove poison line to prevent raw content from being served.
     data = data.replace(/^\{\[\(\< UNTRUSTED CONTENT \>\)\]\}\n/, '');
@@ -137,7 +144,7 @@ BlocklyStorage.handleRetrieveXmlResponse_ = function() {
  * @param {string} message Text to alert.
  * @private
  */
-BlocklyStorage.alert_ = function(message) {
+BlocklyStorage.alert_ = function (message) {
   // Try to use a nice dialog.
   // Fall back to browser's alert() if BlocklyDialogs is not part of build.
   if (typeof BlocklyDialogs === 'object') {

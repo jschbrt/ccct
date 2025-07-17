@@ -18,7 +18,6 @@ goog.require('BlocklyDialogs');
 goog.require('BlocklyGames');
 goog.require('BlocklyInterface');
 
-
 /**
  * User's JavaScript code from previous execution.
  * @type string
@@ -29,7 +28,7 @@ BlocklyCode.executedJsCode = '';
  * Get the user's executable code as JS from the editor (Blockly or ACE).
  * @returns {string} JS code.
  */
-BlocklyCode.getJsCode = function() {
+BlocklyCode.getJsCode = function () {
   if (BlocklyInterface.blocksDisabled) {
     // Text editor.
     return BlocklyInterface.editor['getValue']();
@@ -45,7 +44,7 @@ BlocklyCode.getJsCode = function() {
  * automatically unhighlight all others.  If true or false, manually
  * highlight/unhighlight the specified block.
  */
-BlocklyCode.highlight = function(id, opt_state) {
+BlocklyCode.highlight = function (id, opt_state) {
   if (id) {
     const m = id.match(/^block_id_([^']+)$/);
     if (m) {
@@ -60,18 +59,17 @@ BlocklyCode.highlight = function(id, opt_state) {
  * @param {string} code Generated code.
  * @returns {string} The code without serial numbers.
  */
-BlocklyCode.stripCode = function(code) {
+BlocklyCode.stripCode = function (code) {
   // Strip out serial numbers.
   code = code.replace(/(,\s*)?'block_id_[^']+'\)/g, ')');
   return code.replace(/\s+$/, '');
 };
 
-
 /**
  * Load the JavaScript interpreter.
  * Defer loading until page is loaded and responsive.
  */
-BlocklyCode.importInterpreter = function() {
+BlocklyCode.importInterpreter = function () {
   function load() {
     //<script type="text/javascript"
     //  src="third-party/JS-Interpreter/compressed.js"></script>
@@ -87,7 +85,7 @@ BlocklyCode.importInterpreter = function() {
  * Load the Prettify CSS and JavaScript.
  * Defer loading until page is loaded and responsive.
  */
-BlocklyCode.importPrettify = function() {
+BlocklyCode.importPrettify = function () {
   function load() {
     //<link rel="stylesheet" type="text/css" href="common/prettify.css">
     //<script type="text/javascript" src="common/prettify.js"></script>
@@ -108,7 +106,7 @@ BlocklyCode.importPrettify = function() {
  * Congratulates the user for completing the level and offers to
  * direct them to the next level, if available.
  */
-BlocklyCode.congratulations = function() {
+BlocklyCode.congratulations = function () {
   const content = BlocklyGames.getElementById('dialogDone');
   const style = {
     width: '40%',
@@ -122,10 +120,10 @@ BlocklyCode.congratulations = function() {
     linesText.textContent = '';
     let code = BlocklyCode.executedJsCode;
     code = BlocklyCode.stripCode(code);
-    let noComments = code.replace(/\/\/[^\n]*/g, '');  // Inline comments.
-    noComments = noComments.replace(/\/\*.*\*\//g, '');  /* Block comments. */
-    noComments = noComments.replace(/[ \t]+\n/g, '\n');  // Trailing spaces.
-    noComments = noComments.replace(/\n+/g, '\n');  // Blank lines.
+    let noComments = code.replace(/\/\/[^\n]*/g, ''); // Inline comments.
+    noComments = noComments.replace(/\/\*.*\*\//g, ''); /* Block comments. */
+    noComments = noComments.replace(/[ \t]+\n/g, '\n'); // Trailing spaces.
+    noComments = noComments.replace(/\n+/g, '\n'); // Blank lines.
     noComments = noComments.trim();
     const lineCount = noComments.split('\n').length;
     const pre = BlocklyGames.getElementById('containerCode');
@@ -140,8 +138,7 @@ BlocklyCode.congratulations = function() {
     if (lineCount === 1) {
       locMsg = BlocklyGames.getMsg('Games.linesOfCode1', false);
     } else {
-      locMsg = BlocklyGames.getMsg('Games.linesOfCode2', false)
-          .replace('%1', String(lineCount));
+      locMsg = BlocklyGames.getMsg('Games.linesOfCode2', false).replace('%1', String(lineCount));
     }
     linesText.appendChild(document.createTextNode(locMsg));
   }
@@ -149,8 +146,10 @@ BlocklyCode.congratulations = function() {
   let levelMsg;
   // Safe from HTML injection due to textContent below.
   if (BlocklyGames.LEVEL < BlocklyGames.MAX_LEVEL) {
-    levelMsg = BlocklyGames.getMsg('Games.nextLevel', false)
-        .replace('%1', String(BlocklyGames.LEVEL + 1));
+    levelMsg = BlocklyGames.getMsg('Games.nextLevel', false).replace(
+      '%1',
+      String(BlocklyGames.LEVEL + 1)
+    );
   } else {
     levelMsg = BlocklyGames.getMsg('Games.finalLevel', false);
   }
@@ -159,13 +158,10 @@ BlocklyCode.congratulations = function() {
   ok.addEventListener('click', BlocklyInterface.nextLevel, true);
   ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
 
-  BlocklyDialogs.showDialog(content, null, false, true, style,
-      function() {
-        document.body.removeEventListener('keydown',
-            BlocklyCode.congratulationsKeyDown_, true);
-        });
-  document.body.addEventListener('keydown',
-      BlocklyCode.congratulationsKeyDown_, true);
+  BlocklyDialogs.showDialog(content, null, false, true, style, function () {
+    document.body.removeEventListener('keydown', BlocklyCode.congratulationsKeyDown_, true);
+  });
+  document.body.addEventListener('keydown', BlocklyCode.congratulationsKeyDown_, true);
 
   BlocklyGames.getElementById('dialogDoneText').textContent = levelMsg;
 };
@@ -176,7 +172,7 @@ BlocklyCode.congratulations = function() {
  * @param {!Event} e Keyboard event.
  * @private
  */
-BlocklyCode.congratulationsKeyDown_ = function(e) {
+BlocklyCode.congratulationsKeyDown_ = function (e) {
   BlocklyDialogs.dialogKeyDown(e);
   if (e.keyCode === 13 || e.keyCode === 32) {
     BlocklyInterface.nextLevel();

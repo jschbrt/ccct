@@ -365,7 +365,13 @@ BlocklyDialogs.storageAlert = function (origin, message) {
  */
 BlocklyDialogs.abortOffer = function () {
   // If the user has solved the level, all is well.
-  if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, BlocklyGames.LEVEL)) {
+  if (
+    BlocklyGames.loadFromLocalStorage(
+      BlocklyGames.storageName,
+      BlocklyGames.userCode,
+      BlocklyGames.LEVEL
+    )
+  ) {
     return;
   }
   // Don't override an existing dialog, or interrupt a drag.

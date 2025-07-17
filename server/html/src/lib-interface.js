@@ -108,7 +108,12 @@ BlocklyInterface.loadBlocks = function (defaultXml, inherit) {
     BlocklyGames.LEVEL
   );
   let inherited =
-    inherit && BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, BlocklyGames.LEVEL - 1);
+    inherit &&
+    BlocklyGames.loadFromLocalStorage(
+      BlocklyGames.storageName,
+      BlocklyGames.userCode,
+      BlocklyGames.LEVEL - 1
+    );
   if (inherited && typeof inherit === 'function') {
     inherited = inherit(inherited);
   }
@@ -405,7 +410,7 @@ BlocklyInterface.nextLevel = function () {
       BlocklyGames.LANG +
       '&level=' +
       (BlocklyGames.LEVEL + 1) +
-      BlocklyInterface.nextLevelParam + 
+      BlocklyInterface.nextLevelParam +
       '&user=' +
       BlocklyGames.userCode;
   } else {

@@ -206,7 +206,11 @@ BlocklyGames.init = function (title) {
   // Highlight levels that have been completed.
   for (let i = 1; i <= BlocklyGames.MAX_LEVEL; i++) {
     const link = BlocklyGames.getElementById('level' + i);
-    const done = !!BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, i);
+    const done = !!BlocklyGames.loadFromLocalStorage(
+      BlocklyGames.storageName,
+      BlocklyGames.userCode,
+      i
+    );
     if (link && done) {
       link.className += ' level_done';
     }
@@ -342,48 +346,47 @@ BlocklyGames.esc = function (text) {
     .replace(/'/g, '&#39;');
 };
 
-
 /**
  * Clear the data from the local cache
  */
-BlocklyGames.initClearData = function() {
+BlocklyGames.initClearData = function () {
   let storedData = false;
-    for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
-      if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, j)) {
-        storedData = true;
-      }
+  for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
+    if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, j)) {
+      storedData = true;
     }
+  }
 
   if (storedData) {
     const clearButton = BlocklyGames.getElementById('clearData');
     clearButton.style.visibility = 'visible';
     BlocklyGames.bindClick('clearData', BlocklyGames.clearData);
   }
-}
+};
 
 /**
  * Remove all user data from local storage
  */
-BlocklyGames.clearData = function() {
- if (!confirm(BlocklyGames.getMsg('Index.clear', false))) {
+BlocklyGames.clearData = function () {
+  if (!confirm(BlocklyGames.getMsg('Index.clear', false))) {
     return;
   }
   for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
     delete window.localStorage[BlocklyGames.storageName + BlocklyGames.userCode + j];
   }
   window.location =
-      window.location.protocol +
-      '//' +
-      window.location.host +
-      window.location.pathname +
-      '?lang=' +
-      BlocklyGames.LANG +
-      '&level=1' + 
-      '&skin=' + 
-      BlocklyGames.skinID +
-      '&user=' + 
-      BlocklyGames.userCode;  
-}
+    window.location.protocol +
+    '//' +
+    window.location.host +
+    window.location.pathname +
+    '?lang=' +
+    BlocklyGames.LANG +
+    '&level=1' +
+    '&skin=' +
+    BlocklyGames.skinID +
+    '&user=' +
+    BlocklyGames.userCode;
+};
 
 BlocklyGames.timer;
 

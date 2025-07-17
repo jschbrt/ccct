@@ -35,7 +35,7 @@ Maze.html.start = function (ij) {
       </button>
       <button class="secondary" id="clearData"></button>
     </p>
-    ` 
+    `
   );
 
   // Level‐specific button row: run, reset, skip, submit

@@ -672,6 +672,8 @@ function init() {
     BlocklyGames.bindClick('resetButton', resetButtonClick);
   }
 
+// Commenting out the skip button   
+/*
   BlocklyGames.bindClick('submitButton', submitButtonClick);
 
   if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
@@ -682,7 +684,7 @@ function init() {
     var hiddenskipbutton = document.getElementById('hiddenskipbutton');
     BlocklyGames.bindClick('hiddenskipbutton', hiddenSkipButtonClick);
   }
-
+*/
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
     var letters = ['1', '2', '3', '4', '5'];
     var lettersUsed = [];

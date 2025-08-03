@@ -41,6 +41,9 @@ Maze.html.start = function (ij) {
   // Level‐specific button row: run, reset, skip, submit
   // introduce a skip button for divergent thinking tasks
   let buttons = ``;
+
+  // commented out the skip buttons 
+  /*
   if ([5, 6, 9, 10, 11].includes(ij.level)) {
     buttons += `
     <table id="table" width="450">
@@ -70,7 +73,9 @@ Maze.html.start = function (ij) {
         </td>
       </tr>
     </table>`;
-  } else if (ij.level == 12) {
+  } else 
+  */
+  if (ij.level == 12) {
     buttons = `
     <div id='both-groups'>
     <div id="input-group1">

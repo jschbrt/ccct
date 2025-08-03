@@ -103,8 +103,6 @@ BlocklyGames.html.levelLinks_ = function (ij, suffix) {
     html += ' ';
     if (i === ij.level) {
       html += `<span class="level_number level_done" id="level${i}">${i}</span>`;
-    } else if (i === ij.maxLevel) {
-      html += `<a class="level_number" id="level${i}" href="${url}">${i}</a>`;
     } else {
       html += `<a class="level_dot" id="level${i}" href="${url}"></a>`;
     }

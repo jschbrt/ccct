@@ -444,11 +444,14 @@ BlocklyDialogs.startTime = function () {
   //put timer
   if (BlocklyGames.timer) clearInterval(BlocklyGames.timer);
   BlocklyGames.startTimer();
-
-  if (BlocklyGames.LEVEL == 12) {
-    var timeBubble = document.getElementById('timeBubble');
-    timeBubble.style.display = 'inline';
-    BlocklyGames.countdown('time', 1, 0);
+  if ([1, 2, 3, 4].includes(BlocklyGames.LEVEL)) {
+    BlocklyGames.countdown('time', 2, 30);
+  } else if ([5, 6].includes(BlocklyGames.LEVEL)) {
+    BlocklyGames.countdown('time', 3, 0);
+  } else if ([7, 8, 9, 10, 11, 12].includes(BlocklyGames.LEVEL)) {
+    BlocklyGames.countdown('time', 2, 0);
+  } else if ([13].includes(BlocklyGames.LEVEL)) {
+    BlocklyGames.countdown('time', 4, 0);
   }
 };
 

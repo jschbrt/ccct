@@ -136,7 +136,7 @@ ${header}
       <path d="M 0,-55 a 55 55 0 0 1 55 55" />
     </g>
   </svg>
-  <div id="timeBubble" style='display: none'>
+  <div id="timeBubble" style='display: inline'>
       <div id="time"></div>
   </div>
   <div id="capacityBubble">

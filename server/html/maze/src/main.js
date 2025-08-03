@@ -580,7 +580,6 @@ function init() {
     html: BlocklyGames.IS_HTML,
     isKids: IS_KIDS_VERSION,
   });
-  BlocklyGames.initClearData();
 
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));
 
@@ -656,11 +655,6 @@ function init() {
 
   if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
     BlocklyGames.bindClick('skipButton', skipButtonClick);
-  }
-
-  if ([7, 8].includes(BlocklyGames.LEVEL)) {
-    var hiddenskipbutton = document.getElementById('hiddenskipbutton');
-    BlocklyGames.bindClick('hiddenskipbutton', hiddenSkipButtonClick);
   }
 
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
@@ -912,27 +906,6 @@ function skipButtonClick(e) {
   reset(false);
   execute('skip');
   levelData.submissionType = 'skip';
-  saveData();
-
-  BlocklyInterface.skipLevel(BlocklyGames.LEVEL);
-}
-
-// Hidden skip Button
-function hiddenSkipButtonClick(e) {
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-
-  if (!confirm('Überspringen?')) {
-    return;
-  }
-
-  BlocklyDialogs.hideDialog(false);
-
-  reset(false);
-  execute();
-  levelData.submissionType = 'hiddenSkip';
   saveData();
 
   BlocklyInterface.skipLevel(BlocklyGames.LEVEL);

@@ -65,7 +65,6 @@ BlocklyGames.html.headerBar = function (
       <select id="languageMenu"></select>
       ${linkButton}
       ${helpButton}
-      ${farLeftHtml}
     </td>
   </tr>
 </table>

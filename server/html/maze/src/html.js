@@ -26,16 +26,7 @@ Maze.html.start = function (ij) {
   const header = BlocklyGames.html.headerBar(
     ij,
     BlocklyGames.getMsg('Games.maze', true),
-    BlocklyInterface.nextLevelParam,
-    /* hasLinkButton */ true,
-    /* hasHelpButton */ false,
-    `<p id="adminButtons">
-      <button id="hiddenskipbutton">
-        <img src="common/skipw.png" class="skip"> Skip
-      </button>
-      <button class="secondary" id="clearData"></button>
-    </p>
-    `
+    BlocklyInterface.nextLevelParam
   );
 
   // Level‐specific button row: run, reset, skip, submit

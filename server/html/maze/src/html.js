@@ -32,6 +32,7 @@ Maze.html.start = function (ij) {
   // Level‐specific button row: run, reset, skip, submit
   // introduce a skip button for divergent thinking tasks
   let buttons = ``;
+
   if ([5, 6, 9, 10, 11].includes(ij.level)) {
     buttons += `
     <table id="table" width="450">
@@ -46,10 +47,6 @@ Maze.html.start = function (ij) {
                   title="${BlocklyGames.getMsg('Maze.resetTooltip', true)}">
             <img src="common/1x1.gif" class="stop icon21">
             ${BlocklyGames.getMsg('Games.resetProgram', true)}
-          </button>
-          <button id="skipButton" class="primary"
-                  title="Überspringt die Level ohne eine Lösung abzugeben.">
-            <img src="common/skipw.png" class="skip"> Überspringen
           </button>
           <button id="submitButton" class="primary"
                   title="${BlocklyGames.getMsg('Games.submitTooltip', true)}">

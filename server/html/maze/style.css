@@ -241,16 +241,6 @@ html[dir='RTL'] #pegmanButton > span {
   margin-top: 35px;
 }
 
-#hiddenskipbutton {
-  opacity:0;
-}
-
-#hiddenskipbutton:hover {
-  opacity: 0;
-  border: 1px solid #1c98df;
-  background-color: #1c98df;
-}
-
 button.stop:hover {
   border: 1px solid #1cdf36;
   background-color: #1cdf36;
@@ -303,18 +293,18 @@ button.stop {
 }
 
 #timeBubble {
-    position: absolute;
-    margin-bottom: -0.4em;
-    left: 5px;
-    bottom: 375px;
-    width: 380px;
+  position: absolute;
+  margin-bottom: -0.4em;
+  left: 5px;
+  bottom: 375px;
+  width: 380px;
 }
 
 #time {
-    display: inline;
-    color: #fff;
-    padding: 5px 1em;
-    border-radius: 15px;
-    background-color: rgba(64, 64, 64, 0.7);
-    font-size: large;
+  display: inline;
+  color: #fff;
+  padding: 5px 1em;
+  border-radius: 15px;
+  background-color: rgba(64, 64, 64, 0.7);
+  font-size: large;
 }

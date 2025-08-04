@@ -386,21 +386,20 @@ var resultPath = [];
 /**
  * xAPI endpoint configuration.
  */
-const lrs = "https://logik.hib.uni-tuebingen.de/lrsql/xapi"; 
-const apiKey = "788277dac5e47292147749362006263b9d7a79940264a0cb0c19f9f404ebefc4";
-const passKey = "2ebeaab18ed96bd5ee3ddf9106c1d1fd83739e4c47e085a279bb4a4147fe9324";
+const lrs = 'https://logik.hib.uni-tuebingen.de/lrsql/xapi';
+const apiKey = '788277dac5e47292147749362006263b9d7a79940264a0cb0c19f9f404ebefc4';
+const passKey = '2ebeaab18ed96bd5ee3ddf9106c1d1fd83739e4c47e085a279bb4a4147fe9324';
 const auth = window.XAPI.toBasicAuth(apiKey, passKey);
 const xapi = new window.XAPI({
   endpoint: lrs,
-  auth: auth
+  auth: auth,
 });
 // ToDo: replace with userEmail later
-const urlParams = new URLSearchParams(window.location.search)
+const urlParams = new URLSearchParams(window.location.search);
 var email = urlParams.get('user') || '';
 if (!email) {
   console.warn('No user email provided. Defaulting to empty string.');
 }
-
 
 /**
  * Create and layout all the nodes for the path, scenery, Pegman, and goal.
@@ -600,7 +599,6 @@ function init() {
     html: BlocklyGames.IS_HTML,
     isKids: IS_KIDS_VERSION,
   });
-  BlocklyGames.initClearData();
 
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));
 
@@ -672,19 +670,8 @@ function init() {
     BlocklyGames.bindClick('resetButton', resetButtonClick);
   }
 
-// Commenting out the skip button   
-/*
   BlocklyGames.bindClick('submitButton', submitButtonClick);
 
-  if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
-    BlocklyGames.bindClick('skipButton', skipButtonClick);
-  }
-
-  if ([7, 8].includes(BlocklyGames.LEVEL)) {
-    var hiddenskipbutton = document.getElementById('hiddenskipbutton');
-    BlocklyGames.bindClick('hiddenskipbutton', hiddenSkipButtonClick);
-  }
-*/
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
     var letters = ['1', '2', '3', '4', '5'];
     var lettersUsed = [];
@@ -943,27 +930,6 @@ function skipButtonClick(e) {
   BlocklyInterface.skipLevel(BlocklyGames.LEVEL);
 }
 
-// Hidden skip Button
-function hiddenSkipButtonClick(e) {
-  // Prevent double-clicks or double-taps.
-  if (BlocklyInterface.eventSpam(e)) {
-    return;
-  }
-
-  if (!confirm('Überspringen?')) {
-    return;
-  }
-
-  BlocklyDialogs.hideDialog(false);
-
-  reset(false);
-  execute();
-  levelData.submissionType = 'hiddenSkip';
-  saveData();
-
-  BlocklyInterface.skipLevel(BlocklyGames.LEVEL);
-}
-
 /**
  * Move to the next level
  */
@@ -1022,7 +988,7 @@ function submitButtonClick(e) {
       var skipButton = document.getElementById('skipButton');
       skipButton.style.display = 'none';
     }
-    
+
     reset(false);
     execute('submit');
     var success = result > 0;
@@ -1738,17 +1704,13 @@ function notDone() {
 
 BlocklyGames.callWhenLoaded(init);
 
-
-
-
-
 /**
  * Function to send an xAPI statement
  */
 
-function sendStatement(statement){
+function sendStatement(statement) {
   xapi.sendStatement({
-    statement: statement
+    statement: statement,
   });
 }
 
@@ -1758,68 +1720,68 @@ function sendStatement(statement){
 
 function generateRunStatement(email, success, completion) {
   var statement = {
-    "actor": {
-      "mbox": "mailto:" + email      // Replace with actual user email or identifier               
+    actor: {
+      mbox: 'mailto:' + email, // Replace with actual user email or identifier
     },
-    "verb": {
-      "id": "http://adlnet.gov/expapi/verbs/attempted",
-      "display": {
-        "en-US": "attempted"
-      }
+    verb: {
+      id: 'http://adlnet.gov/expapi/verbs/attempted',
+      display: {
+        'en-US': 'attempted',
+      },
     },
-    "object": {
-      "id": "http://example.com/activities/blocklygames/" + BlocklyGames.LEVEL, // Replace with actual activity ID
-      "definition": {
-        "name": {
-          "en-US": "Computational Creativity test"
+    object: {
+      id: 'http://example.com/activities/blocklygames/' + BlocklyGames.LEVEL, // Replace with actual activity ID
+      definition: {
+        name: {
+          'en-US': 'Computational Creativity test',
         },
-        "description": {
-          "en-US": "A description of the Blockly Games activity."
+        description: {
+          'en-US': 'A description of the Blockly Games activity.',
         },
-        "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
-        "interactionType": "other" 
-      }
+        type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
+        interactionType: 'other',
+      },
     },
-    "timestamp": new Date().toISOString(), // Current timestamp
-    "result": {
-      "response": BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
-      "success": success, // Boolean indicating if the activity was successful
-      "completion": completion // Boolean indicating if the activity was completed
-    }
-  };   
+    timestamp: new Date().toISOString(), // Current timestamp
+    result: {
+      response: BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
+      success: success, // Boolean indicating if the activity was successful
+      completion: completion, // Boolean indicating if the activity was completed
+    },
+  };
   return statement;
-}   
+}
 
 function generateSubmitStatement(email, success, completion) {
   var statement = {
-    "actor": {
-      "mbox": "mailto:" + email      // Replace with actual user email or identifier               
+    actor: {
+      mbox: 'mailto:' + email, // Replace with actual user email or identifier
     },
-    "verb": {
-      "id": "http://adlnet.gov/expapi/verbs/submitted",
-      "display": {
-        "en-US": "submitted"
-      }
+    verb: {
+      id: 'http://adlnet.gov/expapi/verbs/submitted',
+      display: {
+        'en-US': 'submitted',
+      },
     },
-    "object": {
-      "id": "http://example.com/activities/blocklygames/" + BlocklyGames.LEVEL, // Replace with actual activity ID
-      "definition": {
-        "name": {
-          "en-US": "Blockly Games Activity"
+    object: {
+      id: 'http://example.com/activities/blocklygames/' + BlocklyGames.LEVEL, // Replace with actual activity ID
+      definition: {
+        name: {
+          'en-US': 'Blockly Games Activity',
         },
-        "description": {
-          "en-US": "A description of the Blockly Games activity."
+        description: {
+          'en-US': 'A description of the Blockly Games activity.',
         },
-        "type": "http://adlnet.gov/expapi/activities/cmi.interaction",
-        "interactionType": "other" 
-      }
+        type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
+        interactionType: 'other',
+      },
     },
-    "timestamp": new Date().toISOString(), // Current timestamp
-    "result": {
-      "response": BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
-      "success": success, // Boolean indicating if the activity was successful
-      "completion": completion // Boolean indicating if the activity was completed
-    }
-  };   
+    timestamp: new Date().toISOString(), // Current timestamp
+    result: {
+      response: BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
+      success: success, // Boolean indicating if the activity was successful
+      completion: completion, // Boolean indicating if the activity was completed
+    },
+  };
   return statement;
-}   
+}

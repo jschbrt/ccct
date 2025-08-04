@@ -489,18 +489,6 @@ BlocklyDialogs.stop = function () {
   ok.addEventListener('click', handleOk);
   ok.addEventListener('touchend', handleOk);
 
-  var stopSign = document.getElementById('stopImage');
-  function handleStop() {
-    var stopOK = document.getElementById('stopOK');
-    stopOK.style.border = '1px';
-    stopOK.style.backgroundColor = '#1cdf36';
-    stopOK.style.color = '#fff';
-    stopOK.style.pointerEvents = 'auto';
-    stopOK.style.cursor = 'pointer';
-  }
-  stopSign.addEventListener('click', handleStop);
-  stopSign.addEventListener('touchend', handleStop);
-
   var style = {
     width: '40%',
     left: '30%',

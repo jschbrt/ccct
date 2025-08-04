@@ -318,6 +318,8 @@ button.stop:hover {
   border: 1px solid #1cdf36;
   background-color: #1cdf36;
   color: #fff;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 #stopOK:hover {

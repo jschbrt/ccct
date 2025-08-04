@@ -227,11 +227,10 @@ button:hover:not(:disabled) {
 }
 
 #dialogStopText2 {
-  left: 112px;
-  bottom: 61px;
+  left: auto;
+  bottom: auto;
   position: relative;
-  font-size: 1.5vw;
-  font-weight: bold;
+  font-size: 1vw;
 }
 
 #dialogAbortText2 {

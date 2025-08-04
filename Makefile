@@ -3,7 +3,7 @@
 ##############################
 
 SHELL = /bin/bash
-REQUIRED_BINS = unzip wget java python
+REQUIRED_BINS = unzip wget java python3
 
 ##############################
 # Rules
@@ -12,15 +12,15 @@ REQUIRED_BINS = unzip wget java python
 all: deps games
 
 maze: common
-	python build/compress.py maze
+	python3 build/compress.py maze
 
 games: maze
 
 common:
 	@echo "Converting messages.js to JSON for Translatewiki."
-	python build/messages_to_json.py
+	python3 build/messages_to_json.py
 	@echo "Converting JSON from Translatewiki to message files."
-	python build/json_to_js.py
+	python3 build/json_to_js.py
 	@echo
 
 deps:

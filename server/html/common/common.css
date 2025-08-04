@@ -314,13 +314,13 @@ button.stop:hover {
   color: #fff9f9e8;
 }
 
-#stopOKVisible {
+#stopOK {
   border: 1px solid #1cdf36;
   background-color: #1cdf36;
   color: #fff;
 }
 
-#stopOKVisible:hover {
+#stopOK:hover {
   border: 1px solid #1cdf36;
   background-color: #1cdf36;
   color: #fff9f9e8;

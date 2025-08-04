@@ -304,6 +304,12 @@ BlocklyInterface.injectBlockly = function (options) {
   }
   options['media'] = 'third-party/blockly/media/';
   options['oneBasedIndex'] = false;
+  options['grid'] = { spacing: 20, length: 3, colour: '#ccc', snap: true }; //add grid
+  options['theme'] = {
+    componentStyles: {
+      workspaceBackgroundColour: '#ffffffee',
+    },
+  };
   BlocklyInterface.workspace = Blockly.inject('blockly', options);
   BlocklyInterface.workspace.addChangeListener(BlocklyInterface.codeChanged);
 };

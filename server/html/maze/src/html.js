@@ -26,24 +26,13 @@ Maze.html.start = function (ij) {
   const header = BlocklyGames.html.headerBar(
     ij,
     BlocklyGames.getMsg('Games.maze', true),
-    BlocklyInterface.nextLevelParam,
-    /* hasLinkButton */ true,
-    /* hasHelpButton */ false,
-    `<p id="adminButtons">
-      <button id="hiddenskipbutton">
-        <img src="common/skipw.png" class="skip"> Skip
-      </button>
-      <button class="secondary" id="clearData"></button>
-    </p>
-    `
+    BlocklyInterface.nextLevelParam
   );
 
   // Level‐specific button row: run, reset, skip, submit
   // introduce a skip button for divergent thinking tasks
   let buttons = ``;
 
-  // commented out the skip buttons 
-  /*
   if ([5, 6, 9, 10, 11].includes(ij.level)) {
     buttons += `
     <table id="table" width="450">
@@ -59,10 +48,6 @@ Maze.html.start = function (ij) {
             <img src="common/1x1.gif" class="stop icon21">
             ${BlocklyGames.getMsg('Games.resetProgram', true)}
           </button>
-          <button id="skipButton" class="primary"
-                  title="Überspringt die Level ohne eine Lösung abzugeben.">
-            <img src="common/skipw.png" class="skip"> Überspringen
-          </button>
           <button id="submitButton" class="primary"
                   title="${BlocklyGames.getMsg('Games.submitTooltip', true)}">
             <img src="common/submit2.png" class="submit">${BlocklyGames.getMsg(
@@ -73,9 +58,7 @@ Maze.html.start = function (ij) {
         </td>
       </tr>
     </table>`;
-  } else 
-  */
-  if (ij.level == 12) {
+  } else if (ij.level == 12) {
     buttons = `
     <div id='both-groups'>
     <div id="input-group1">
@@ -141,7 +124,7 @@ ${header}
       <path d="M 0,-55 a 55 55 0 0 1 55 55" />
     </g>
   </svg>
-  <div id="timeBubble" style='display: none'>
+  <div id="timeBubble" style='display: inline'>
       <div id="time"></div>
   </div>
   <div id="capacityBubble">

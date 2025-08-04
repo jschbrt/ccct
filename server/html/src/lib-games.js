@@ -346,48 +346,6 @@ BlocklyGames.esc = function (text) {
     .replace(/'/g, '&#39;');
 };
 
-/**
- * Clear the data from the local cache
- */
-BlocklyGames.initClearData = function () {
-  let storedData = false;
-  for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
-    if (BlocklyGames.loadFromLocalStorage(BlocklyGames.storageName, BlocklyGames.userCode, j)) {
-      storedData = true;
-    }
-  }
-
-  if (storedData) {
-    const clearButton = BlocklyGames.getElementById('clearData');
-    clearButton.style.visibility = 'visible';
-    BlocklyGames.bindClick('clearData', BlocklyGames.clearData);
-  }
-};
-
-/**
- * Remove all user data from local storage
- */
-BlocklyGames.clearData = function () {
-  if (!confirm(BlocklyGames.getMsg('Index.clear', false))) {
-    return;
-  }
-  for (let j = 1; j <= BlocklyGames.MAX_LEVEL; j++) {
-    delete window.localStorage[BlocklyGames.storageName + BlocklyGames.userCode + j];
-  }
-  window.location =
-    window.location.protocol +
-    '//' +
-    window.location.host +
-    window.location.pathname +
-    '?lang=' +
-    BlocklyGames.LANG +
-    '&level=1' +
-    '&skin=' +
-    BlocklyGames.skinID +
-    '&user=' +
-    BlocklyGames.userCode;
-};
-
 BlocklyGames.timer;
 
 BlocklyGames.startTimer = function () {

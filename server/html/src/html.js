@@ -262,6 +262,18 @@ BlocklyGames.html.stopDialog = function () {
   </div>
   `;
     }
+    else {
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">Level ${level}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    }
   } else if (skin === 0) {
     if (level === 1) {
       msg = astroMsg.a;
@@ -324,11 +336,19 @@ BlocklyGames.html.stopDialog = function () {
   </div>
   `;
     }
-  } else {
-    return 
- }
-
-  
+   else {
+    return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">Level ${level}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+   }
+ } 
 };
 
 /**

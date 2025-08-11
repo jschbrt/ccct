@@ -600,6 +600,9 @@ function init() {
     isKids: IS_KIDS_VERSION,
   });
 
+  //add the dialogue on the every level
+  setTimeout(BlocklyDialogs.stop, 100);
+
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));
 
   const rtl = BlocklyGames.IS_RTL;
@@ -781,13 +784,15 @@ function init() {
     BlocklyCode.importPrettify();
 
     // show dialogs or start timer
-    if ([2, 3, 4, 5, 7, 13].includes(BlocklyGames.LEVEL)) {
+    /*if ([2, 3, 4, 5, 7, 13].includes(BlocklyGames.LEVEL)) {
       setTimeout(BlocklyDialogs.stop, 100);
       BlocklyGames.startTimer();
     } else {
       if (BlocklyGames.timer) clearInterval(BlocklyGames.timer);
       BlocklyGames.startTimer();
     }
+      */
+    
   }
 }
 
@@ -983,11 +988,6 @@ function submitButtonClick(e) {
     resetButton.style.display = 'none';
     submitButton.style.display = 'none';
 
-    if ([5, 6, 9, 10, 11].includes(BlocklyGames.LEVEL)) {
-      // change level 1 to 9
-      var skipButton = document.getElementById('skipButton');
-      skipButton.style.display = 'none';
-    }
 
     reset(false);
     execute('submit');

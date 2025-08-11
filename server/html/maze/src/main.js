@@ -105,6 +105,7 @@ const SKINS = [
 const SKIN_ID = BlocklyGames.getIntegerParamFromUrl('skin', 0, SKINS.length - 1);
 const SKIN = SKINS[SKIN_ID];
 const IS_KIDS_VERSION = Boolean(SKIN_ID); // if true, its the 1-2graders version
+const SKIN_NAME = SKIN_ID === 0 ? 'Astronaut' : 'Bee';
 
 // retrieve the usercode from the URL
 BlocklyGames.skinID = SKIN_ID;
@@ -1094,6 +1095,14 @@ function submitChoiceLevel(e) {
   if (isClean) {
     submitButton.style.display = 'none';
     saveChoiceData();
+    let completion = true;
+    // generate xapi statement
+    let statement = generateChoiceLevelStatement(
+      userName || '',
+      completion
+    );
+    console.log(statement);
+    sendStatement(statement);
     switchLevel();
   }
 }
@@ -1718,6 +1727,7 @@ function sendStatement(statement) {
  */
 
 function generateRunStatement(userName, success, completion) {
+
   var statement = {
     actor: {
       account: {
@@ -1732,13 +1742,13 @@ function generateRunStatement(userName, success, completion) {
       },
     },
     object: {
-      id: 'http://example.com/activities/blocklygames/' + BlocklyGames.LEVEL, // Replace with actual activity ID
+      id: 'https://www.ccct.hib.uni-tuebingen.de/html/maze.html/' + '?level=' + BlocklyGames.LEVEL + '&skin=' + SKIN_ID,
       definition: {
         name: {
-          'en-US': 'Computational Creativity test',
+          'en-US': 'Maze ' + SKIN_NAME + ' Level ' + BlocklyGames.LEVEL,
         },
         description: {
-          'en-US': 'A description of the Blockly Games activity.',
+          'en-US': 'This is a part of Computational Creativity Testing.',
         },
         type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
         interactionType: 'other',
@@ -1748,7 +1758,7 @@ function generateRunStatement(userName, success, completion) {
     result: {
       response: BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
       success: success, // Boolean indicating if the activity was successful
-      completion: completion, // Boolean indicating if the activity was completed
+      completion: completion // Boolean indicating if the activity was completed
     },
   };
   return statement;
@@ -1769,13 +1779,13 @@ function generateSubmitStatement(userName, success, completion) {
       },
     },
     object: {
-      id: 'http://example.com/activities/blocklygames/' + BlocklyGames.LEVEL, // Replace with actual activity ID
+      id: 'https://www.ccct.hib.uni-tuebingen.de/html/maze.html/' + '?level=' + BlocklyGames.LEVEL + '&skin=' + SKIN_ID,
       definition: {
         name: {
-          'en-US': 'Blockly Games Activity',
+          'en-US': 'Maze ' + SKIN_NAME + ' Level ' + BlocklyGames.LEVEL,
         },
         description: {
-          'en-US': 'A description of the Blockly Games activity.',
+          'en-US': 'This is a part of Computational Creativity Testing.',
         },
         type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
         interactionType: 'other',
@@ -1785,8 +1795,47 @@ function generateSubmitStatement(userName, success, completion) {
     result: {
       response: BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
       success: success, // Boolean indicating if the activity was successful
-      completion: completion, // Boolean indicating if the activity was completed
+      completion: completion // Boolean indicating if the activity was completed
     },
   };
   return statement;
 }
+
+function generateChoiceLevelStatement(userName, completion) {
+  var statement = {
+    actor: {
+      account: {
+        name: userName,
+        homePage: 'https://moodle.hector-kinderakademien.de/'
+      }
+    },
+    verb: {
+      id: 'http://adlnet.gov/expapi/verbs/selected',
+      display: {
+        'en-US': 'selected',
+      },
+    },
+    object: {
+      id: 'https://www.ccct.hib.uni-tuebingen.de/html/maze.html/' + '?level=' + BlocklyGames.LEVEL + '&skin=' + SKIN_ID,
+      definition: {
+        name: {
+          'en-US': 'Maze ' + SKIN_NAME + ' Level ' + BlocklyGames.LEVEL,
+        },
+        description: {
+          'en-US': 'This is a part of Computational Creativity Testing.',
+        },
+        type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
+        interactionType: 'other',
+      },
+    },
+    timestamp: new Date().toISOString(), // Current timestamp
+    result: {
+      response: JSON.stringify({first: choiceLevelData['prio1'], second: choiceLevelData['prio2']}), // The choices made by the user
+      completion: completion // Boolean indicating if the activity was completed
+    },
+  };
+  return statement;
+} 
+
+
+//ToDo: clean up xAPI data, add skin info 

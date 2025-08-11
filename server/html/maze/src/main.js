@@ -602,7 +602,7 @@ function init() {
 
   //add the dialogue on the every level
   setTimeout(BlocklyDialogs.stop, 100);
-
+  
   BlocklyInterface.init(BlocklyGames.getMsg('Games.maze', true));
 
   const rtl = BlocklyGames.IS_RTL;
@@ -876,7 +876,6 @@ function runButtonClick(e) {
   levelData.allSubmitted.resultType.push(result);
   levelData.allSubmitted.timestamp.push(new Date().toISOString());
   levelData.playPressedCount += 1;
-
   console.log(levelData);
   var success = result > 0;
   var statement = generateRunStatement(email || '', success, true);
@@ -1052,8 +1051,9 @@ function submitChoiceLevel(e) {
   //var input = false; set a variable to true false depending on if real content was submitted
   var already_alerted = false;
   var isClean = false;
-  for (var i = 0; i < numberOfAnswers; i++) {
-    var choiceLevelInput = document.getElementById('choiceLevelInput' + (i + 1)).value; // return value of input box
+  const choiceLevelInputs = document.getElementsByTagName('input');
+  for (var i = 0; i < choiceLevelInputs.length; i++) {
+    var choiceLevelInput = choiceLevelInputs[i].value; // return value of input box
     choiceLevelInput = choiceLevelInput.toUpperCase();
     choiceLevelInputList[i] = choiceLevelInput;
     if (already_alerted) {

@@ -203,32 +203,7 @@ BlocklyGames.html.stopDialog = function () {
   if (skin === 1) {
     if (level === 1) {
       msg = beeMsg.a;
-    } else if (level === 5) {
-      msg = beeMsg.b;
-    } else if (level === 7) {
-      msg = beeMsg.c;
-    } else if (level === 12) {
-      msg = beeMsg.d;
-    } else if (level === 13) {
-      msg = beeMsg.e;
-    }
-  } else if (skin === 0) {
-    if (level === 1) {
-      msg = astroMsg.a;
-    } else if (level === 5) {
-      msg = astroMsg.b;
-    } else if (level === 7) {
-      msg = astroMsg.c;
-    } else if (level === 12) {
-      msg = astroMsg.d;
-    } else if (level === 13) {
-      msg = astroMsg.e;
-    }
-  } else {
-    msg = 'Unbekanntes Level';
-  }
-
-  return `
+      return `
   <div id="dialogStop" class="dialogHiddenContent">
     <div id="stopMessageDiv">
       <div id="dialogStopText2">${msg}</div>
@@ -238,6 +213,122 @@ BlocklyGames.html.stopDialog = function () {
     </div>
   </div>
   `;
+    } else if (level === 5) {
+      msg = beeMsg.b;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 7) {
+      msg = beeMsg.c;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 12) {
+      msg = beeMsg.d;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 13) {
+      msg = beeMsg.e;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    }
+  } else if (skin === 0) {
+    if (level === 1) {
+      msg = astroMsg.a;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 5) {
+      msg = astroMsg.b;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 7) {
+      msg = astroMsg.c;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 12) {
+      msg = astroMsg.d;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    } else if (level === 13) {
+      msg = astroMsg.e;
+      return `
+  <div id="dialogStop" class="dialogHiddenContent">
+    <div id="stopMessageDiv">
+      <div id="dialogStopText2">${msg}</div>
+    </div>
+    <div id="dialogStopButtons" class="center" style="padding: 1ex 3ex 0">
+      <button id="stopOK" class="stop">Weiter</button>
+    </div>
+  </div>
+  `;
+    }
+  } else {
+    return 
+ }
+
+  
 };
 
 /**

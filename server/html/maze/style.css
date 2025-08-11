@@ -308,3 +308,7 @@ button.stop {
   background-color: rgba(64, 64, 64, 0.7);
   font-size: large;
 }
+
+.large{
+	font-size: 25px;
+}

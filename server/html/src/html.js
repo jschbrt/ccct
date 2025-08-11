@@ -158,24 +158,12 @@ BlocklyGames.html.dialog = function () {
  */
 BlocklyGames.html.doneDialog = function () {
   return `
-    <div id="dialogDone" class="dialogHiddenContent">
-    <div style="font-size: large; margin: 1em; color: purple;">{{msg meaning="Games.congratulations" desc="alert - This is displayed when the user solves the level.\n{lb}{lb}Identical|Congratulation{rb}{rb}"}}Congratulations!{{/msg}}</div>
-    <div id="finalImageDiv">
-      <img id="finalImage">
-      <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
-    </div>
-    <div id="dialogDoneButtons" class="farSide" style="padding: 1ex 3ex 0">
-      <button id="doneOk" class="secondary">
-        {{msg meaning="Games.dialogOk" desc="IBID"}}OK{{/msg}}
-      </button>
-    </div>
-  </div>
 <div id="dialogDone" class="dialogHiddenContent">
   <div class="large">${BlocklyGames.getMsg('Games.congratulations', true)}</div>
   <div id="finalImageDiv">
-  <img id="finalImage">
-  <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
-    </div>
+    <img id="finalImage">
+    <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
+  </div>
   <div id="dialogDoneButtons" class="farSide farSideButtons">
     <button class="addHideHandler">${BlocklyGames.esc(Blockly.Msg['DIALOG_CANCEL'])}</button>
     <button id="doneOk" class="secondary">${BlocklyGames.esc(Blockly.Msg['DIALOG_OK'])}</button>

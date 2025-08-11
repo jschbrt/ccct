@@ -384,6 +384,8 @@ let pegmanD;
 const log = [];
 var resultPath = [];
 
+var choiceLevelOptions = [];
+
 /**
  * xAPI endpoint configuration.
  */
@@ -686,6 +688,7 @@ function init() {
       );
       if (code) {
         var xml = Blockly.Xml.textToDom(code);
+        choiceLevelOptions.push(code);
         if (xml.childElementCount != 0) {
           var letter = letters[numberOfAnswers];
           BlocklyInterface.loadMazeChoice(code, false, letter);
@@ -1830,7 +1833,12 @@ function generateChoiceLevelStatement(userName, completion) {
     },
     timestamp: new Date().toISOString(), // Current timestamp
     result: {
-      response: JSON.stringify({first: choiceLevelData['prio1'], second: choiceLevelData['prio2']}), // The choices made by the user
+      response: JSON.stringify({
+        first: choiceLevelData['prio1'],
+        second: choiceLevelData['prio2'],
+        options: choiceLevelOptions
+      }), // The choices made by the user
+
       completion: completion // Boolean indicating if the activity was completed
     },
   };

@@ -394,11 +394,10 @@ const xapi = new window.XAPI({
   endpoint: lrs,
   auth: auth,
 });
-// ToDo: replace with userEmail later
 const urlParams = new URLSearchParams(window.location.search);
-var email = urlParams.get('user') || '';
-if (!email) {
-  console.warn('No user email provided. Defaulting to empty string.');
+var userName = urlParams.get('user') || '';
+if (!userName) {
+  console.warn('No user name provided. Defaulting to empty string.');
 }
 
 /**
@@ -878,7 +877,7 @@ function runButtonClick(e) {
   levelData.playPressedCount += 1;
   console.log(levelData);
   var success = result > 0;
-  var statement = generateRunStatement(email || '', success, true);
+  var statement = generateRunStatement(userName || '', success, true);
   console.log(statement);
   sendStatement(statement);
 }
@@ -991,7 +990,7 @@ function submitButtonClick(e) {
     reset(false);
     execute('submit');
     var success = result > 0;
-    var statement = generateSubmitStatement(email || '', success, true);
+    var statement = generateSubmitStatement(userName || '', success, true);
     console.log(statement);
     sendStatement(statement);
   }
@@ -1718,10 +1717,13 @@ function sendStatement(statement) {
  * Function to generate xAPI statement for the run action
  */
 
-function generateRunStatement(email, success, completion) {
+function generateRunStatement(userName, success, completion) {
   var statement = {
     actor: {
-      mbox: 'mailto:' + email, // Replace with actual user email or identifier
+      account: {
+        name: userName,
+        homePage: 'https://moodle.hector-kinderakademien.de/'
+      }
     },
     verb: {
       id: 'http://adlnet.gov/expapi/verbs/attempted',
@@ -1752,10 +1754,13 @@ function generateRunStatement(email, success, completion) {
   return statement;
 }
 
-function generateSubmitStatement(email, success, completion) {
+function generateSubmitStatement(userName, success, completion) {
   var statement = {
     actor: {
-      mbox: 'mailto:' + email, // Replace with actual user email or identifier
+      account: {
+        name: userName,
+        homePage: 'https://moodle.hector-kinderakademien.de/'
+      }
     },
     verb: {
       id: 'http://adlnet.gov/expapi/verbs/submitted',

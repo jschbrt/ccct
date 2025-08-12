@@ -467,9 +467,7 @@ BlocklyDialogs.finish = function () {
     top: '3em',
   };
 
-  var ok = document.getElementById('doneOk');
-  ok.addEventListener('click', BlocklyInterface.nextLevel, true);
-  ok.addEventListener('touchend', BlocklyInterface.nextLevel, true);
+  
 
   BlocklyDialogs.showDialog(content, null, false, true, style, function () {
     document.body.removeEventListener('keydown', BlocklyDialogs.finishKeyDown, true);

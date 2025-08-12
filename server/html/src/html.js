@@ -151,6 +151,11 @@ BlocklyGames.html.doneDialog = function () {
     <img id="finalImage">
     <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
   </div>
+  <div id="dialogDoneButtons" class="farSide farSideButtons">
+
+
+
+  </div>
 </div>
 `;
 };

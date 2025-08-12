@@ -380,8 +380,11 @@ BlocklyGames.countdown = function (elementName, minutes, seconds) {
         choiceLevelInput = choiceLevelInput.toUpperCase();
         choiceLevelInputList[i] = choiceLevelInput;
       }
-      saveChoiceData();
+      if (BlocklyGames.LEVEL != BlocklyGames.CHOICE_LEVEL) {saveData();}
+      //ToDo: record skip statement
       switchLevel();
+      let statement  = generateTimeoutStatement();
+      sendStatement(statement);
     } else {
       time = new Date(msLeft);
       hours = time.getUTCHours();

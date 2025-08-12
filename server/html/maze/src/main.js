@@ -33,7 +33,7 @@ BlocklyGames.storageName = 'maze';
 
 var submitPressed = false; // for Maze.animate
 var NUMBER_OF_ANSWERS = 0; // amout of choices made in divergent task
-var LETTERS_USED = []; // which letters have been used
+var letters_used = []; // which letters have been used
 var choiceLevelInputList = []; //input of in choice level
 
 const MAX_BLOCKS = [
@@ -389,9 +389,9 @@ var choiceLevelOptions = [];
 /**
  * xAPI endpoint configuration.
  */
-const lrs = 'https://logik.hib.uni-tuebingen.de/lrsql/xapi';
-const apiKey = '788277dac5e47292147749362006263b9d7a79940264a0cb0c19f9f404ebefc4';
-const passKey = '2ebeaab18ed96bd5ee3ddf9106c1d1fd83739e4c47e085a279bb4a4147fe9324';
+const lrs = ''; // InsertLearning Record Store endpoint
+const apiKey = ''; // API key for authentication
+const passKey = ''; // Password key for authentication
 const auth = window.XAPI.toBasicAuth(apiKey, passKey);
 const xapi = new window.XAPI({
   endpoint: lrs,
@@ -553,7 +553,6 @@ function drawMap() {
 }
 
 var numberOfAnswers = 0;
-var letters_used;
 
 // This is the Data object used for saving stuff to mysql
 // Save all submitted plays
@@ -1066,7 +1065,7 @@ function submitChoiceLevel(e) {
       isClean = false;
       alert('Bitte fülle alle Felder aus.');
       already_alerted = true;
-    } else if (LETTERS_USED.includes(choiceLevelInput)) {
+    } else if (letters_used.includes(choiceLevelInput)) {
       // if it is NOT clean
       isClean = false;
       alert('Verwende bitte nur die aufgelisteten Zahlen.');
@@ -1813,9 +1812,9 @@ function generateChoiceLevelStatement(userName, completion) {
       }
     },
     verb: {
-      id: 'http://adlnet.gov/expapi/verbs/selected',
+      id: 'http://adlnet.gov/expapi/verbs/submitted',
       display: {
-        'en-US': 'selected',
+        'en-US': 'submitted',
       },
     },
     object: {
@@ -1846,4 +1845,39 @@ function generateChoiceLevelStatement(userName, completion) {
 } 
 
 
-//ToDo: clean up xAPI data, add skin info 
+function generateTimeoutStatement() {
+  var statement = {
+    actor: {
+      account: {
+        name: userName,
+        homePage: 'https://moodle.hector-kinderakademien.de/'
+      }
+    },
+    verb: {
+        id: 'https://w3id.org/xapi/adl/verbs/abandoned',
+        display: {
+            'en-US': 'session timed out'
+        }
+    },
+    object: {
+      id: 'https://www.ccct.hib.uni-tuebingen.de/html/maze.html/' + '?level=' + BlocklyGames.LEVEL + '&skin=' + SKIN_ID,
+      definition: {
+        name: {
+          'en-US': 'Maze ' + SKIN_NAME + ' Level ' + BlocklyGames.LEVEL,
+        },
+        description: {
+          'en-US': 'This is a part of Computational Creativity Testing.',
+        },
+        type: 'http://adlnet.gov/expapi/activities/cmi.interaction',
+        interactionType: 'other',
+      },
+    },
+    timestamp: new Date().toISOString(), // Current timestamp
+    result: {
+      response: BlocklyCode.stripCode(BlocklyCode.getJsCode()), // The code submitted by the user
+      success: false, // Boolean indicating if the activity was successful
+      completion: false, // Boolean indicating if the activity was completed
+    },
+  };
+  return statement;
+}

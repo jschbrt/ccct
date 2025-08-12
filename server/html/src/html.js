@@ -15,36 +15,23 @@ goog.provide('BlocklyGames.html');
 goog.require('Blockly.Msg');
 goog.require('BlocklyGames');
 
+const beeMsg = {
+  a: 'Level 1 bis 4 sind zum Üben.\nHilf der Biene zum Honig!\nNimm die bunten Blöcke und baue den Weg.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann siehst du, ob es klappt.\nDrück auf „Abgeben“, wenn es fertig ist.\nViel Spaß! 🐝🍯',
+  b: 'Level 5 und 6 sind ein bisschen schwerer.\nDer Weg ist nicht so einfach.\nHilf der Biene!\nGib ihr die richtigen Blöcke.\nSo findet sie den Weg zum Honig.\nDu hast für diese Levels insgesamt 6 Minuten Zeit.\nDrück auf „Testen“, um zu schauen.\nDrück auf „Abgeben“, wenn es fertig ist.\nDu schaffst das! 🐝🍯',
+  c: 'Level 7 bis 11\nDas Labyrinth bleibt gleich.\nAber der Weg ändert sich!\nBringe die Biene jedes Mal anders zum Honig.\nProbiere in jedem Level einen neuen Weg!\nNimm die bunten Blöcke.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann auf „Abgeben“.\nViel Glück! 🐝🍯',
+  d: 'Level 12\nDu hast viele Lösungen gemacht.\nJetzt sag uns:\nWelche Lösung findest du am besten?\nWelche ist auch gut?\nSchreib die Nummer in die Kästchen:\n🟨 Gold = die beste Lösung\n⬜ Silber = die zweitbeste Lösung\nDu hast für dieses Level 2 Minuten Zeit.\nDanke! 😊🐝',
+  e: 'Level 13 – das letzte Level!\nDie Biene will zum Honig.\nAber: Es gibt nur wenige Blöcke!\nKannst du trotzdem den Weg finden?\nDenk gut nach und probier es aus!\nDu hast für dieses Level 4 Minuten Zeit.\nViel Glück! 🐝🍯🌟',
+};
 
-const beeMsg = 
-{
-a:
-"Level 1 bis 4 sind zum Üben.\nHilf der Biene zum Honig!\nNimm die bunten Blöcke und baue den Weg.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann siehst du, ob es klappt.\nDrück auf „Abgeben“, wenn es fertig ist.\nViel Spaß! 🐝🍯",
-b:
-"Level 5 und 6 sind ein bisschen schwerer.\nDer Weg ist nicht so einfach.\nHilf der Biene!\nGib ihr die richtigen Blöcke.\nSo findet sie den Weg zum Honig.\nDu hast für diese Levels insgesamt 6 Minuten Zeit.\nDrück auf „Testen“, um zu schauen.\nDrück auf „Abgeben“, wenn es fertig ist.\nDu schaffst das! 🐝🍯",
-c:
-"Level 7 bis 11\nDas Labyrinth bleibt gleich.\nAber der Weg ändert sich!\nBringe die Biene jedes Mal anders zum Honig.\nProbiere in jedem Level einen neuen Weg!\nNimm die bunten Blöcke.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann auf „Abgeben“.\nViel Glück! 🐝🍯",
-d:
-"Level 12\nDu hast viele Lösungen gemacht.\nJetzt sag uns:\nWelche Lösung findest du am besten?\nWelche ist auch gut?\nSchreib die Nummer in die Kästchen:\n🟨 Gold = die beste Lösung\n⬜ Silber = die zweitbeste Lösung\nDu hast für dieses Level 2 Minuten Zeit.\nDanke! 😊🐝",
-e:
-"Level 13 – das letzte Level!\nDie Biene will zum Honig.\nAber: Es gibt nur wenige Blöcke!\nKannst du trotzdem den Weg finden?\nDenk gut nach und probier es aus!\nDu hast für dieses Level 4 Minuten Zeit.\nViel Glück! 🐝🍯🌟"
-}
+const astroMsg = {
+  a: 'Level 1 bis 4 sind zum Üben.\nHilf der Astronautin zum Raumschiff!\nNimm die bunten Blöcke und baue den Weg.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann siehst du, ob es klappt.\nDrück auf „Abgeben“, wenn es fertig ist.\nViel Spaß! 🚀',
+  b: 'Level 5 und 6 sind ein bisschen schwerer.\nDer Weg ist nicht so einfach.\nHilf der Astronautin!\nGib ihr die richtigen Blöcke.\nSo findet sie den Weg zum Raumschiff.\nDu hast für diese Levels insgesamt 6 Minuten Zeit.\nDrück auf „Testen“, um zu schauen.\nDrück auf „Abgeben“, wenn es fertig ist.\nDu schaffst das! 🚀',
+  c: 'Level 7 bis 11\nDas Labyrinth bleibt gleich.\nAber der Weg ändert sich!\nBringe die Astronautin jedes Mal anders zum Raumschiff.\nProbiere in jedem Level einen neuen Weg!\nNimm die bunten Blöcke.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann auf „Abgeben“.\nViel Glück! 🚀',
+  d: 'Level 12\nDu hast viele Lösungen gemacht.\nJetzt sag uns:\nWelche Lösung findest du am besten?\nWelche ist auch gut?\nSchreib die Nummer in die Kästchen:\n🟨 Gold = die beste Lösung\n⬜ Silber = die zweitbeste Lösung\nDu hast für dieses Level 2 Minuten Zeit.\nDanke! 😊🚀',
+  e: 'Level 13 – das letzte Level!\nDie Astronautin will zum Raumschiff.\nAber: Es gibt nur wenige Blöcke!\nKannst du trotzdem den Weg finden?\nDenk gut nach und probier es aus!\nDu hast für dieses Level 4 Minuten Zeit.\nViel Glück! 🚀🌟',
+};
 
-const astroMsg = 
-{
-a:
-"Level 1 bis 4 sind zum Üben.\nHilf der Astronautin zum Raumschiff!\nNimm die bunten Blöcke und baue den Weg.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann siehst du, ob es klappt.\nDrück auf „Abgeben“, wenn es fertig ist.\nViel Spaß! 🚀",
-b:
-"Level 5 und 6 sind ein bisschen schwerer.\nDer Weg ist nicht so einfach.\nHilf der Astronautin!\nGib ihr die richtigen Blöcke.\nSo findet sie den Weg zum Raumschiff.\nDu hast für diese Levels insgesamt 6 Minuten Zeit.\nDrück auf „Testen“, um zu schauen.\nDrück auf „Abgeben“, wenn es fertig ist.\nDu schaffst das! 🚀",
-c:
-"Level 7 bis 11\nDas Labyrinth bleibt gleich.\nAber der Weg ändert sich!\nBringe die Astronautin jedes Mal anders zum Raumschiff.\nProbiere in jedem Level einen neuen Weg!\nNimm die bunten Blöcke.\nDu hast für diese Levels insgesamt 10 Minuten Zeit.\nDrück auf „Testen“.\nDann auf „Abgeben“.\nViel Glück! 🚀",
-d:
-"Level 12\nDu hast viele Lösungen gemacht.\nJetzt sag uns:\nWelche Lösung findest du am besten?\nWelche ist auch gut?\nSchreib die Nummer in die Kästchen:\n🟨 Gold = die beste Lösung\n⬜ Silber = die zweitbeste Lösung\nDu hast für dieses Level 2 Minuten Zeit.\nDanke! 😊🚀",
-e:
-"Level 13 – das letzte Level!\nDie Astronautin will zum Raumschiff.\nAber: Es gibt nur wenige Blöcke!\nKannst du trotzdem den Weg finden?\nDenk gut nach und probier es aus!\nDu hast für dieses Level 4 Minuten Zeit.\nViel Glück! 🚀🌟"
-}
-
-//TODO: 
+//TODO:
 
 /**
  * Top toolbar for page
@@ -164,10 +151,6 @@ BlocklyGames.html.doneDialog = function () {
     <img id="finalImage">
     <div id="dialogDoneText" style="font-size: large; margin: 1em;">Vielen Dank für deine Teilnahme. </br> Das hast Du super gemacht.</div>
   </div>
-  <div id="dialogDoneButtons" class="farSide farSideButtons">
-    <button class="addHideHandler">${BlocklyGames.esc(Blockly.Msg['DIALOG_CANCEL'])}</button>
-    <button id="doneOk" class="secondary">${BlocklyGames.esc(Blockly.Msg['DIALOG_OK'])}</button>
-  </div>
 </div>
 `;
 };
@@ -177,7 +160,7 @@ BlocklyGames.html.doneDialog = function () {
  * TODO: add skin and level parameters
  */
 BlocklyGames.html.stopDialog = function () {
-// rewrite to give a message according to the level either from beeMsg or astroMsg depending on the skin
+  // rewrite to give a message according to the level either from beeMsg or astroMsg depending on the skin
   let msg = '';
   let skin = 0; // default skin
   // get skin from url parameters
@@ -186,7 +169,7 @@ BlocklyGames.html.stopDialog = function () {
     skin = parseInt(urlParams.get('skin'), 10);
   } else {
     skin = 0; // default skin
-  } 
+  }
   const level = parseInt(urlParams.get('level'), 10) || 1; // default level is 1
   if (skin === 1) {
     if (level === 1) {
@@ -249,8 +232,7 @@ BlocklyGames.html.stopDialog = function () {
     </div>
   </div>
   `;
-    }
-    else {
+    } else {
       return `
   <div id="dialogStop" class="dialogHiddenContent">
     <div id="stopMessageDiv">
@@ -323,9 +305,8 @@ BlocklyGames.html.stopDialog = function () {
     </div>
   </div>
   `;
-    }
-   else {
-    return `
+    } else {
+      return `
   <div id="dialogStop" class="dialogHiddenContent">
     <div id="stopMessageDiv">
       <div id="dialogStopText2">Level ${level}</div>
@@ -335,8 +316,8 @@ BlocklyGames.html.stopDialog = function () {
     </div>
   </div>
   `;
-   }
- } 
+    }
+  }
 };
 
 /**

@@ -678,7 +678,7 @@ function init() {
 
   if (BlocklyGames.LEVEL === BlocklyGames.CHOICE_LEVEL) {
     var letters = ['1', '2', '3', '4', '5'];
-    var lettersUsed = [];
+    
     for (var level = BlocklyGames.DIVERGENT_1; level < BlocklyGames.DIVERGENT_1 + 5; level++) {
       var code = BlocklyGames.loadFromLocalStorage(
         BlocklyGames.storageName,
@@ -692,7 +692,7 @@ function init() {
           var letter = letters[numberOfAnswers];
           BlocklyInterface.loadMazeChoice(code, false, letter);
           numberOfAnswers += 1;
-          lettersUsed.push(letter);
+          letters_used.push(letter);
         }
       }
     }
@@ -712,8 +712,7 @@ function init() {
     } else if (numberOfAnswers == 1) {
       var el = document.getElementById('input-group2');
       el.style.display = 'none';
-      var input = document.getElementById('choiceLevelInput1');
-      input.value = letters_used[0];
+      
       setTimeout(BlocklyDialogs.stop, 100);
     } else {
       setTimeout(BlocklyDialogs.stop, 100);
@@ -1056,7 +1055,7 @@ function submitChoiceLevel(e) {
   const choiceLevelInputs = document.getElementsByTagName('input');
   for (var i = 0; i < choiceLevelInputs.length; i++) {
     var choiceLevelInput = choiceLevelInputs[i].value; // return value of input box
-    choiceLevelInput = choiceLevelInput.toUpperCase();
+
     choiceLevelInputList[i] = choiceLevelInput;
     if (already_alerted) {
       break;
@@ -1065,7 +1064,7 @@ function submitChoiceLevel(e) {
       isClean = false;
       alert('Bitte fülle alle Felder aus.');
       already_alerted = true;
-    } else if (letters_used.includes(choiceLevelInput)) {
+    } else if (!letters_used.includes(choiceLevelInput)) {
       // if it is NOT clean
       isClean = false;
       alert('Verwende bitte nur die aufgelisteten Zahlen.');

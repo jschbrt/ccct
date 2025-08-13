@@ -1057,7 +1057,8 @@ function submitChoiceLevel(e) {
     var choiceLevelInput = choiceLevelInputs[i].value; // return value of input box
 
     choiceLevelInputList[i] = choiceLevelInput;
-    if (already_alerted) {
+    // second part of the condition i a hacky fix to prevent level 12 not accepting only one answer when one input field is displayed
+    if (already_alerted || (i === 1 && document.getElementById('input-group2').style.display === "none")) {
       break;
     }
     if (choiceLevelInput === '') {

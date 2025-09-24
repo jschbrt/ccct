@@ -10,6 +10,8 @@ More details at https://osf.io/zebfw/.
 
 The CCCT is a web-based application using Blockly for visual programming. Users see a maze on the left (with animated bees or astronauts) and a programming workspace on the right, where they drag blocks to build code sequences. Interactions like submissions and timestamps are captured for scoring, with automated checks for basic tasks and manual review for creativity.
 
+![CCCT Interface](https://github.com/jschbrt/ccct/blob/ccct/interface.jpg)
+
 ## Repository Structure
 
 Adapted from Blockly Games, the repo includes:

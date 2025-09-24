@@ -39,7 +39,7 @@ Serve `server/html/` with a web server, e.g., `cd server/html && python3 -m http
 
 ## Data Handling and Fromatting
 
-Data collected: Code submissions (Blockly JSON), timestamps, actions (play, skip, submit). Stored client-side, submitted to backend. Blockly JSON is converted to text prior to saving (e.g., "move forward"; "turn left"). For scoring please refer to our OSF storage (https://osf.io/zebfw/).
+Data collected: Code submissions (Blockly JSON), timestamps, actions (play, skip, submit). Stored client-side, submitted to backend. Blockly JSON is converted to text prior to saving (e.g., "move forward"; "turn left"). For scoring, please refer to the design and scoring specifications in our OSF storage (https://osf.io/zebfw/).
 
 ## Technical Information for Reuse
 

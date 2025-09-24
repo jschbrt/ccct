@@ -8,7 +8,7 @@ More details at https://osf.io/zebfw/.
 
 ## System Description
 
-The CCCT is a web-based application using Blockly for visual programming. Users see a maze on the left (with animated bees or astronauts) and a programming workspace on the right, where they drag blocks to build code sequences. The CCCT comprises 13 levels across five modules, each assessing different aspects of CT and CC, by requiring participants to construct block-based code guiding a char-acter through a maze to a predefined goal. Interactions like submissions and timestamps are captured for scoring.
+The CCCT is a web-based application using Blockly for visual programming. Users see a maze on the left (with animated bees or astronauts) and a programming workspace on the right, where they drag blocks to build code sequences. The CCCT comprises 13 levels across five modules, each assessing different aspects of CT and CC, by requiring participants to construct block-based code guiding a char-acter through a maze to a predefined goal. Interactions like code submissions and timestamps are captured for scoring.
 
 ![CCCT Interface](https://github.com/jschbrt/ccct/blob/ccct/interface.jpg)
 
@@ -39,12 +39,10 @@ Serve `server/html/` with a web server, e.g., `cd server/html && python3 -m http
 
 ## Data Handling and Fromatting
 
-Data collected: Code submissions (Blockly JSON), timestamps, actions, demographics. Stored client-side, submitted to backend.
-
-Readability: Blockly JSON is converted to text prior to saving (e.g., "move forward; turn left"). Custom process for scoring (see OSF: https://osf.io/zebfw/).
+Data collected: Code submissions (Blockly JSON), timestamps, actions (play, skip, submit). Stored client-side, submitted to backend. Blockly JSON is converted to text prior to saving (e.g., "move forward"; "turn left"). For scoring please refer to our OSF storage (https://osf.io/zebfw/).
 
 ## Technical Information for Reuse
 
 The CCCT is a web-based application built with HTML, CSS, and JavaScript, making it easy to deploy and integrate. It's compatible with modern browsers and devices, including laptops and tablets, with touch-friendly interfaces for younger users. To reuse it on online platforms like Learning Management Systems (LMS), you can host the static files on any web server or embed it via iframe in systems such as Moodle or Canvas.
 
-For full functionality, especially saving user data, you'll need to set up a backend. In our implementation, we used xAPI (Experience API) to store assessment data in a database, capturing detailed interactions like code submissions and timestamps. To adapt the tool, modify source files in `server/html/`, then rebuild with `make maze`.
+For full functionality, especially saving user data, you'll need to set up a backend. In our implementation, we used xAPI (Experience API) to store assessment data in a database. To adapt the tool, modify source files in `server/html/`, then rebuild with `make maze`.

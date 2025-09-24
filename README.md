@@ -15,10 +15,12 @@ The CCCT is a web-based application using Blockly for visual programming. Users 
 Adapted from Blockly Games, the repo includes:
 - `Makefile`: Build script.
 - `build/`: Scripts for compression and localization.
-- `json/`: Localization files. *Note: Localization is primarily adapted for German, with some text hardcoded in the app.*
+- `json/`: Localization files. 
 - `server/html/`: Web app files (HTML, JS, assets).
 - `server/third-party/`: Libraries like Blockly and SoundJS.
 - `third-party/`: Build tools.
+
+*Note: Localization is primarily adapted for German, with some text hardcoded in the app.*
 
 ## Setup
 

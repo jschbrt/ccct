@@ -8,7 +8,7 @@ More details at https://osf.io/zebfw/.
 
 ## System Description
 
-The CCCT is a web-based application using Blockly for visual programming. Users see a maze on the left (with animated bees or astronauts) and a programming workspace on the right, where they drag blocks to build code sequences. Interactions like submissions and timestamps are captured for scoring, with automated checks for basic tasks and manual review for creativity.
+The CCCT is a web-based application using Blockly for visual programming. Users see a maze on the left (with animated bees or astronauts) and a programming workspace on the right, where they drag blocks to build code sequences. The CCCT comprises 13 levels across five modules, each assessing different aspects of CT and CC, by requiring participants to construct block-based code guiding a char-acter through a maze to a predefined goal. Interactions like submissions and timestamps are captured for scoring.
 
 ![CCCT Interface](https://github.com/jschbrt/ccct/blob/ccct/interface.jpg)
 
